@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wynajem nieruchomości</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        
+        <a class="navbar-brand" href="index.html"><i class="fa fa-home mr-1" style="font-size:24px"></i>Wynajem.pl</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Domy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Mieszkania</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Działki</a>
+                </li>
+            </ul>
+            <div class="navbar-nav">
+                <a class="nav-link" href="login.html"><i class="fa fa-user mr-1" style="font-size:24px"></i>Moje konto</a>
+            </div>
+            <a href="#" class="btn btn-outline-success my-2 my-sm-0 d-flex align-items-center"><i class="fa fa-plus-circle mr-1" style="font-size:24px"></i>Dodaj ogłoszenie</a>
+        </div>
+    </div>    
+</nav>
+<div class="searching">
+    <div class="container">
+        <div class="row py-5">
+            <h3 class="col-md-12 p-2 text-center text-light">Znajdź dom dla siebie</h3>
+            <form class="row col-md-8 mx-auto py-3 bg-light justify-content-between">
+                <input class="form-control col-md-7 my-1" type="text" placeholder="Nazwa">
+                <input class="form-control col-md-4 my-1" type="text" placeholder="Miasto lub województwo">
+                <select class="form-control col-md-4 px-0 my-1 form-select">
+                    <option value="" disabled selected>Kategoria</option>
+                    <option>Action</option>
+                    <option>Action</option>
+                    <option>Action</option>
+                    <option>Action</option>
+                    <option>Action</option>
+                </select>
+                <select class="form-control col-md-4 px-0 my-1">
+                    <option value="" disabled selected>Zasięg</option>
+                    <option>+ 0 km</option>
+                    <option>+ 5 km</option>
+                    <option>+ 10 km</option>
+                    <option>+ 25 km</option>
+                    <option>+ 30 km</option>
+                    <option>+ 50 km</option>
+                </select>
+                <button class="btn btn-success col-md-3 my-1" type="submit">Szukaj</button>
+            </form>
+        </div>
+    </div>
+</div>
+<main>
+    <div class="container">
+        <div class="row py-3">
+         <h2 class="title col-md-12">Tytuł ogłoszenia</h2>
+         <div class="image-owner d-flex col-md-12 flex-wrap">
+            <div id="carouselExampleControls" class="carousel slide col-md-8 col-sm-12" data-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img class="d-block w-100" src="img/drewniany_2.jpg" alt="First slide">
+                  </div>
+                  <div class="carousel-item">
+                    <img class="d-block w-100" src="img/drewniany_2.jpg" alt="Second slide">
+                  </div>
+                  <div class="carousel-item">
+                    <img class="d-block w-100" src="img/drewniany_2.jpg" alt="Third slide">
+                  </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+            <div class="row info col-md-4 col-sm-12 justify-content-center">
+                <img src="img/avatar.jpg" alt="user-avatar" class="owner-avatar">
+                <span class="user-name col-md-12">Jan Kowalski</span>
+            </div>
+         </div>
+        </div>
+        <div class="row">
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <td colspan="2">Dane szczegółowe:</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th class="col-sm-3">Powierzchnia</th>
+                    <td class="col-sm-9">Mark</td>
+                  </tr>
+                  <tr>
+                    <th class="col-sm-3">Lokalizacja ...</th>
+                    <td class="col-sm-9">Jacob</td>
+                  </tr>
+                  <tr>
+                    <th class="col-sm-3">Coś tam jeszcze....</th>
+                    <td class="col-sm-9">Mark</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <div class="row item-desc p-1 mb-3">
+            Poseł na Sejm Marcin Porzucek oraz burmistrz Mirosław Wieczór spotkali się dziś z wronieckimi dziennikarzami, aby poinformować o powstaniu na Zamościu przystanku kolejowego. Budowa peronów pasażerskich jest możliwa dzięki modernizacji linii kolejowej na odcinku Wronki-Słonice.
+
+Początkowo pozycja Wronki Zamość widniała na liście rezerwowej projektów budowy nowych przystanków. Jednak w czerwcu rządzący zdecydowali się przenieść inwestycję, zlokalizowaną w naszym regionie na listę podstawową, dając tym samym zielone światło do jej realizacji.
+        </div>
+    </div>
+</main>
+<footer class="bg-dark text-light">
+    <div class="container">
+        <div class="row">
+            <p class="authors">
+                Stronę opracowali:
+            </p>
+            <ul>
+                <li>Blanka Jerzyńska</li>
+                <li>Przemysław Skowroński</li>
+                <li>Kamil Orzeł</li>
+            </ul>
+        </div>
+    </div>
+</footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
