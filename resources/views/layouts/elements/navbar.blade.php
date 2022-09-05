@@ -40,14 +40,14 @@
                                     <ul class="dropdown-menu dropdown-menu-light">
 
                                         @can('USER-my-account')
-                                            <li><a class="dropdown-item" href="#">{{ __('My account') }}</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('myProfile') }}">{{ __('My account') }}</a></li>
                                         @endcan
                                         @can('USER-offer-menagement')
                                             <li><a class="dropdown-item" href="#">{{ __('Create Offers') }}</a></li>
                                         @endcan
                                             <li><hr class="dropdown-divider"></li>
                                             @can('ACP-view')
-                                                <li><a class="dropdown-item" href="#">{{ __('ACP') }}</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('adminDashboard') }}">{{ __('ACP') }}</a></li>
                                             @endcan
                                             <li>
                                                 <a class="dropdown-item" href="{{ route('logout') }}"

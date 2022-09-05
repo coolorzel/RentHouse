@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDashboard;
+use App\Http\Controllers\Admin\AdminPageSettings;
 use App\Http\Controllers\SystemControl\FirstInstall;
+use App\Http\Controllers\User\MyUserProfile;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,9 +23,28 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
+//____________________//
+// FIRST INSTALLATION //
+//____________________//
 Route::group(['prefix' => 'firstInstall'], function() {
     Route::get('/', [FirstInstall::class, 'index'])->name('firstInstallIndex');
     Route::post('/store', [FirstInstall::class, 'store'])->name('firstInstallStore');
+});
+
+//_____________________//
+// ADMIN CONTROL PANEL //
+//_____________________//
+Route::group(['prefix' => 'acp', 'middleware' => ['permission:USER-view-myoffer']], function() {
+    Route::get('/', [AdminDashboard::class, 'index'])->name('adminDashboard');
+    Route::get('/statistics', [AdminDashboard::class, 'statistics'])->name('adminStatistics');
+    Route::get('/settings', [AdminPageSettings::class, 'index'])->name('adminSettings');
+});
+
+//______________//
+// USER PROFILE //
+//______________//
+Route::group(['prefix' => 'profile', 'middleware' => ['auth']], function() {
+    Route::get('/', [MyUserProfile::class, 'index'])->name('myProfile');
 });
 
 
