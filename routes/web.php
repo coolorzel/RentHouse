@@ -38,6 +38,7 @@ Route::group(['prefix' => 'acp', 'middleware' => ['permission:USER-view-myoffer'
     Route::get('/', [AdminDashboard::class, 'index'])->name('adminDashboard');
     Route::get('/statistics', [AdminDashboard::class, 'statistics'])->name('adminStatistics');
     Route::get('/settings', [AdminPageSettings::class, 'index'])->name('adminSettings');
+    Route::post('/settings', [AdminPageSettings::class, 'store'])->name('adminSettingsStore');
 });
 
 //______________//

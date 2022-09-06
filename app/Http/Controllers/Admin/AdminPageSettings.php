@@ -14,7 +14,7 @@ class AdminPageSettings extends Controller
      */
     public function index()
     {
-        //
+        return view('site.admin.adminsettings');
     }
 
     /**
@@ -35,7 +35,9 @@ class AdminPageSettings extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $title = $request->title;
+        dd($request);
+        return redirect()->route('adminSettings');
     }
 
     /**
