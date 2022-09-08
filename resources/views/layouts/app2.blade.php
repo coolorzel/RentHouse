@@ -10,20 +10,16 @@
     <title>{{ config('app.name', 'RentHouse') }} - @yield('title')</title>
     <!-- Style sheet -->
 
-    <link rel="stylesheet" href="{{ asset('project/css/bootstrap-grid.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('project/css/bootstrap-reboot.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('project/css/bootstrap-utilities.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('project/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('mdb/css/mdb.min.css') }}">
 
     <!-- Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet'>
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('project/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('project/css/sidebars.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>
     <div id="app">
@@ -36,12 +32,8 @@
             @yield('content')
         </main>
     </div>
-    <!-- JAVASCRIPTS-->
-    <script src="{{ url('mdb/js/mdb.min.js') }}"></script>
-    <script src="{{ url('project/js/bootstrap.js') }}"></script>
-    <script src="{{ url('project/js/bootstrap.bundle.js') }}"></script>
+    <!-- JAVASCRIPTS -->
     <script src="{{ url('project/js/sidebars.js') }}"></script>
-    <script src="{{ url('project/js/changeForm.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- tether js -->
     <script src="{{ url('/project/plugins/tether/js/tether.min.js') }}"></script>
@@ -55,6 +47,7 @@
     <script src="{{ url('/project/plugins/google-map/gmap.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
+    <script src=" {{ asset('project/js/changeForm.js') }} "></script>
 
 </body>
 </html>

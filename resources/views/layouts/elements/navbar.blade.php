@@ -25,7 +25,7 @@
                 @endif
 
                 @if (Route::has('postNewAd'))
-                    <a href="{{ route('postNewAd') }}" class="btn btn-outline-success my-2 my-sm-0 d-flex align-items-center"><i class="fa fa-plus-circle mr-1" style="font-size:24px"></i> {{ __('Post new ad') }}</a>
+                    <a href="{{ route('postNewAd') }}" class="btn btn-outline-success my-2 my-sm-0 d-flex align-items-center"><i class="fa fa-plus-circle mx-1" style="font-size:24px"></i> {{ __('Post new ad') }}</a>
                 @endif
             </div>
             @else
@@ -66,7 +66,7 @@
                     @endif
 
                     @if (Route::has('postNewAd'))
-                        <a href="{{ route('postNewAd') }}" class="btn btn-outline-success my-2 my-sm-0 d-flex align-items-center"><i class="fa fa-plus-circle mr-1" style="font-size:24px"></i> {{ __('Post new ad') }}</a>
+                        <a href="{{ route('postNewAd') }}" class="btn btn-outline-success my-2 my-sm-0 d-flex align-items-center"><i class="fa fa-plus-circle mx-1" style="font-size:24px"></i> {{ __('Post new ad') }}</a>
                     @endif
                 </div>
             @endguest

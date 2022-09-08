@@ -21,10 +21,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('username')->nullable();
-            $table->string('city')->nullable();
-            $table->string('zipcode')->nullable();
-            $table->string('street')->nullable();
             $table->string('number')->nullable();
+            $table->string('street')->nullable();
+            $table->string('zipcode')->nullable();
+            $table->string('city')->nullable();
+            $table->string('province')->nullable();
             $table->string('country')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('avatar')->nullable();

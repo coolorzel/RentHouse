@@ -54,56 +54,72 @@
                     </div>
                 </div>
                 <div class="col-md-8 shadow p-3 mb-5 bg-body rounded">
-                    <div class="card mb-3">
+
+                    <div class="card mb-3" id="editData">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Full Name</h6>
+                                <div class="col-sm-3 d-flex align-items-center">
+                                    <h6 class="mb-0">{{ __('Name and last name') }}</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    Kenneth Valdez
+                                    <div class="input-group">
+                                        <input type="text" readonly name="name" aria-label="First name" class="form-control-sm text-secondary form-control-plaintext" style="width: 50%;" value="Kenneth">
+                                        <input type="text" readonly name="lname" aria-label="Last name" class="form-control-sm text-secondary form-control-plaintext" style="width: 50%;" value="Valdez">
+                                    </div>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Email</h6>
+                                <div class="col-sm-3 d-flex align-items-center">
+                                    <h6 class="mb-0">{{ __('Email') }}</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    fip@jukmuh.al
+                                    <input type="email" readonly class="form-control-plaintext form-control-sm text-secondary" id="editData email" name="email" value="admin@admin.admin">
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Phone</h6>
+                                <div class="col-sm-3 d-flex align-items-center">
+                                    <h6 class="mb-0">{{ __('Phone') }}</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    (239) 816-9029
+                                    <input type="tel" readonly class="form-control-plaintext form-control-sm text-secondary" id="editData phone_number" name="phone_number" value="251 959 468">
                                 </div>
+
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Mobile</h6>
+                                <div class="col-sm-3 d-flex align-items-center">
+                                    <h6 class="mb-0">{{ __('Address') }}</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    (320) 380-4539
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Address</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    Bay Area, San Francisco, CA
+                                    <div class="input-group">
+                                        <input name="country" readonly class="form-control-plaintext form-control-sm text-secondary" list="datalistOptions" id="exampleDataList editData" placeholder="Type to search..." style="width:50%">
+                                        <datalist id="datalistOptions">
+                                            <option value="San Francisco">
+                                            <option value="New York">
+                                            <option value="Seattle">
+                                            <option value="Los Angeles">
+                                            <option value="Chicago">
+                                        </datalist>
+                                        <input name="city" readonly class="form-control-plaintext form-control-sm text-secondary" list="datalistOptions2" id="exampleDataList editData" placeholder="Type to search..." style="width:50%">
+                                        <datalist id="datalistOptions2">
+                                            <option value="Ukośna">
+                                            <option value="Jaśminowa">
+                                            <option value="Mleczna">
+                                            <option value="Orzechowa">
+                                            <option value="Czereśniowa">
+                                        </datalist>
+                                    </div>
+
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <a class="btn btn-info " target="__blank" href="#">Edit</a>
+                                    <button class="btn btn-info" id="editButtonSelect" target="__blank" href="#" onclick="editButtonData()">Edit</button>
+                                    <button class="btn btn-primary" id="cancelButtonSelect" target="__blank" href="#" onclick="cancelButtonData()" style="display:none;">Cancel</button>
+                                    <button class="btn btn-danger" id="saveButtonSelect" target="__blank" href="#" style="display:none;">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -173,4 +189,5 @@
 
         </div>
     </div>
+
 @endsection
