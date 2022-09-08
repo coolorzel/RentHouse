@@ -83,7 +83,7 @@
                                     <h6 class="mb-0">{{ __('Phone') }}</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="tel" readonly class="form-control-plaintext form-control-sm text-secondary" id="editData phone_number" name="phone_number" value="251 959 468">
+                                    <input type="tel" readonly class="form-control-plaintext form-control-sm text-secondary phone" id="editData phone_number" name="phone_number" value="251 959 468">
                                 </div>
 
                             </div>
@@ -93,22 +93,52 @@
                                     <h6 class="mb-0">{{ __('Address') }}</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <div class="input-group">
-                                        <input name="country" readonly class="form-control-plaintext form-control-sm text-secondary" list="datalistOptions" id="exampleDataList editData" placeholder="Type to search..." style="width:50%">
-                                        <datalist id="datalistOptions">
+                                    <div class="input-group mb-2">
+                                        <input name="country" readonly class="form-control-plaintext form-control-sm text-secondary" list="datalistCountryOptions" id="exampleDataList editData" placeholder="{{ __('Country') }}" style="width:50%" disabled>
+                                        <datalist id="datalistCountryOptions">
                                             <option value="San Francisco">
                                             <option value="New York">
                                             <option value="Seattle">
                                             <option value="Los Angeles">
                                             <option value="Chicago">
                                         </datalist>
-                                        <input name="city" readonly class="form-control-plaintext form-control-sm text-secondary" list="datalistOptions2" id="exampleDataList editData" placeholder="Type to search..." style="width:50%">
-                                        <datalist id="datalistOptions2">
+                                        <input name="province" readonly class="form-control-plaintext form-control-sm text-secondary" list="datalistProvinceOptions" id="exampleDataList editData" placeholder="{{ __('Province') }}" style="width:50%">
+                                        <datalist id="datalistProvinceOptions">
+                                            <option value="Wielkopolska">
+                                            <option value="Zachodnio-Pomorskie">
+                                            <option value="Małopolska">
+                                            <option value="Pomorskie">
+                                        </datalist>
+                                    </div>
+                                    <div class="input-group">
+                                        <input name="zipcode" readonly class="form-control-plaintext form-control-sm text-secondary zipcode" list="datalistZipcodeOptions" id="exampleDataList editData zipcode" placeholder="{{ __('Zip-Code') }}" style="width:20%">
+                                        <datalist id="datalistZipcodeOptions">
+                                            <option value="64-510">
+                                            <option value="64-500">
+                                            <option value="93-503">
+                                            <option value="19-492">
+                                            <option value="90-203">
+                                        </datalist>
+                                        <input name="city" readonly class="form-control-plaintext form-control-sm text-secondary" list="datalistCityOptions" id="exampleDataList editData" placeholder="{{ __('City') }}" style="width:30%">
+                                        <datalist id="datalistCityOptions">
+                                            <option value="Wronki">
+                                            <option value="Międzychód">
+                                            <option value="Ćmachowo">
+                                            <option value="Poznań">
+                                        </datalist>
+                                        <input name="street" readonly class="form-control-plaintext form-control-sm text-secondary" list="datalistStreetOptions" id="exampleDataList editData" placeholder="{{ __('Street') }}" style="width:30%">
+                                        <datalist id="datalistStreetOptions">
                                             <option value="Ukośna">
-                                            <option value="Jaśminowa">
-                                            <option value="Mleczna">
-                                            <option value="Orzechowa">
+                                            <option value="Inna">
                                             <option value="Czereśniowa">
+                                            <option value="Małysza">
+                                        </datalist>
+                                        <input name="number" readonly class="form-control-plaintext form-control-sm text-secondary number" list="datalistNumberOptions" id="exampleDataList editData" placeholder="{{ __('Number') }}" style="width:20%">
+                                        <datalist id="datalistNumberOptions">
+                                            <option value="2">
+                                            <option value="3">
+                                            <option value="3a">
+                                            <option value="6">
                                         </datalist>
                                     </div>
 
