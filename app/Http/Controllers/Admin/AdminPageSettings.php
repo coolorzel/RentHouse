@@ -24,7 +24,7 @@ class AdminPageSettings extends Controller
      */
     public function create()
     {
-        //
+        dd(Request::path());
     }
 
     /**

@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mb-2">
     <div class="container">
 
-        <a class="navbar-brand" href="{{ route('index') }}"><i class="fa fa-home mr-1" style="font-size:24px"></i> {{ config('app.name', 'Laravel') }}</a>
+        <a class="navbar-brand" href="{{ route('index') }}"><i class="fa fa-home mr-1" style="font-size:24px"></i> {{ config('global.page_name', 'RentHouse') }}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

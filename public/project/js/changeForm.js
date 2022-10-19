@@ -1,6 +1,10 @@
-var formEdit = [];
-var divNode = document.getElementById("editData");
-var inputNodes = divNode.getElementsByTagName('INPUT');
+if (document.getElementById("editData"))
+{
+    var formEdit = [];
+    var divNode = document.getElementById("editData");
+    var inputNodes = divNode.getElementsByTagName('INPUT');
+}
+
 function editButtonData() {
     for(var i = 0; i < inputNodes.length; i++){
         formEdit.push({
@@ -13,6 +17,8 @@ function editButtonData() {
         element.readOnly = false;
         element.classList.remove('form-control-plaintext');
         element.classList.add('form-control');
+        element.classList.remove('text-secondary');
+        element.classList.add('text-black');
     });
 
     document.getElementById('editButtonSelect').style.display = 'none';
@@ -27,6 +33,8 @@ function cancelButtonData() {
         element.readOnly = true;
         element.classList.remove('form-control');
         element.classList.add('form-control-plaintext');
+        element.classList.remove('text-black');
+        element.classList.add('text-secondary');
     });
 
     document.getElementById('editButtonSelect').style.display = '';

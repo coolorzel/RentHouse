@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Settings;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -201,6 +202,7 @@ return [
          * Application role & permission...
          */
         Spatie\Permission\PermissionServiceProvider::class,
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 
     ],
 

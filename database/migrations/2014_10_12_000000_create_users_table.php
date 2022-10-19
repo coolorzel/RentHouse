@@ -26,7 +26,12 @@ return new class extends Migration
             $table->string('zipcode')->nullable();
             $table->string('city')->nullable();
             $table->string('province')->nullable();
-            $table->string('country')->nullable();
+            $table->string('country')->default('Poland');
+            $table->string('website')->nullable();
+            $table->string('github')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('facebook')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('avatar')->nullable();
             $table->rememberToken();
