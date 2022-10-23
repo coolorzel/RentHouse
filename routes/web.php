@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminDashboard;
 use App\Http\Controllers\Admin\AdminPageSettings;
 use App\Http\Controllers\SystemControl\FirstInstall;
 use App\Http\Controllers\User\AvatarController;
+use App\Http\Controllers\User\LinkUserController;
 use App\Http\Controllers\User\MyUserProfile;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +61,14 @@ Route::group(['middleware' => 'first_install'], function() {
         Route::post('/update', [MyUserProfile::class, 'update'])->name('myProfileUpdate');
         Route::post('/avatarUpdate', [AvatarController::class, 'update'])->name('myAvatarUpdate');
         Route::delete('/avatarDelete', [AvatarController::class, 'delete'])->name('myAvatarDelete');
+        Route::get('/editLinkInfo/{nameLink}', [LinkUserController::class, 'edit'])->name('myLinksEdit');
+        Route::post('/editLinkInfo')->name('myLinksEdit'); // ONLY FOR CHECK ADDRESS. GET IS CHECKED
+        Route::post('/createLinkInfo', [LinkUserController::class, 'create'])->name('myLinksInfo');
+        Route::post('/createLinkStore', [LinkUserController::class, 'store'])->name('myLinksCreate');
+        Route::post('/updateLinkInfo/{nameLink}', [LinkUserController::class, 'update'])->name('myLinksUpdate');
+        Route::get('/updateLinkInfo')->name('myLinksUpdate'); // ONLY FOR CHECK ADDRESS. GET IS CHECKED
+        Route::delete('/deleteLinkInfo/{nameLink}', [LinkUserController::class, 'delete'])->name('myLinksDelete');
+        Route::get('/deleteLinkInfo')->name('myLinksDelete');  // ONLY FOR CHECK ADDRESS. GET IS CHECKED
     });
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Descriptions\UserLinksDescriptions;
 use App\Http\Controllers\Controller;
 //use http\Client\Curl\User;
 use App\Http\Requests\UserProfileValidationRequest;
@@ -21,8 +22,15 @@ class MyUserProfile extends Controller
     public function index()
     {
         //
+        $links = UserLinksDescriptions::$LINKS['links'];
         $user = User::find(Auth::user()->id)->first();
-        return view('site.user.myprofile', compact('user'));
+        $issetLink = [];
+        foreach ($links as $key => $l)
+        {
+            if (empty($user[$key]))
+            $issetLink[] = $key;
+        }
+        return view('site.user.myprofile', compact('user', 'issetLink'));
     }
 
     /**

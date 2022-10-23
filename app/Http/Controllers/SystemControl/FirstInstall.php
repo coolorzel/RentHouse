@@ -19,7 +19,6 @@ class FirstInstall extends Controller
     public function index ()
     {
         if ((User::exists() == null) || (Role::exists() == null)) {
-            //$forms = Config::get('settings.additional');
             $forms = SettingsDescription::$DESCRIPTION['additional'];
             $step = 0;
             $quantityDefaultInputs = 3;
