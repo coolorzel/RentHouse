@@ -6,14 +6,17 @@ use App\Descriptions\UserLinksDescriptions;
 use App\Http\Controllers\Controller;
 //use http\Client\Curl\User;
 use App\Http\Requests\UserProfileValidationRequest;
+use App\Http\Requests\UserUpdatePassword;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules;
 
 class MyUserProfile extends Controller
 {
-    private int $id;
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +33,7 @@ class MyUserProfile extends Controller
             if (empty($user[$key]))
             $issetLink[] = $key;
         }
-        return view('site.user.myprofile', compact('user', 'issetLink'));
+        return view('site.user.myprofile', compact('user', 'issetLink', 'links'));
     }
 
     /**
@@ -111,6 +114,29 @@ class MyUserProfile extends Controller
         }
     }
 
+    public function update_password(UserUpdatePassword $request)
+    {
+        $request->validated();
+        $oldPassword = $request->oldPassword;
+        $newPassword = $request->newPassword;
+        $repPassword = $request->repPassword;
+        $user = User::find(Auth::id())->first();
+        if(Hash::check($oldPassword, $user->password))
+        {
+            if ($newPassword == $repPassword)
+            {
+                $user->update([
+                    'password' => Hash::make($newPassword),
+                ]);
+                return response()->json(['status'=>1,'title'=>'Success','msg'=>'Change password completed','type'=>'success']);
+            }
+            return response()->json(['status'=>0,'title'=>'Error','msg'=>'Password repeat is not same to new password.','type'=>'error']);
+        }
+        else
+        {
+            return response()->json(['status'=>0,'error'=> ['oldPassword' => ['Old Password is valid!']]]);
+        }
+    }
 
     /**
      * Remove the specified resource from storage.

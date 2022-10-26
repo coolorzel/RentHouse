@@ -88,7 +88,7 @@ class LinkUserController extends Controller
         if (isset($links[$request->nameLink]))
         {
             $user = User::find(Auth::id())->first();
-            $user->$type = $request->valueLink;
+            $user->$type = $request->valueLink; // $user->website = 'KUPA';
             $user->update();
             if(!$user)
             {

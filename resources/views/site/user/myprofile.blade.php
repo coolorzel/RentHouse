@@ -91,56 +91,22 @@
                     </div>
                     <div class="card mt-3">
                         <ul class="list-group list-group-flush">
-                            @if(Auth::user()->website)
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                                    {{ __('Website') }}</h6>
-                                <span class="text-secondary"><a href="http://{{ Auth::user()->website }}">{{ Auth::user()->website }}</a></span>
-                                <button id="buttonEditLinks" type="button" class="btn-sm btn-info btn-floating" style="position: absolute;/* top: 2px; */right: -20px;" data-info="website" data-mdb-toggle="modal" data-mdb-target="#exampleModalEdit">
-                                    <i class="fa fa-magic"></i>
-                                </button>
-                            </li>
+                            @if(count($issetLink) == 5 )
+                                <span class="text-warning mb-1 text-center">{{ __('No links available. Add a new one!') }}</span>
                             @endif
-
-                            @if(Auth::user()->github)
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github mr-2 icon-inline"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>Github</h6>
-                                <span class="text-secondary"><a href="https://github.com/{{ Auth::user()->github }}">{{ Auth::user()->github }}</a></span>
-                                <button id="buttonEditLinks" type="button" class="btn-sm btn-info btn-floating" style="position: absolute;/* top: 2px; */right: -20px;" data-info="github" data-mdb-toggle="modal" data-mdb-target="#exampleModalEdit">
-                                    <i class="fa fa-magic"></i>
-                                </button>
-                            </li>
+                            @foreach ($links as $key=>$val)
+                                @if(Auth::user()->$key)
+                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                    <h6 class="mb-0"> <i class="fa fa-@if($key == 'website')globe @else{{ $key }} @endif fa-2x text-warning" aria-hidden="true"></i>
+                                        {{ __(ucfirst($key)) }}</h6>
+                                    <span class="text-secondary"><a href="http://{{ Auth::user()->$key }}">{{ Auth::user()->$key }}</a></span>
+                                    <button id="buttonEditLinks" type="button" class="btn-sm btn-info btn-floating" style="position: absolute;/* top: 2px; */right: -20px;" data-info="{{$key}}" data-mdb-toggle="modal" data-mdb-target="#exampleModalEdit">
+                                        <i class="fa fa-magic"></i>
+                                    </button>
+                                </li>
                                 @endif
+                            @endforeach
 
-                                @if(Auth::user()->twitter)
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>Twitter</h6>
-                                <span class="text-secondary"><a href="https://twitter.com/{{ Auth::user()->twitter }}">{{ __('@').Auth::user()->twitter }}</a></span>
-                                <button id="buttonEditLinks" type="button" class="btn-sm btn-info btn-floating" style="position: absolute;/* top: 2px; */right: -20px;" data-info="twitter" data-mdb-toggle="modal" data-mdb-target="#exampleModalEdit">
-                                    <i class="fa fa-magic"></i>
-                                </button>
-                            </li>
-                                @endif
-
-                                @if(Auth::user()->instagram)
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram mr-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</h6>
-                                <span class="text-secondary"><a href="https://www.instagram.com/{{ Auth::user()->instagram }}">{{ Auth::user()->instagram }}</a></span>
-                                <button id="buttonEditLinks" type="button" class="btn-sm btn-info btn-floating" style="position: absolute;/* top: 2px; */right: -20px;" data-info="instagram" data-mdb-toggle="modal" data-mdb-target="#exampleModalEdit">
-                                    <i class="fa fa-magic"></i>
-                                </button>
-                            </li>
-                                @endif
-
-                                @if(Auth::user()->facebook)
-                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>Facebook</h6>
-                                <span class="text-secondary"><a href="https://facebook.com/{{ Auth::user()->facebook }}">{{ Auth::user()->facebook }}</a></span>
-                                <button id="buttonEditLinks" type="button" class="btn-sm btn-info btn-floating" style="position: absolute;/* top: 2px; */right: -20px;" data-info="facebook" data-mdb-toggle="modal" data-mdb-target="#exampleModalEdit">
-                                    <i class="fa fa-magic"></i>
-                                </button>
-                            </li>
-                                @endif
                             <button type="button" class="btn btn-outline-info btn-rounded" style="position: absolute; top: -15px; left: -15px;" data-mdb-toggle="modal" data-mdb-target="#modalConfirmCreateLink">
                                 {{ __('Add new link') }}</button>
 
@@ -189,7 +155,7 @@
                                             <!--Body-->
                                             <div class="modal-body">
 
-                                                <i class="fa fa-times fa-4x animated rotateIn"></i>
+                                                <i class="fa fa-times fa-4x animated rotateIn text-danger"></i>
 
                                             </div>
 
@@ -325,14 +291,69 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-info" id="editButtonSelect" target="__blank" href="#" onclick="editButtonData()" type="button">Edit</button>
-                                    <button class="btn btn-primary" id="cancelButtonSelect" target="__blank" href="#" onclick="cancelButtonData()" style="display:none;" type="button">Cancel</button>
-                                    <button class="btn btn-success" id="saveButtonSelect" target="__blank" href="#" style="display:none;" type="submit">Save</button>
+                                    <button class="btn btn-info" id="editButtonSelect" target="__blank" href="#" onclick="editButtonData()" type="button">
+                                        {{ __('Edit') }}</button>
+                                    <button class="btn btn-warning" id="changePasswordButtonSelect" target="__blank" type="button" data-mdb-toggle="modal" data-mdb-target="#modalChangePasswordPost">
+                                        {{ __('Change Password') }}</button>
+                                    <button class="btn btn-primary" id="cancelButtonSelect" target="__blank" href="#" onclick="cancelButtonData()" style="display:none;" type="button">
+                                        {{ __('Cancel') }}</button>
+                                    <button class="btn btn-success" id="saveButtonSelect" target="__blank" href="#" style="display:none;" type="submit">
+                                        {{ __('Save') }}</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     </form>
+
+                    <!--MODAL: modal create links -->
+                    <div class="modal top fade" id="modalChangePasswordPost" tabindex="-1" aria-labelledby="modalChangePasswordPostLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="true">
+                        <div class="modal-dialog modal-dialog-centered modal-warning">
+                            <div class="modal-content">
+                                <form action="{{ route('myPasswordUpdate') }}" method="post" id="myPasswordUpdatePost">
+                                    @csrf
+                                    <div class="modal-header bg-warning">
+                                        <h5 class="modal-title">{{ __('Change password') }}</h5>
+                                        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="link-value" class="col-form-label">{{ __('Enter a your password.') }}:</label>
+                                            <div class="input-group flex-nowrap form-outline">
+                                                <span class="input-group-text" id="symbolCreateLink">OLD</span>
+                                                <input name="oldPassword" id="link-value" type="text" class="form-control" aria-label="editLinks" aria-describedby="addon-wrapping"/>
+                                                <label class="form-label" for="link-value" id="commentCreateLink">{{ __('Enter a your old password') }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="mb-1">
+                                                <label for="link-value" class="col-form-label">{{ __('Enter a your new password.') }}:</label>
+                                                <div class="input-group flex-nowrap form-outline">
+                                                    <span class="input-group-text" id="symbolCreateLink" style="min-width:65px;">NEW</span>
+                                                    <input name="newPassword" id="link-value" type="text" class="form-control" aria-label="editLinks" aria-describedby="addon-wrapping"/>
+                                                    <label class="form-label" for="link-value" id="commentCreateLink">{{ __('Enter a your new password') }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-1">
+                                                <div class="input-group flex-nowrap form-outline">
+                                                    <span class="input-group-text" id="symbolCreateLink" style="min-width:65px;">REP</span>
+                                                    <input name="repPassword" id="link-value" type="text" class="form-control" aria-label="editLinks" aria-describedby="addon-wrapping"/>
+                                                    <label class="form-label" for="link-value" id="commentCreateLink">{{ __('Repeat new password') }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                                            {{ __('Cancel') }}
+                                        </button>
+                                        <button type="submit" class="btn btn-warning">{{ __('Save') }}</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--MODAL: modal create links -->
+                <!--
                     <div class="card mb-3" id="editData">
                         <div class="card-body">
                         <table class="table table-striped" id="table1">
@@ -418,7 +439,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
 
 
@@ -439,6 +460,50 @@
             headers:{
                 'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        $(function (){
+            $('#myPasswordUpdatePost').on('submit', function(e){
+               e.preventDefault();
+
+               $.ajax({
+                   url:$(this).attr('action'),
+                   method:$(this).attr('method'),
+                   data:new FormData(this),
+                   processData: false,
+                   dataType:'json',
+                   contentType:false,
+                   success:
+                       function(data) {
+                       if (data.status == 0) {
+                           $.each(data.error, function (prefix, val) {
+                               Toastify({
+                                   text: val[0], // "This is a toast",
+                                   duration: 3000,
+                                   //destination: "https://github.com/apvarun/toastify-js",
+                                   newWindow: true,
+                                   close: true,
+                                   gravity: "top", // `top` or `bottom`
+                                   position: "right", // `left`, `center` or `right`
+                                   stopOnFocus: true, // Prevents dismissing of toast on hover
+                                   style: {
+                                       background: "linear-gradient(to right, #aac900, #ff0000)",
+                                   },
+                                   onClick: function(){} // Callback after click
+                               }).showToast();
+                           });
+                           } else {
+                               Swal.fire({
+                                   title: data.title,
+                                   text: data.msg,
+                                   type: data.type
+                               });.then(function(){
+                                   location.reload();
+                               });
+                           }
+                       }
+               });
+            });
         });
 
         $(function (){
@@ -687,6 +752,7 @@
                                document.getElementById('editButtonSelect').style.display = '';
                                document.getElementById('cancelButtonSelect').style.display = 'none';
                                document.getElementById('saveButtonSelect').style.display = 'none';
+                               document.getElementById('changePasswordButtonSelect').style.display = '';
                                formEdit = [];
                            }
                        }

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset('project/simple-datatables/style.css') }}">
     <link rel="stylesheet" href="{{ asset('mdb/css/mdb.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.37/dist/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
     <!-- Dropzone -->
 
@@ -55,6 +56,7 @@
     <script src="{{ url('/project/plugins/jquery-nice-select/js/jquery.nice-select.min.js') }}"></script>
     <script src="{{ url('/project/plugins/fancybox/jquery.fancybox.pack.js') }}"></script>
     <!-- sweet alert -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @include('sweetalert::alert')

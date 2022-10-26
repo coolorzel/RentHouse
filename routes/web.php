@@ -59,6 +59,7 @@ Route::group(['middleware' => 'first_install'], function() {
     Route::group(['prefix' => 'profile', 'middleware' => ['auth', 'verified']], function() {
         Route::get('/', [MyUserProfile::class, 'index'])->name('myProfile');
         Route::post('/update', [MyUserProfile::class, 'update'])->name('myProfileUpdate');
+        Route::post('/updatePassword', [MyUserProfile::class, 'update_password'])->name('myPasswordUpdate');
         Route::post('/avatarUpdate', [AvatarController::class, 'update'])->name('myAvatarUpdate');
         Route::delete('/avatarDelete', [AvatarController::class, 'delete'])->name('myAvatarDelete');
         Route::get('/editLinkInfo/{nameLink}', [LinkUserController::class, 'edit'])->name('myLinksEdit');
