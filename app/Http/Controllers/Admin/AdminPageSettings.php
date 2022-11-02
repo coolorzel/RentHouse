@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Descriptions\SettingsDescription;
 use App\Http\Controllers\Controller;
+use App\Models\Settings;
 use Illuminate\Http\Request;
 
 class AdminPageSettings extends Controller
@@ -10,11 +12,19 @@ class AdminPageSettings extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
-        return view('site.admin.adminsettings');
+        $forms = SettingsDescription::$DESCRIPTION['additional'];
+        $valueSettings = [];
+        $settings = Settings::all();
+        foreach($settings as $setting)
+        {
+            $valueSettings[$setting->name] = $setting->value;
+        }
+        //dd($valueSettings);
+        return view('site.admin.adminsettings', compact('valueSettings'));
     }
 
     /**
@@ -31,13 +41,21 @@ class AdminPageSettings extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
-        $title = $request->title;
-        dd($request);
-        return redirect()->route('adminSettings');
+        $data = $request->all();
+        foreach ($data as $key => $value)
+        {
+            if ($key == '_token'){}
+            else
+            {
+                if (!Settings::where('name', $key)->update(['value' => $value])) {
+                    return response()->json(['status'=>0,'title'=>'Error','msg'=>'ERROR Update','type'=>'error']);}
+            }
+        }
+        return response()->json(['status' => 1, 'title' => 'Success', 'msg' => 'Update completed', 'type' => 'success']);
     }
 
     /**
@@ -83,5 +101,25 @@ class AdminPageSettings extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function availableSite()
+    {
+        $tableName = 'page_available';
+        $setting = Settings::get()->where('name', $tableName)->first();
+        if ($setting->value == true)
+        {
+            $setting->value = false;
+            $button = __('Enable');
+            $status = __('Disabled');
+        }
+        else
+        {
+            $setting->value = true;
+            $button = __('Disable');
+            $status = __('Enabled');
+        }
+        $setting->update();
+        return response()->json(['Value'=>$setting->value,'Button'=>$button,'Status'=>$status]);
     }
 }

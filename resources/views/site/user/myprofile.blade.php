@@ -2,16 +2,19 @@
 
 @section('title', __('My profile'))
 
+@section('menu')
+
+    <!-- Breadcrumb -->
+    <div class="col-md-12 shadow p-2 mb-3 bg-body rounded d-flex">
+            <button type="button" class="btn btn-outline-secondary" onclick="javascript:history.back()"><i class="fa fa-arrow-left"></i></button>
+            <button class="btn btn-outline-secondary active">{{ __('My account') }}</button>
+    </div>
+    <span class="text-secondary" style="position: relative;top: -28px;left: 18px;">{{ __('Edit your profile.') }}</span>
+    <!-- /Breadcrumb -->
+
+@endsection
+
 @section('content')
-    <div class="container">
-        <div class="main-body">
-
-            <!-- Breadcrumb -->
-                <div class="col-md-12 shadow p-3 mb-5 bg-body rounded">
-                    <p class="h2 text-secondary align-self-center">{{ __('My profile') }}</p>
-                </div>
-            <!-- /Breadcrumb -->
-
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3 shadow p-3 mb-5 bg-body rounded">
                     <div class="card">
@@ -91,7 +94,7 @@
                     </div>
                     <div class="card mt-3">
                         <ul class="list-group list-group-flush">
-                            @if(count($issetLink) == 5 )
+                            @if(count($issetLink) == count($links))
                                 <span class="text-warning mb-1 text-center">{{ __('No links available. Add a new one!') }}</span>
                             @endif
                             @foreach ($links as $key=>$val)
@@ -149,7 +152,7 @@
                                         <div class="modal-content text-center">
                                             <!--Header-->
                                             <div class="modal-header d-flex justify-content-center">
-                                                <p class="heading">Are you sure?</p>
+                                                <p class="heading">{{ __('Are you sure?') }}</p>
                                             </div>
 
                                             <!--Body-->
@@ -446,11 +449,6 @@
                 </div>
             </div>
 
-        </div>
-    </div>
-
-
-
 @endsection
 
 @section('scripts')
@@ -497,7 +495,7 @@
                                    title: data.title,
                                    text: data.msg,
                                    type: data.type
-                               });.then(function(){
+                               }).then(function(){
                                    location.reload();
                                });
                            }

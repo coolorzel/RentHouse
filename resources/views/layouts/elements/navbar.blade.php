@@ -42,9 +42,6 @@
                                         @can('USER-my-account')
                                             <li><a class="dropdown-item" href="{{ route('myProfile') }}">{{ __('My account') }}</a></li>
                                         @endcan
-                                        @can('USER-offer-menagement')
-                                            <li><a class="dropdown-item" href="#">{{ __('Create Offers') }}</a></li>
-                                        @endcan
                                             <li><hr class="dropdown-divider"></li>
                                             @can('ACP-view')
                                                 <li><a class="dropdown-item" href="{{ route('adminDashboard') }}">{{ __('ACP') }}</a></li>

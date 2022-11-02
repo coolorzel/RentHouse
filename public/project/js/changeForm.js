@@ -24,6 +24,7 @@ function editButtonData() {
     document.getElementById('editButtonSelect').style.display = 'none';
     document.getElementById('cancelButtonSelect').style.display = '';
     document.getElementById('saveButtonSelect').style.display = '';
+    document.getElementById('changePasswordButtonSelect').style.display = 'none';
 }
 
 function cancelButtonData() {
@@ -40,6 +41,7 @@ function cancelButtonData() {
     document.getElementById('editButtonSelect').style.display = '';
     document.getElementById('cancelButtonSelect').style.display = 'none';
     document.getElementById('saveButtonSelect').style.display = 'none';
+    document.getElementById('changePasswordButtonSelect').style.display = '';
     formEdit = [];
 }
 

@@ -9,12 +9,47 @@
             </div>
             <div class="col-auto">
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="activityLog" checked="">
+                    <input name="user_email_verify" value="0" type="hidden">
+                    <input name="user_email_verify" type="checkbox" class="custom-control-input" value="1" id="userEmailVerify" @if($valueSettings['user_email_verify'] == true) checked @endif>
                     <span class="custom-control-label"></span>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="list-group-item">
+        <div class="row align-items-center">
+            <div class="col">
+                <strong class="mb-2">{{ __('Active registration of a new user') }}</strong>
+                <p class="text-muted mb-0">{{ __('Enabled, it allows new users to register on the site.') }}</p>
+            </div>
+            <div class="col-auto">
+                <div class="custom-control custom-switch">
+                    <input name="user_register_available" value="0" type="hidden">
+                    <input name="user_register_available" type="checkbox" class="custom-control-input" value="1" id="userRegisterAvailable" @if($valueSettings['user_register_available'] == true) checked @endif>
+                    <span class="custom-control-label"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-group-item">
+        <div class="row align-items-center">
+            <div class="col">
+                <strong class="mb-2">{{ __('Active login on the website') }}</strong>
+                <p class="text-muted mb-0">{{ __('Should the website login option be enabled?') }}</p>
+            </div>
+            <div class="col-auto">
+                <div class="custom-control custom-switch">
+                    <input name="user_login_available" value="0" type="hidden">
+                    <input name="user_login_available" type="checkbox" class="custom-control-input" value="1" id="userLoginAvailable" @if($valueSettings['user_login_available'] == true) checked @endif>
+                    <span class="custom-control-label"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--
     <div class="list-group-item">
         <div class="row align-items-center">
             <div class="row mb-2 align-items-center">
@@ -32,5 +67,6 @@
             </div>
         </div>
     </div>
+-->
 </div>
 

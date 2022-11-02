@@ -33,10 +33,7 @@ class UserProfileValidationRequest extends FormRequest
 
         $user = User::find(Auth::user()->id)->first();
         $rules = [
-            'name' => ['required', 'string', 'max:255'],
-            'lname' => ['required', 'string', 'max:255'],
-            'username' => ['required','unique:users,username,'.$user->id],
-            'province' => ['required'],
+            'province' => [''],
             'city' => [''],
             'zipcode' => [''],
             'street' => [''],
@@ -44,6 +41,21 @@ class UserProfileValidationRequest extends FormRequest
             'country' => [''],
             'phone' => [''],
         ];
+
+        if (isset($_POST['name']))
+        {
+            $rules['name'] = ['required', 'string', 'max:255'];
+        }
+
+        if (isset($_POST['lname']))
+        {
+            $rules['lname'] = ['required', 'string', 'max:255'];
+        }
+
+        if (isset($_POST['username']))
+        {
+            $rules['lname'] = ['required','unique:users,username,'.$user->id];
+        }
 
         if (isset($_POST['password']))
         {

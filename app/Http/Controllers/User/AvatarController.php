@@ -20,11 +20,14 @@ class AvatarController extends Controller
      */
 
 
-    public function update(Request $request)
+    public function update(Request $request, User $user)
     {
         //return $request;
         if($request->hasFile('file')) {
-            $user = User::find(Auth::id());
+            if (!request()->route()->named('updateUserAvatar'))
+            {
+                $user = User::find(Auth::id());
+            }
             $file = $request->file('file');
             $ext = $file->getClientOriginalExtension();
             $fileName = time().'.'.$ext;
@@ -51,11 +54,14 @@ class AvatarController extends Controller
         }
     }
 
-    public function delete (Request $request)
+    public function delete (Request $request, User $user)
     {
         if ($request->delete == true)
         {
-            $user = User::find(Auth::id());
+            if (!request()->route()->named('deleteUserAvatar'))
+            {
+                $user = User::find(Auth::id());
+            }
             $path = 'assets/uploads/users/'.$user->id.'/avatar/';
             $oldAvatar = $user->avatar;
             if(File::exists($path.$oldAvatar))

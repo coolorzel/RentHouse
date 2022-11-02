@@ -11,10 +11,20 @@ use Illuminate\Support\Facades\Route;
 
 class LinkUserController extends Controller
 {
-    public function edit ($nameLink)
+    public function edit (User $user, $nameLink)
     {
         $links = UserLinksDescriptions::$LINKS['links'];
-        $user = User::find(Auth::id())->first();
+        if (!request()->route()->named('userLinkEdit'))
+        {
+            $user = User::find(Auth::id())->first();
+            $link = route('myLinksUpdate').'/'.$nameLink;
+            $delete = route('myLinksDelete').'/'.$nameLink;
+        }
+        else
+        {
+            $link = route('userLinkUpdate',['user' => $user->id, 'nameLink' => $nameLink]);
+            $delete = route('userLinkDelete',['user' => $user->id, 'nameLink' => $nameLink]);
+        }
 
         if (isset($links[$nameLink]))
         {
@@ -23,8 +33,6 @@ class LinkUserController extends Controller
                 $symbol = $links[$nameLink]['symbol'];
                 $nameModal = $links[$nameLink]['nameModal'];
                 $commentInput = $links[$nameLink]['commentInput'];
-                $link = route('myLinksUpdate').'/'.$nameLink;
-                $delete = route('myLinksDelete').'/'.$nameLink;
                 return response()->json(['Link' => $link,
                     'Delete' => $delete,
                     'Value' => $user[$nameLink],
@@ -44,11 +52,14 @@ class LinkUserController extends Controller
         }
     }
 
-    public function create (Request $request)
+    public function create (User $user, Request $request)
     {
         $req = $request->data;
         $links = UserLinksDescriptions::$LINKS['links'];
-        $user = User::find(Auth::id())->first();
+        if (!request()->route()->named('userLinksInfo'))
+        {
+            $user = User::find(Auth::id())->first();
+        }
         if (isset($links[$req]))
         {
             if(empty($user[$req]))
@@ -81,13 +92,16 @@ class LinkUserController extends Controller
             'Data' => $nameLink]);*/
     }
 
-    public function store (Request $request)
+    public function store (User $user, Request $request)
     {
         $links = UserLinksDescriptions::$LINKS['links'];
         $type = $request->nameLink;
         if (isset($links[$request->nameLink]))
         {
-            $user = User::find(Auth::id())->first();
+            if (!request()->route()->named('userLinkCreate'))
+            {
+                $user = User::find(Auth::id())->first();
+            }
             $user->$type = $request->valueLink; // $user->website = 'KUPA';
             $user->update();
             if(!$user)
@@ -103,12 +117,15 @@ class LinkUserController extends Controller
         }
     }
 
-    public function update (Request $request, $nameLink)
+    public function update (Request $request, User $user, $nameLink)
     {
         $links = UserLinksDescriptions::$LINKS['links'];
         if (isset($links[$nameLink]))
         {
-            $user = User::find(Auth::id())->first();
+            if (!request()->route()->named('userLinkUpdate'))
+            {
+                $user = User::find(Auth::id())->first();
+            }
             $user->$nameLink = $request->valueLink;
             $user->update();
             if(!$user)
@@ -125,12 +142,15 @@ class LinkUserController extends Controller
         }
     }
 
-    public function delete ($nameLink)
+    public function delete (User $user, $nameLink)
     {
         $links = UserLinksDescriptions::$LINKS['links'];
         if (isset($links[$nameLink]))
         {
-            $user = User::find(Auth::id())->first();
+            if (!request()->route()->named('userLinkDelete'))
+            {
+                $user = User::find(Auth::id())->first();
+            }
             $user->$nameLink = '';
             $user->update();
             if(!$user)

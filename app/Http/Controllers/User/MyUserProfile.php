@@ -65,7 +65,8 @@ class MyUserProfile extends Controller
      */
     public function show($id)
     {
-        //
+
+        //dd(request()->route()->named('viewUserProfile')) ;
     }
 
     /**
