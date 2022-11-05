@@ -90,12 +90,12 @@ class AdminContactController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Contact  $contact
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Contact  $message
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(Contact $contact)
+    public function messageShow(Contact $message)
     {
-        //
+        return view('site.admin.messages.show-message', compact('message'));
     }
 
     /**

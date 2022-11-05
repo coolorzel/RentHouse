@@ -8,7 +8,7 @@
     <div class="col-md-12 shadow p-2 mb-3 bg-body rounded d-flex">
         <button type="button" class="btn btn-outline-secondary" onclick="javascript:history.back()"><i class="fa fa-arrow-left"></i></button>
         <button class="btn btn-outline-secondary">{{ __('ACP') }}</button>
-        <button class="btn btn-outline-secondary active">{{ __('Message contacts') }}</button>
+        <button class="btn btn-outline-secondary active">{{ __('Message list') }}</button>
     </div>
     <span class="text-secondary" style="position: relative;top: -28px;left: 18px;">{{ __('List of all message contacts. ') }}</span>
     <!-- /Breadcrumb -->
@@ -70,10 +70,16 @@
                                 <td>
                                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                         @if(Auth::user()->can('ACP-contact-message-read'))
-                                            <button href="#" type="button" class="btn btn-sm btn-outline-info" data-info="{{ $message->id }}" data-route="{{ route('adminContactTitleShow', $message->id) }}" data-mdb-toggle="modal" data-mdb-target="#modalEditMethod">
-                                                {{ __('Read On') }}</button>
+                                            <a href="{{ route('adminContactMessageView', $message->id) }}" type="button" class="btn btn-outline-info btn-sm">
+                                                {{ __('Read') }}</a>
                                         @else
-                                            <button href="#" type="button" class="btn btn-sm btn-outline-info" disabled>{{ __('Read On') }}</button>
+                                            <button href="#" type="button" class="btn btn-outline-info btn-sm" disabled>{{ __('Read') }}</button>
+                                        @endif
+                                        @if(Auth::user()->can('ACP-contact-message-history'))
+                                            <button href="#" type="button" class="btn btn-outline-warning btn-sm" data-info="{{ $message->id }}" data-route="{{ route('adminContactTitleShow', $message->id) }}" data-mdb-toggle="modal" data-mdb-target="#modalHistoryView">
+                                                <i class="fa fa-history"></i></button>
+                                        @else
+                                            <button href="#" type="button" class="btn btn-outline-warning btn-sm" disabled><i class="fa fa-history"></i></button>
                                         @endif
                                     </div>
                                 </td>

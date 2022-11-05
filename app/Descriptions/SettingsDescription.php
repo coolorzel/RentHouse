@@ -232,6 +232,7 @@ class SettingsDescription {
         'ACP-contact-view',
         'ACP-contact-title-view',
         'ACP-contact-message-view',
+        'ACP-contact-message-read',
 
 
         // PERMISSION FOR BLADE AND CONTROLLER //
@@ -256,6 +257,7 @@ class SettingsDescription {
         'ACP-contact-title-edit',
         'ACP-contact-title-delete',
         'ACP-contact-message-read',
+        'ACP-contact-message-history',
 
         // PERMISSION FOR MIDDLEWARE //
         'ACP-visit-page-off',

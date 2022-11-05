@@ -65,7 +65,7 @@
                         <li><a href="{{ route('adminContactTitle') }}" class="btn btn-link link-dark rounded {{ Request::is('acp/contact/title') ? 'active' : '' }}">{{ __('Title') }}</a></li>
                         <li><a href="{{ route('adminContactMessage') }}" class="btn btn-link link-dark rounded position-relative {{ (Request::is('acp/contact/message') || Request::is('acp/contact/message/*')) ? 'active' : '' }}">{{ __('Messages') }}
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {{ count(\App\Models\Contact::all()) }}
+                                    {{ count(\App\Models\Contact::where('displayed', false)->get()) }}
                                     <span class="visually-hidden">unread messages</span>
                                 </span>
                             </a>

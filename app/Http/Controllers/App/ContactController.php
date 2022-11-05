@@ -40,6 +40,14 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
+        $message = Contact::where(['u_id' => Auth::id()])->orderBy('id', 'desc')->first();
+        $ts = strtotime($message->created_at);
+        $today = date('Y-m-d H:i:s');
+        $timeMessage = date('Y-m-d H:i:s', strtotime('+20 second', $ts));
+        if($timeMessage >= $today){
+            $nextMessageToTime = strtotime($timeMessage) - strtotime($today);
+            return response()->json(['title'=>__('Error time send'),'msg' => __('You must wait to next send message').'</br>'.__('Next message:').' '.date('s', $nextMessageToTime).'second', 'type' => 'error']);
+        }
         $request->validate([
             'name' => 'required',
             'lname' => 'required',
