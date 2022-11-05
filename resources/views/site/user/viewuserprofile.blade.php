@@ -92,7 +92,24 @@
                         @endcan
                         <div class="mt-3">
                             <h4>{{ $user->name }} {{ $user->lname }}</h4>
-                            <p class="text-secondary mb-1">{{ strtoupper($user->roles->first()->name) }}</p>
+                            <form id="roles" action="{{ route('changeRoleUser', $user->id) }}" method="POST">
+                                @csrf
+                                    @can('ACP-user-role-change')
+                                    <select class="form-control-plaintext form-control text-secondary text-center" id="inputRolesSelect" name="role" readonly disabled>
+                                        @foreach($roles as $role)
+                                            <option value="{{ $role->id }}"
+                                                {{ in_array($role->name, $userRole)
+                                                    ? 'selected'
+                                                    : '' }}>{{ strtoupper($role->name) }}</option>
+                                        @endforeach
+                                    </select>
+                                    <button id="changeRoles" type="button" class="btn-sm btn-info btn-floating" style="position: absolute;/* top: 2px; */right: -20px;" data-set="0" data-info="roles">
+                                        <i class="fa fa-magic"></i>
+                                    </button>
+                                    @else
+                                    <p class="text-secondary mb-1">{{ strtoupper($user->roles->first()->name) }}</p>
+                                   @endcan
+                            </form>
                             <p class="text-muted font-size-sm">{{ $user->province }} {{ $user->city }} {{ $user->street }} {{ $user->number }}</p>
                         </div>
                     </div>
@@ -270,7 +287,7 @@
                                 <h6 class="mb-0">{{ __('Email') }}</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="email" readonly class="form-control-plaintext form-control-sm text-secondary" id="editData email" name="email" value="{{ $user->email }}" placeholder="login@domain.com" disabled>
+                                <input type="email" readonly class="form-control-plaintext form-control-sm text-secondary" id="editData email" name="email" value="{{ $user->email }}" placeholder="login@domain.com">
                                 @can('ACP-user-edit-email')
                                 <button id="buttonEditProfile" data-info="email" data-set="0" type="button" class="btn btn-info btn-rounded" style="position: absolute;right: -6%;">
                                     {{ __('Edit') }}
@@ -343,6 +360,20 @@
                             </div>
                         </div>
                         </form>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                @if (!isset($user->email_verified_at))
+                                    @can('ACP-user-edit-address')
+                                        <form method="post" enctype="multipart/form-data" action="{{ route('activateUserAccount',$user->id) }}" id="address">
+                                            @csrf
+                                            @method('POST')
+                                    <button class="btn btn-warning" id="verificationAccount" target="__blank" type="submit">
+                                        {{ __('Verification account') }}</button>
+                                        </form>
+                                    @endcan
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
             <!--MODAL: modal create links -->
@@ -452,6 +483,72 @@
 
         $(function (){
             $(document).ready(function() {
+                $('#changeRoles').click(function(){
+                    if($(this).data('set') == 0){
+                        $(this).removeClass('btn-info');
+                        $(this).addClass('btn-success');
+                        $(this).find('i').removeClass('fa-magic');
+                        $(this).find('i').addClass('fa-check');
+                        $(this).data('set', '1');
+                        $(this).attr('type', 'button');
+                        $('#inputRolesSelect').removeClass('form-control-plaintext').removeClass('text-secondary').addClass('text-black');
+                        document.getElementById('inputRolesSelect').readOnly = false;
+                        document.getElementById('inputRolesSelect').disabled = false;
+                    }else{
+                        $(this).attr('type', 'submit');
+                        $('#'+$(this).data('info')).on('submit', function(e) {
+                            e.preventDefault();
+
+                            $.ajax({
+                                url: $(this).attr('action'),
+                                method: $(this).attr('method'),
+                                data: new FormData(this),
+                                processData: false,
+                                dataType: 'json',
+                                contentType: false,
+                                success:
+                                    function (data) {
+                                        if (data.status == 0) {
+                                            $.each(data.error, function (prefix, val) {
+                                                Toastify({
+                                                    text: val[0], // "This is a toast",
+                                                    duration: 3000,
+                                                    //destination: "https://github.com/apvarun/toastify-js",
+                                                    newWindow: true,
+                                                    close: true,
+                                                    gravity: "top", // `top` or `bottom`
+                                                    position: "right", // `left`, `center` or `right`
+                                                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                                                    style: {
+                                                        background: "linear-gradient(to right, #aac900, #ff0000)",
+                                                    },
+                                                    onClick: function () {
+                                                    } // Callback after click
+                                                }).showToast();
+                                            });
+                                        } else {
+                                            Swal.fire({
+                                                title: data.title,
+                                                text: data.msg,
+                                                type: data.type
+                                            }).then(function () {
+                                                location.reload();
+                                            });
+                                        }
+                                        document.getElementById('inputRolesSelect').readOnly = true;
+                                        document.getElementById('inputRolesSelect').disabled = true;
+                                }
+                            });
+                        });
+                        $(this).addClass('btn-info');
+                        $(this).removeClass('btn-success');
+                        $(this).find('i').removeClass('fa-check');
+                        $(this).find('i').addClass('fa-magic');
+                        $('#inputRolesSelect').addClass('form-control-plaintext').removeClass('text-black').addClass('text-secondary');
+                        $(this).data('set', '0');
+                    }
+                });
+
                 $('#editData button').click(function(){
                     var formEdit = [];
                     var btn = $(this).data('info');
@@ -518,9 +615,9 @@
                                                 title: data.title,
                                                 text: data.msg,
                                                 type: data.type
-                                            });/*.then(function () {
+                                            }).then(function () {
                                                 location.reload();
-                                            });*/
+                                            });
                                         }
                                     }
                             });

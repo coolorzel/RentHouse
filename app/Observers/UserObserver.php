@@ -20,6 +20,7 @@ class UserObserver
         }
         else
         {
+            toast(__('Owner permissions have been added to the account.'),'success');
             $user->assignRole('Owner');
         }
     }

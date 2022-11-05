@@ -323,7 +323,7 @@
                                             <label for="link-value" class="col-form-label">{{ __('Enter a your password.') }}:</label>
                                             <div class="input-group flex-nowrap form-outline">
                                                 <span class="input-group-text" id="symbolCreateLink">OLD</span>
-                                                <input name="oldPassword" id="link-value" type="text" class="form-control" aria-label="editLinks" aria-describedby="addon-wrapping"/>
+                                                <input name="oldPassword" id="link-value" type="password" class="form-control" aria-label="editLinks" aria-describedby="addon-wrapping"/>
                                                 <label class="form-label" for="link-value" id="commentCreateLink">{{ __('Enter a your old password') }}</label>
                                             </div>
                                         </div>
@@ -332,14 +332,14 @@
                                                 <label for="link-value" class="col-form-label">{{ __('Enter a your new password.') }}:</label>
                                                 <div class="input-group flex-nowrap form-outline">
                                                     <span class="input-group-text" id="symbolCreateLink" style="min-width:65px;">NEW</span>
-                                                    <input name="newPassword" id="link-value" type="text" class="form-control" aria-label="editLinks" aria-describedby="addon-wrapping"/>
+                                                    <input name="newPassword" id="link-value" type="password" class="form-control" aria-label="editLinks" aria-describedby="addon-wrapping"/>
                                                     <label class="form-label" for="link-value" id="commentCreateLink">{{ __('Enter a your new password') }}</label>
                                                 </div>
                                             </div>
                                             <div class="mb-1">
                                                 <div class="input-group flex-nowrap form-outline">
                                                     <span class="input-group-text" id="symbolCreateLink" style="min-width:65px;">REP</span>
-                                                    <input name="repPassword" id="link-value" type="text" class="form-control" aria-label="editLinks" aria-describedby="addon-wrapping"/>
+                                                    <input name="repPassword" id="link-value" type="password" class="form-control" aria-label="editLinks" aria-describedby="addon-wrapping"/>
                                                     <label class="form-label" for="link-value" id="commentCreateLink">{{ __('Repeat new password') }}</label>
                                                 </div>
                                             </div>

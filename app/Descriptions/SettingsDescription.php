@@ -228,8 +228,13 @@ class SettingsDescription {
         'ACP-update-settings-site',
         'ACP-roles-view',
         'ACP-permissions-view',
+        'ACP-user-activate-account',
+        'ACP-contact-view',
+        'ACP-contact-title-view',
+        'ACP-contact-message-view',
 
-        // PERMISSION FOR BLADE //
+
+        // PERMISSION FOR BLADE AND CONTROLLER //
         'ACP-user-edit',
         'ACP-user-edit-name-lname',
         'ACP-user-edit-email',
@@ -243,7 +248,17 @@ class SettingsDescription {
         'ACP-role-delete',
         'ACP-permission-create',
         'ACP-permission-edit',
-        'ACP-permission-delete'
+        'ACP-permission-delete',
+        'ACP-user-password-reset',
+        'ACP-user-role-change',
+        'ACP-contact-title-create',
+        'ACP-contact-title-show',
+        'ACP-contact-title-edit',
+        'ACP-contact-title-delete',
+        'ACP-contact-message-read',
 
+        // PERMISSION FOR MIDDLEWARE //
+        'ACP-visit-page-off',
+        'ACP-login-despite-disabled-login',
         ];
 }

@@ -67,7 +67,7 @@
                                 @endif
                             </div>
                         </div>
-                        <p class="w-100 text-center">— Or Sign In With —</p>
+                        <p class="w-100 text-center">{{ __('— Or Sign In With —') }}</p>
                         <div class="col d-flex text-center">
                             <a href="#" class="btn btn-outline-success my-2 my-sm-0 d-flex align-items-center"><span class="fa fa-facebook-square mr-1"></span> Facebook</a>
                             <a href="#" class="btn btn-outline-success my-2 my-sm-0 d-flex align-items-center"><span class="fa fa-twitter-square mr-1"></span> Twitter</a>
@@ -80,7 +80,12 @@
             <div class="shadow p-3 mb-5 bg-body rounded">
                 <div class="card-body">
                     <p class=" h4 text-secondary align-self-center text-center">{{ __('Do you don\'t have account?') }}</p>
-                    <a href="{{ route('register') }}" class="btn btn-success col-md-12 my-1" type="submit">{{ __('Register new account') }}</a>
+                    @if(config('global.user_register_available', '1'))
+                        <a href="{{ route('register') }}" class="btn btn-success col-md-12 my-1" type="submit">{{ __('Register new account') }}</a>
+                    @else
+                        <button href="#" class="btn btn-success col-md-12 my-1" disabled>{{ __('Register new account') }}</button>
+                        <p>{{ __('Register new user is off.') }}</p>
+                    @endif
                 </div>
             </div>
         </div>

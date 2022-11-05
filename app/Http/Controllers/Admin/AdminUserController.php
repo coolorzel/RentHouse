@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminUserController extends Controller
 {
@@ -36,5 +37,24 @@ class AdminUserController extends Controller
         {
             return 'ISTNIEJE JUŻ';
         }
+    }
+
+    public function activateAccount(User $user)
+    {
+        if(Auth::user()->can('ACP-user-activate-account')){
+            $user->email_verified_at = date("Y-m-d h:i:sa");
+            $user->save();
+            toast(__('The user\'s email has been activated.'),'success');
+            return back();
+        }
+        toast(__('You don\'t permissions.'),'error');
+        return back();
+    }
+
+    public function changeRoleUser(User $user, Request $request)
+    {
+        $user->syncRoles($request->get('role'));
+        return response()->json(['status'=>1,'title'=>'Success','msg'=>__('User role updated completed'),'type'=>'success']);
+
     }
 }
