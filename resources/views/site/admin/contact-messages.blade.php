@@ -68,15 +68,15 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example" id="operations">
                                         @if(Auth::user()->can('ACP-contact-message-read'))
-                                            <a href="{{ route('adminContactMessageView', $message->id) }}" type="button" class="btn btn-outline-info btn-sm">
-                                                {{ __('Read') }}</a>
+                                            <button data-route="{{ route('contactMessageOperations', $message->id) }}" data-info="read" type="button" id="readMessage" value="{{ $message->id }}" class="btn btn-outline-info btn-sm">
+                                                {{ __('Read') }}</button>
                                         @else
                                             <button href="#" type="button" class="btn btn-outline-info btn-sm" disabled>{{ __('Read') }}</button>
                                         @endif
                                         @if(Auth::user()->can('ACP-contact-message-history'))
-                                            <button href="#" type="button" class="btn btn-outline-warning btn-sm" data-info="{{ $message->id }}" data-route="{{ route('adminContactTitleShow', $message->id) }}" data-mdb-toggle="modal" data-mdb-target="#modalHistoryView">
+                                            <button href="#" type="button" class="btn btn-outline-warning btn-sm" data-info="history" data-route="{{ route('contactMessageOperations', $message->id) }}" data-mdb-toggle="modal" data-mdb-target="#modalHistoryView">
                                                 <i class="fa fa-history"></i></button>
                                         @else
                                             <button href="#" type="button" class="btn btn-outline-warning btn-sm" disabled><i class="fa fa-history"></i></button>
@@ -92,6 +92,42 @@
             </div>
         </div>
     </div>
+
+    <!--MODAL: modal create links -->
+    <div class="modal top fade" id="modalHistoryView" tabindex="-1" aria-labelledby="modalHistoryViewLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="true">
+        <div class="modal-dialog modal-dialog-centered modal-warning">
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalEditLabel">{{ __('Create new link') }}</h5>
+                        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="type-link" class="col-form-label">{{ __('Select type link') }}:</label>
+                            <select id="type-link" name="nameLink" class="form-select" aria-label="Default select example">
+                                <option selected>{{ __('Open this select menu') }}</option>
+
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="link-value" class="col-form-label">{{ __('Enter a your name or address') }}:</label>
+                            <div class="input-group flex-nowrap form-outline">
+                                <span class="input-group-text" id="symbolCreateLink">****</span>
+                                <input name="valueLink" id="link-value" type="text" class="form-control" readonly aria-label="editLinks" aria-describedby="addon-wrapping" value="" disabled />
+                                <label class="form-label" for="link-value" id="commentCreateLink">{{ __('**************') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                            {{ __('Close') }}
+                        </button>
+                        <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <!--MODAL: modal create links -->
 @endsection
 
 @section('scripts')
@@ -103,6 +139,31 @@
     <script>
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+
+    <script>
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $("#operations button").click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: $(this).data('route'),
+                data: {
+                    id: $(this).val(),
+                    operation: $(this).data('info'),
+                },
+                success: function(result) {
+                    window.location.assign(result.route);
+                },
+                error: function(result) {
+                    alert('error');
+                }
+            });
         });
     </script>
 @endsection

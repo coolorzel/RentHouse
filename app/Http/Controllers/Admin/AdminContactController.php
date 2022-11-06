@@ -98,6 +98,40 @@ class AdminContactController extends Controller
         return view('site.admin.messages.show-message', compact('message'));
     }
 
+    public function operations (Contact $message, Request $request)
+    {
+        if($request->operation == 'read'){
+            if($message->displayed == false)
+                $this->statusReadUnRead($message);
+                $route = route('adminContactMessageView', $message->id);
+                return response()->json(['route' => $route]);
+        }
+        if($request->operation == 'history')
+            return ('HISTORY');
+    }
+
+    public function statusReadUnRead (Contact $message)
+    {
+        if ($message->displayed == true) {
+            $message->displayed = false;
+            $responseValue = __('Has not been read');
+        }
+        else
+        {
+            $message->displayed = true;
+            $responseValue = __('Has been read');
+        }
+        if ($message->save())
+            return response()->json(['status' => 1, 'title' => 'Success', 'msg' => 'Read status changed success', 'type' => 'success', 'description' => $responseValue]);
+        else
+            return response()->json(['status'=>0,'title'=>'Error','msg'=>'ERROR change status displayed','type'=>'error']);
+    }
+
+    public function statusClose (Contact $message)
+    {
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

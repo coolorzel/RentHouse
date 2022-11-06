@@ -94,6 +94,11 @@ Route::group(['middleware' => 'first_install'], function() {
                 Route::group(['prefix' => 'message', 'middleware' => ['permission:ACP-contact-message-view']], function() {
                     Route::get('/', [AdminContactController::class, 'messageIndex'])->name('adminContactMessage');
                     Route::get('/show/{message}', [AdminContactController::class, 'messageShow'])->middleware('permission:ACP-contact-message-read')->name('adminContactMessageView');
+                    Route::group(['prefix' => 'status'], function(){
+                        Route::post('/operations/{message}', [AdminContactController::class, 'operations'])->name('contactMessageOperations');
+                        Route::post('/readUnRead/{message}', [AdminContactController::class, 'statusReadUnRead'])->middleware('permission:ACP-contact-message-change-status-read-un-read')->name('adminContactMessageReadUnRead');
+                        Route::post('/close/{message}', [AdminContactController::class, 'statusClose'])->middleware('permission:ACP-contact-message-change-status-close')->name('adminContactMessageClose');
+                    });
                 });
             });
         });
