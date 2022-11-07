@@ -39,6 +39,20 @@ Route::group(['prefix' => 'firstInstall'], function() {
     Route::post('/', [FirstInstall::class, 'store'])->name('firstInstallStore');
 });
 Route::get('/siteIsOff', [siteIsOff::class, 'index'])->name('siteIsOff');
+Route::get('/test', function(){
+    $message = \App\Models\Contact::find(2)->first();
+    $test = [];
+    foreach($message->history as $key => $val)
+    {
+        $history[$key] = [
+                'information' => $val->information,
+                'message' => $val->message,
+                'user' => $val->viewer_u_id,
+                'created_at' => $val->created_at
+        ];
+    }
+    dd($history);
+});
 
 Route::group(['middleware' => 'first_install'], function() {
 
@@ -82,6 +96,9 @@ Route::group(['middleware' => 'first_install'], function() {
                 Route::post('/show/{permission}', [PermissionsController::class, 'show'])->middleware('permission:ACP-permission-edit')->name('adminPermissionShow');
                 Route::post('/edit/{permission}', [PermissionsController::class, 'update'])->middleware('permission:ACP-permission-edit')->name('adminPermissionEdit');
                 Route::delete('/destroy/{permission}', [PermissionsController::class, 'destroy'])->middleware('permission:ACP-permission-delete')->name('adminPermissionDelete');
+            });
+            Route::group(['prefix' => 'conclusions', 'middleware' => ['permission:MOD-conclusions-view']], function() {
+                Route::get('/', [ConclusionsController::class, 'index'])->name('adminUserConclusions');
             });
             Route::group(['prefix' => 'contact', 'middleware' => ['permission:ACP-contact-view']], function() {
                 Route::group(['prefix' => 'title', 'middleware' => ['permission:ACP-contact-title-view']], function() {

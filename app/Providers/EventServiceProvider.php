@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Contact;
+use App\Models\Contact_Control;
 use App\Models\User;
+use App\Observers\ContactObserver;
 use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -29,7 +32,9 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        parent::boot();
         User::observe(UserObserver::class);
+        Contact::observe(ContactObserver::class);
     }
 
     /**

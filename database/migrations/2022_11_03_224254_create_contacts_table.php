@@ -38,7 +38,7 @@ return new class extends Migration
             $table->string('information');
             $table->string('message')->nullable();
             $table->bigInteger('message_id');
-            $table->bigInteger('viewer_u_id');
+            $table->bigInteger('viewer_u_id')->nullable();
             $table->timestamps();
         });
     }

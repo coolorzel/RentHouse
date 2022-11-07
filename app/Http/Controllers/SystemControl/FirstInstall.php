@@ -105,6 +105,10 @@ class FirstInstall extends Controller
                     {
                         $permissionslist2 = preg_grep('/(^user|^acp)/i', $permissionslist);
                     }
+                    if ($role_name == 'moderator')
+                    {
+                        $permissionslist2 = preg_grep('/(^mod|^user)/i', $permissionslist);
+                    }
                     if ($role_name == 'user')
                     {
                         $permissionslist2 = preg_grep('/(^user)/i', $permissionslist);

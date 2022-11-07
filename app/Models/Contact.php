@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\ContactObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,5 +26,9 @@ class Contact extends Model
     public function title()
     {
         return $this->hasOne(Contact_Title::class, 'id', 'title_id');
+    }
+    public function history()
+    {
+        return $this->hasMany(Contact_Control::class, 'message_id', 'id');
     }
 }

@@ -235,6 +235,7 @@ class SettingsDescription {
         'ACP-contact-message-read',
         'ACP-contact-message-change-status-read-un-read',
         'ACP-contact-message-change-status-close',
+        'MOD-conclusions-view',
 
 
         // PERMISSION FOR BLADE AND CONTROLLER //

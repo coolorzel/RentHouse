@@ -48,25 +48,32 @@
                 <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
                     {{ __('Account') }}
                 </button>
-                <div class="collapse {{ (Request::is('acp/users') || Request::is('acp/users/*') || Request::is('acp/roles') || Request::is('acp/roles/*') || Request::is('acp/permissions') || Request::is('acp/permissions/*')) ? 'show' : '' }}" id="account-collapse">
+                <div class="collapse {{ (Request::is('acp/users') || Request::is('acp/users/*') || Request::is('acp/roles') || Request::is('acp/roles/*') || Request::is('acp/permissions') || Request::is('acp/permissions/*') || Request::is('acp/conclusions') || Request::is('acp/conclusions/*')) ? 'show' : '' }}" id="account-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                         <li><a href="{{ route('adminUserProfile') }}" class="btn btn-link link-dark rounded {{ Request::is('acp/users') ? 'active' : '' }}">{{ __('Users') }}</a></li>
                         <li><a href="{{ route('adminUserRoles') }}" class="btn btn-link link-dark rounded {{ (Request::is('acp/roles') || Request::is('acp/roles/*')) ? 'active' : '' }}">{{ __('Roles') }}</a></li>
                         <li><a href="{{ route('adminUserPermissions') }}" class="btn btn-link link-dark rounded {{ (Request::is('acp/permissions') || Request::is('acp/permissions/*')) ? 'active' : '' }}">{{ __('Permissions') }}</a></li>
+                        <li><a href="{{ route('adminUserConclusions') }}" class="btn btn-link link-dark rounded {{ (Request::is('acp/conclusions') || Request::is('acp/conclusions/*')) ? 'active' : '' }}">{{ __('Conclusions') }}</a></li>
                     </ul>
                 </div>
             </li>
             <li class="mb-1">
-                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#contact-collapse" aria-expanded="false">
+                <button class="btn btn-toggle align-items-center rounded collapsed position-relative" data-bs-toggle="collapse" data-bs-target="#contact-collapse" aria-expanded="false">
                     {{ __('Contact') }}
+                    @if(count(\App\Models\Contact::where('displayed', false)->get()) > 0)
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                                    {{ __('New message') }}
+                                    <span class="visually-hidden">{{ __('unread messages') }}</span>
+                                </span>
+                    @endif
                 </button>
                 <div class="collapse {{ (Request::is('acp/contact') || Request::is('acp/contact/*')) ? 'show' : '' }}" id="contact-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                         <li><a href="{{ route('adminContactTitle') }}" class="btn btn-link link-dark rounded {{ Request::is('acp/contact/title') ? 'active' : '' }}">{{ __('Title') }}</a></li>
                         <li><a href="{{ route('adminContactMessage') }}" class="btn btn-link link-dark rounded position-relative {{ (Request::is('acp/contact/message') || Request::is('acp/contact/message/*')) ? 'active' : '' }}">{{ __('Messages') }}
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
                                     {{ count(\App\Models\Contact::where('displayed', false)->get()) }}
-                                    <span class="visually-hidden">unread messages</span>
+                                    <span class="visually-hidden">{{ __('unread messages') }}</span>
                                 </span>
                             </a>
                         </li>

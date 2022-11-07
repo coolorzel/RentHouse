@@ -40,13 +40,14 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        $message = Contact::where(['u_id' => Auth::id()])->orderBy('id', 'desc')->first();
-        $ts = strtotime($message->created_at);
-        $today = date('Y-m-d H:i:s');
-        $timeMessage = date('Y-m-d H:i:s', strtotime('+20 second', $ts));
-        if($timeMessage >= $today){
-            $nextMessageToTime = strtotime($timeMessage) - strtotime($today);
-            return response()->json(['title'=>__('Error time send'),'msg' => __('You must wait to next send message').'</br>'.__('Next message:').' '.date('s', $nextMessageToTime).'second', 'type' => 'error']);
+        if ($message = Contact::where(['u_id' => Auth::id()])->orderBy('id', 'desc')->first()){
+            $ts = strtotime($message->created_at);
+            $today = date('Y-m-d H:i:s');
+            $timeMessage = date('Y-m-d H:i:s', strtotime('+20 second', $ts));
+            if ($timeMessage >= $today) {
+                $nextMessageToTime = strtotime($timeMessage) - strtotime($today);
+                return response()->json(['status' => 0, 'title' => __('Error time send'), 'msg' => __('You must wait to next send message') . ' :: ' . __('Next message:') . ' ' . date('s', $nextMessageToTime) . 'second', 'type' => 'error']);
+            }
         }
         $request->validate([
             'name' => 'required',
@@ -72,7 +73,7 @@ class ContactController extends Controller
                 'title_id' => $request->title
             ]);
         }
-        return response()->json(['title'=>__('Success'),'msg' => __('Message was sent'), 'type' => 'success']);
+        return response()->json(['status' => 1, 'title'=>__('Success'),'msg' => __('Message was sent'), 'type' => 'success']);
     }
 
     /**

@@ -48,20 +48,20 @@
                         <div class="d-flex align-items-center text-center">
                             {{ __('Email') }}: <b>@if($message->email) {{ $message->email }}@else {{ $message->user->email }}@endif</b>
                         </div>
-                        <div class="align-items-center text-center d-grid gap-2">
+                        <div class="align-items-center text-center d-grid gap-2" id="operation">
                             @if(!$message->email)
                             <a href="{{ route('viewUserProfile', $message->user->id) }}" type="button" class="btn btn-light">{{ __('Open profile') }}</a>
                             @endif
                             @can('ACP-contact-message-change-status-read-un-read')
                                 <form id="statusReadUnRead" action="{{ route('adminContactMessageReadUnRead', $message->id) }}" method="POST" class="d-grid gap-2">
                                     @csrf
-                                    <button type="submit" class="btn btn-secondary">@if($message->displayed == 1) {{ __('Mark as unread') }}@else {{ __('Mark as read') }}@endif</button>
+                                    <button id="btnReadUnRead" type="submit" class="btn btn-secondary">@if($message->displayed == 1) {{ __('Mark as unread') }}@else {{ __('Mark as read') }}@endif</button>
                                 </form>
                             @endcan
                             @can('ACP-contact-message-change-status-close')
                                 <form id="statusClose" action="{{ route('adminContactMessageClose', $message->id) }}" method="POST" class="d-grid gap-2">
                                     @csrf
-                                    <button type="submit" class="btn btn-danger">{{ __('Close') }}</button>
+                                    <button id="btnClose" type="submit" class="btn btn-danger">@if($message->closed == 1) {{ __('Open') }}@else {{ __('Close') }}@endif</button>
                                 </form>
                             @endcan
                             <button type="button" class="btn btn-warning" disabled>{{ __('Response') }}</button>
@@ -72,8 +72,12 @@
                 <div class="col-md-8 shadow p-3 mb-5 bg-body rounded">
                     <div class="card-body">
                         <h2 class="h3 mb-4 page-title fw-bold position-relative">{{ __('Title') }}: {{ $message->title->name }}
-                            <span id="messageStatus" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
-                                @if($message->displayed == 1) {{ __('Has been read') }}@else {{ __('Has not been read') }}@endif
+                            <span id="messageStatus" class="position-absolute top-0 start-100 translate-middle badge rounded-pill @if($message->closed == false) bg-success @else bg-danger @endif">
+                                @if($message->closed == false)
+                                    @if($message->displayed == true) {{ __('Has been read') }}@else {{ __('Has not been read') }}@endif
+                                @else
+                                    {{ __('Has been CLOSE') }}
+                                @endif
                             </span>
                         </h2>
                         <hr>
@@ -107,7 +111,7 @@
             }
         });
         $(function (){
-            $('#statusReadUnRead').on('submit', function(e){
+            $('#operation form').on('submit', function(e){
                 e.preventDefault();
                 $.ajax({
                     url:$(this).attr('action'),
@@ -134,7 +138,17 @@
                                     onClick: function(){} // Callback after click
                                 }).showToast();
                             } else {
-                                $('#messageStatus').text(data.description);
+                                if(data.typepost == 'readunread')
+                                {
+                                    $('#messageStatus').text(data.description);
+                                    $('#btnReadUnRead').text(data.btn);
+                                }
+                                if(data.typepost == 'close')
+                                {
+                                    $('#messageStatus').text(data.description);
+                                    $('#btnClose').text(data.btn);
+                                }
+
                                 Swal.fire({
                                     title: data.title,
                                     text: data.msg,

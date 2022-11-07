@@ -89,6 +89,7 @@
                                         <label class="control-label col-sm-10" for="comment">{{ __('Comment') }}:</label>
                                         <div class="col-sm-10">
                                             <textarea class="form-control" rows="5" id="comment" name="message" required></textarea>
+                                            <span class="">{{ __('You have') }} <span id="counter"></span> {{ __('characters left') }}.</span>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -197,4 +198,22 @@
         });
     });
 </script>
+
+    <script>
+        window.onload = function(){
+            var maxLength = 240;
+            var oSpan = document.getElementById('counter');
+            oSpan.innerHTML = maxLength +'';
+            $('#comment').on('keyup', function(){
+                var string = document.getElementById('comment')
+                console.log(string.value.length);
+                oSpan.innerHTML = (maxLength - ( string.value.length ) ) +'';
+                if( maxLength < string.value.length ) {
+                    whenBeMaxLength = string.value.substring(0, maxLength);
+                    string.value = whenBeMaxLength;
+                    oSpan.innerHTML = (maxLength - ( string.value.length ) ) +'';
+                }
+            });
+        }
+    </script>
 @endsection

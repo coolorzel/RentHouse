@@ -98,32 +98,36 @@
         <div class="modal-dialog modal-dialog-centered modal-warning">
             <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalEditLabel">{{ __('Create new link') }}</h5>
+                        <h5 class="modal-title" id="exampleModalEditLabel">{{ __('History message') }}: <span id="userEmail">###</span></h5>
                         <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="type-link" class="col-form-label">{{ __('Select type link') }}:</label>
-                            <select id="type-link" name="nameLink" class="form-select" aria-label="Default select example">
-                                <option selected>{{ __('Open this select menu') }}</option>
-
-                            </select>
+                            <label for="type-link" class="col-form-label">{{ __('History') }}</label>
                         </div>
                         <div class="mb-3">
-                            <label for="link-value" class="col-form-label">{{ __('Enter a your name or address') }}:</label>
-                            <div class="input-group flex-nowrap form-outline">
-                                <span class="input-group-text" id="symbolCreateLink">****</span>
-                                <input name="valueLink" id="link-value" type="text" class="form-control" readonly aria-label="editLinks" aria-describedby="addon-wrapping" value="" disabled />
-                                <label class="form-label" for="link-value" id="commentCreateLink">{{ __('**************') }}</label>
-                            </div>
+                            <ul class="list-group" id="historyList">
+                                <li class="list-group-item">###</li>
+                            </ul>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
                             {{ __('Close') }}
                         </button>
-                        <button type="submit" class="btn btn-primary">{{ __('Create') }}</button>
-                    </div>
+                        <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Top popover">
+                            Popover on top
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right" data-bs-content="Right popover">
+                            Popover on right
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover">
+                            Popover on bottom
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="Left popover">
+                            Popover on left
+                        </button>
+                        </div>
             </div>
         </div>
     </div>
@@ -157,8 +161,37 @@
                     id: $(this).val(),
                     operation: $(this).data('info'),
                 },
+                beforeSend:function (){
+                    $('#historyList').text('');
+                },
                 success: function(result) {
-                    window.location.assign(result.route);
+                    if(typeof result.route !== 'undefined') {
+                        window.location.assign(result.route);
+                    }else{
+                        $('#userEmail').text(result.email);
+                        $.each(result.history, function (prefix, val) {
+                            if(typeof val['user'] !== 'undefined') {
+                                $('#historyList').append(
+                                    "<li class=\"list-group-item d-flex justify-content-between align-items-center\">" +
+                                    "<i class=\"fa fa-question-circle-o\"></i>"
+                                    + val['information'] +
+                                    "<span style=\"font-size: xx-small\" class=\"badge badge-primary badge-pill\">" +
+                                    "MODERATOR: " + val['user'] + "<br>"
+                                    + val['created_at'] +
+                                    "</span></li>"
+                                );
+                            }else{
+                                $('#historyList').append(
+                                    "<li class=\"list-group-item d-flex justify-content-between align-items-center\">" +
+                                    "<i class=\"fa fa-question-circle-o\"></i>"
+                                    + val['information'] +
+                                    "<span style=\"font-size: xx-small\" class=\"badge badge-primary badge-pill\">"
+                                    + val['created_at'] +
+                                    "</span></li>"
+                                );
+                            }
+                        });
+                    }
                 },
                 error: function(result) {
                     alert('error');
@@ -166,4 +199,7 @@
             });
         });
     </script>
+    <script>
+    </script>
 @endsection
+
