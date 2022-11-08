@@ -41,6 +41,36 @@
 
 
         <div class="container">
+            @role('user')
+            <div class="alert alert-primary" role="alert">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-3 text-center">
+                            <i class="align-middle fa fa-info fa-3x"></i>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <div class="col-8 col-sm-12">
+                                    @if(isset(Auth::user()->email_verified_at))
+                                        <span class="badge rounded-pill text-bg-success"><i class="text-white fa fa-check"></i></span>
+                                        {{ __('Verification of the e-mail address has been completed') }}.
+                                        @else
+                                        <span class="badge rounded-pill text-bg-danger"><i class="text-white fa fa-times"></i></span>
+                                    {{ __('Verification has not been carried out. If you do not have the verification email in your mailbox, please resend it ...') }}
+                                        <strong><a href="{{ route('verification.notice') }}"><i class="fa fa-arrow-right"></i>{{ __('THERE') }}<i class="fa fa-arrow-left"></i></a></strong>
+                                        @endif
+                                </div>
+                                <div class="col-4 col-sm-12">
+                                    <span class="badge rounded-pill text-bg-danger"><i class="text-white fa fa-times"></i></span>
+                                    {{ (__('Choose if your account will be used for letting or if you are the owner of the property you want to rent. If you are a landlord, please complete the verification form.')) }}
+                                    <strong><a href="{{ route('myBillingVerificationForm') }}"><i class="fa fa-arrow-right"></i>{{ __('THERE') }}<i class="fa fa-arrow-left"></i></a></strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endrole
             <div class="main-body">
 
                     @yield('menu')

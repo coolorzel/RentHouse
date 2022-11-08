@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\BillingAccount;
 use Illuminate\Http\Request;
 
-class BillingAccount extends Controller
+class UserBillingAccount extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,11 +21,11 @@ class BillingAccount extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
-        //
+        return view('site.user.billing-account.billing-account-create');
     }
 
     /**
@@ -45,7 +45,7 @@ class BillingAccount extends Controller
      * @param  \App\Models\BillingAccount  $billingAccount
      * @return \Illuminate\Http\Response
      */
-    public function show(BillingAccount $billingAccount)
+    public function show(UserBillingAccount $billingAccount)
     {
         //
     }
@@ -56,7 +56,7 @@ class BillingAccount extends Controller
      * @param  \App\Models\BillingAccount  $billingAccount
      * @return \Illuminate\Http\Response
      */
-    public function edit(BillingAccount $billingAccount)
+    public function edit(UserBillingAccount $billingAccount)
     {
         //
     }
@@ -68,7 +68,7 @@ class BillingAccount extends Controller
      * @param  \App\Models\BillingAccount  $billingAccount
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BillingAccount $billingAccount)
+    public function update(Request $request, UserBillingAccount $billingAccount)
     {
         //
     }
@@ -79,7 +79,7 @@ class BillingAccount extends Controller
      * @param  \App\Models\BillingAccount  $billingAccount
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BillingAccount $billingAccount)
+    public function destroy(UserBillingAccount $billingAccount)
     {
         //
     }

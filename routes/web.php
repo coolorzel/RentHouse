@@ -14,6 +14,7 @@ use App\Http\Controllers\SystemControl\siteIsOff;
 use App\Http\Controllers\User\AvatarController;
 use App\Http\Controllers\User\LinkUserController;
 use App\Http\Controllers\User\MyUserProfile;
+use App\Http\Controllers\User\UserBillingAccount;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -142,6 +143,9 @@ Route::group(['middleware' => 'first_install'], function() {
             Route::get('/updateLinkInfo')->name('myLinksUpdate'); // ONLY FOR CHECK ADDRESS. GET IS CHECKED
             Route::delete('/deleteLinkInfo/{nameLink}', [LinkUserController::class, 'delete'])->middleware('permission:USER-my-link-delete')->name('myLinksDelete');
             Route::get('/deleteLinkInfo')->name('myLinksDelete');  // ONLY FOR CHECK ADDRESS. GET IS CHECKED
+            Route::group(['prefix' => 'billing', 'middleware' => ['verified']], function() {
+                Route::get('/createVerification', [UserBillingAccount::class, 'create'])->name('myBillingVerificationForm');
+            });
         });
 
         //___________________//
@@ -163,7 +167,7 @@ Route::group(['middleware' => 'first_install'], function() {
 
         });
 
-        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified')->name('home');
         Route::get('/postNewAd')->name('postNewAd');
     });
 });

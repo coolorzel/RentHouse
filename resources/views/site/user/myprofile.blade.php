@@ -356,34 +356,43 @@
                         </div>
                     </div>
                     <!--MODAL: modal create links -->
-                <!--
-                    <div class="card mb-3" id="editData">
+
+                    <div class="card mb-3">
                         <div class="card-body">
-                        <table class="table table-striped" id="table1">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Operation</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <tr>
-                                <td>1</td>
-                                <td>nazwa</td>
-                                <td>
-                                    OPERATION
-                                </td>
-                            </tr>
-
-
-                            </tbody>
-                        </table>
+                            <div class="card-header"><h4>{{ __('Billing accounts') }}</h4></div>
+                            @if(isset($billings))
+                            <div class="accordion accordion-flush" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Accordion Item #1
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                            Accordion Item #2
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            @else
+                                <div class="callout">{{ __('You do not have billing account...') }}</div>
+                            @endif
+                            <a href="{{ route('myBillingVerificationForm') }}" class="btn btn-outline-default" type="button">
+                                {{ __('Create new billing account') }}
+                            </a>
                         </div>
                     </div>
 
-                    <div class="card chart-container">
+                <!--    <div class="card chart-container">
                         <canvas id="chart"></canvas>
                     </div>
 

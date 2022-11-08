@@ -34,6 +34,18 @@
                         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
+                                    <a class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-bell mr-1 text-warning" style="font-size:24px"></i>
+                                        <span class="position-absolute start-100 translate-middle badge rounded-pill bg-info">
+                                    0
+                                    <span class="visually-hidden">{{ __('unread notification') }}</span>
+                                </span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-light">
+                                        <li>{{ __('Empty') }}...</li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa fa-user mr-1" style="font-size:24px"></i> {{ Auth::user()->name }}
                                     </a>
