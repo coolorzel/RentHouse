@@ -17,6 +17,11 @@ use App\Http\Controllers\User\MyUserProfile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+//moje testy
+Route::get('/tenantapplication', function(){
+    return view('site.user.tenantapplication');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
