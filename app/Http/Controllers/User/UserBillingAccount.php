@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BillingAccountRequest;
 use App\Models\BillingAccount;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -37,9 +38,10 @@ class UserBillingAccount extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BillingAccountRequest $request)
     {
-        //
+        $routeMyProfile = route('myProfile');
+        return ($request);
     }
 
     /**
