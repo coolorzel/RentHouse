@@ -145,6 +145,7 @@ Route::group(['middleware' => 'first_install'], function() {
             Route::get('/deleteLinkInfo')->name('myLinksDelete');  // ONLY FOR CHECK ADDRESS. GET IS CHECKED
             Route::group(['prefix' => 'billing', 'middleware' => ['verified']], function() {
                 Route::get('/createVerification', [UserBillingAccount::class, 'create'])->name('myBillingVerificationForm');
+                Route::post('/store', [UserBillingAccount::class, 'store'])->name('newBillingAccountCreate');
             });
         });
 

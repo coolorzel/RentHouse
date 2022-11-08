@@ -4,7 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\BillingAccount;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserBillingAccount extends Controller
 {
@@ -25,7 +27,8 @@ class UserBillingAccount extends Controller
      */
     public function create()
     {
-        return view('site.user.billing-account.billing-account-create');
+        $user = User::find(Auth::id())->first();
+        return view('site.user.billing-account.billing-account-create', compact('user'));
     }
 
     /**

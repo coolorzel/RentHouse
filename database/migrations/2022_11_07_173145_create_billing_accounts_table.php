@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('billing_accounts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('u_id');
-            $table->boolean('company')->default(false);
+            $table->boolean('company');
             $table->boolean('verified')->default(false);
             $table->boolean('rejected')->default(false);
             $table->boolean('destroy')->default(false);
