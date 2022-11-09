@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "090a4891b252dc347e0ee1c93ff4430c",
+    "content-hash": "31c1a1dba117e6a867959e6e8c3e7afe",
     "packages": [
         {
             "name": "brick/math",
@@ -2220,6 +2220,68 @@
                 }
             ],
             "time": "2022-08-01T11:03:24+00:00"
+        },
+        {
+            "name": "pacerit/laravel-polish-validation-rules",
+            "version": "5.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pacerit/laravel-polish-validation-rules.git",
+                "reference": "f470d1ef8eecde31d13a7ac3b5dc1852ee80cafb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pacerit/laravel-polish-validation-rules/zipball/f470d1ef8eecde31d13a7ac3b5dc1852ee80cafb",
+                "reference": "f470d1ef8eecde31d13a7ac3b5dc1852ee80cafb",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^9.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "PacerIT\\LaravelPolishValidationRules\\Providers\\LaravelPolishValidationRulesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PacerIT\\LaravelPolishValidationRules\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Wiktor Pacer",
+                    "email": "kontakt@pacerit.pl",
+                    "homepage": "https://pacerit.pl",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Simple Polish Validation rules for Laravel and Lumen framework",
+            "keywords": [
+                "laravel",
+                "pacerit",
+                "pesel",
+                "polish",
+                "regon",
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/pacerit/laravel-polish-validation-rules/issues",
+                "source": "https://github.com/pacerit/laravel-polish-validation-rules/tree/5.0.1"
+            },
+            "time": "2022-06-20T15:47:39+00:00"
         },
         {
             "name": "phpoption/phpoption",

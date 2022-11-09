@@ -30,7 +30,7 @@ class BillingAccountRequest extends FormRequest
             $validate = [
                 'name' => 'bail|required',
                 'lname' => 'required',
-                'pesel' => 'int|required',
+                'pesel' => 'PESEL',
                 'phone_number' => 'required',
                 'country' => 'required',
                 'province' => 'required',
@@ -38,7 +38,8 @@ class BillingAccountRequest extends FormRequest
                 'street' => 'required',
                 'building_number' => 'required',
                 'company_name' => 'required',
-                'company_nip' => 'required',
+                'company_nip' => 'NIP',
+                'company_regon' => 'required',
                 'company_website' => 'max:30',
                 'message' => 'max:254',
             ];
@@ -46,7 +47,7 @@ class BillingAccountRequest extends FormRequest
             $validate = [
                 'name' => 'bail|required',
                 'lname' => 'required',
-                'pesel' => 'int|required',
+                'pesel' => 'int|min:11|max:11|required',
                 'phone_number' => 'required',
                 'country' => 'required',
                 'province' => 'required',

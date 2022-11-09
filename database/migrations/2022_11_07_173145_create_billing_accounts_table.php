@@ -32,6 +32,7 @@ return new class extends Migration
             // FOR Company //
             $table->string('company_name');
             $table->string('company_nip');
+            $table->string('company_regon');
             $table->string('company_website');
             $table->foreign('u_id') // Tworzenie relacji. Określenie kolumny z tej tabeli
             ->references('id') // Określenie kolumny z tabeli zewnętrznej

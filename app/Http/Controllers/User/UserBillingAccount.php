@@ -41,7 +41,7 @@ class UserBillingAccount extends Controller
     public function store(BillingAccountRequest $request)
     {
         $routeMyProfile = route('myProfile');
-        return ($request);
+        return ($routeMyProfile);
     }
 
     /**
