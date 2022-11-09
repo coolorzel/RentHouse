@@ -57,7 +57,7 @@ class ContactController extends Controller
             'message' => 'required|min:60'
         ]);
         if (Auth::user()){
-            $user = User::find(Auth::id())->first();
+            $user = User::find(Auth::id());
             Contact::create([
                 'message' => $request->message,
                 'u_id' => $user->id,

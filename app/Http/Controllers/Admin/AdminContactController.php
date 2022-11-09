@@ -116,7 +116,7 @@ class AdminContactController extends Controller
             }
             foreach($message->history as $key => $val) {
                 if(isset($val->viewer_u_id)) {
-                    $user = User::find($val->viewer_u_id)->first();
+                    $user = User::find($val->viewer_u_id);
                     $history[$key] = [
                         'information' => $val->information,
                         'message' => $val->message,

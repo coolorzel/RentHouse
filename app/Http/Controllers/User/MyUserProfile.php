@@ -4,9 +4,9 @@ namespace App\Http\Controllers\User;
 
 use App\Descriptions\UserLinksDescriptions;
 use App\Http\Controllers\Controller;
-//use http\Client\Curl\User;
 use App\Http\Requests\UserProfileValidationRequest;
 use App\Http\Requests\UserUpdatePassword;
+use App\Models\BillingAccount;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,14 +26,16 @@ class MyUserProfile extends Controller
     {
         //
         $links = UserLinksDescriptions::$LINKS['links'];
-        $user = User::find(Auth::user()->id)->first();
+        $user = User::find(Auth::id());
+        $billings = BillingAccount::where('u_id', $user->id)->get();
+        //dd($billings);
         $issetLink = [];
         foreach ($links as $key => $l)
         {
             if (empty($user[$key]))
             $issetLink[] = $key;
         }
-        return view('site.user.myprofile', compact('user', 'issetLink', 'links'));
+        return view('site.user.myprofile', compact('user', 'issetLink', 'links', 'billings'));
     }
 
     /**
@@ -121,7 +123,7 @@ class MyUserProfile extends Controller
         $oldPassword = $request->oldPassword;
         $newPassword = $request->newPassword;
         $repPassword = $request->repPassword;
-        $user = User::find(Auth::id())->first();
+        $user = User::find(Auth::id());
         if(Hash::check($oldPassword, $user->password))
         {
             if ($newPassword == $repPassword)

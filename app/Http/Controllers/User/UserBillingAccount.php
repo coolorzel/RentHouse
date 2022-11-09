@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BillingAccountRequest;
 use App\Models\BillingAccount;
+use App\Models\BillingApplication;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,12 +37,55 @@ class UserBillingAccount extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(BillingAccountRequest $request)
     {
+        $user = User::find(Auth::id());
         $routeMyProfile = route('myProfile');
-        return ($routeMyProfile);
+        if ($request->company == true) {
+            $billing = BillingAccount::create([
+                'u_id' => $user->id,
+                'company' => $request->company,
+                'name' => $request->name,
+                'lname' => $request->lname,
+                'pesel' => $request->pesel,
+                'phone_number' => $request->phone_number,
+                'country' => $request->country,
+                'province' => $request->province,
+                'city' => $request->city,
+                'zipcode' => $request->zipcode,
+                'street' => $request->street,
+                'building_number' => $request->building_number,
+                'company_name' => $request->company_name,
+                'company_nip' => $request->company_nip,
+                'company_regon' => $request->company_regon,
+                'company_website' => $request->company_website,
+            ]);
+        }else{
+            $billing = BillingAccount::create([
+                'u_id' => $user->id,
+                'company' => $request->company,
+                'name' => $request->name,
+                'lname' => $request->lname,
+                'pesel' => $request->pesel,
+                'phone_number' => $request->phone_number,
+                'country' => $request->country,
+                'province' => $request->province,
+                'city' => $request->city,
+                'zipcode' => $request->zipcode,
+                'street' => $request->street,
+                'building_number' => $request->building_number,
+            ]);
+        }
+
+        $message = BillingApplication::create([
+            'billing_id' => $billing->id,
+            'sender' => $user->id,
+            'message' => $request->message
+        ]);
+
+        return response()->json(['status'=>1,'route' => $routeMyProfile,'title'=>'Success','msg'=>__('The billing account request has been delivered. Wait for a response or a change in status.'),'type'=>'success']);
     }
 
     /**

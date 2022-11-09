@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class BillingAccountRequest extends FormRequest
 {
@@ -35,6 +37,7 @@ class BillingAccountRequest extends FormRequest
                 'country' => 'required',
                 'province' => 'required',
                 'city' => 'required',
+                'zipcode' => 'post_code',
                 'street' => 'required',
                 'building_number' => 'required',
                 'company_name' => 'required',
@@ -47,11 +50,12 @@ class BillingAccountRequest extends FormRequest
             $validate = [
                 'name' => 'bail|required',
                 'lname' => 'required',
-                'pesel' => 'int|min:11|max:11|required',
+                'pesel' => 'PESEL',
                 'phone_number' => 'required',
                 'country' => 'required',
                 'province' => 'required',
                 'city' => 'required',
+                'zipcode' => 'post_code',
                 'street' => 'required',
                 'building_number' => 'required',
                 'message' => 'max:254',

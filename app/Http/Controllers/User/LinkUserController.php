@@ -16,7 +16,7 @@ class LinkUserController extends Controller
         $links = UserLinksDescriptions::$LINKS['links'];
         if (!request()->route()->named('userLinkEdit'))
         {
-            $user = User::find(Auth::id())->first();
+            $user = User::find(Auth::id());
             $link = route('myLinksUpdate').'/'.$nameLink;
             $delete = route('myLinksDelete').'/'.$nameLink;
         }
@@ -100,7 +100,7 @@ class LinkUserController extends Controller
         {
             if (!request()->route()->named('userLinkCreate'))
             {
-                $user = User::find(Auth::id())->first();
+                $user = User::find(Auth::id());
             }
             $user->$type = $request->valueLink; // $user->website = 'KUPA';
             $user->update();
@@ -124,7 +124,7 @@ class LinkUserController extends Controller
         {
             if (!request()->route()->named('userLinkUpdate'))
             {
-                $user = User::find(Auth::id())->first();
+                $user = User::find(Auth::id());
             }
             $user->$nameLink = $request->valueLink;
             $user->update();
@@ -149,7 +149,7 @@ class LinkUserController extends Controller
         {
             if (!request()->route()->named('userLinkDelete'))
             {
-                $user = User::find(Auth::id())->first();
+                $user = User::find(Auth::id());
             }
             $user->$nameLink = '';
             $user->update();

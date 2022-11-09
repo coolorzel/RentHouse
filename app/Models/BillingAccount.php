@@ -10,6 +10,7 @@ class BillingAccount extends Model
     use HasFactory;
     protected $table = "billing_accounts";
     protected $fillable = [
+        'u_id',
         'company',
         'name',
         'lname',

@@ -71,6 +71,15 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3 d-flex align-items-center">
+                                    <h6 class="mb-0">{{ __('Phone number') }} <span class="text-danger">*</span></h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control form-control-sm phone_number" id="phone_number" name="phone_number" value="" placeholder="692-059-930">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3 d-flex align-items-center">
                                     <h6 class="mb-0">{{ __('Pesel') }} <span class="text-danger">*</span></h6>
                                 </div>
                                 <div class="col-sm-9">
@@ -270,6 +279,10 @@
 
         $('.company_regon').mask("00-000000-0", optionsRegon, {
             placeholder: "12-345678-9"
+        });
+
+        $('.phone_number').mask("000-000-000", {
+            placeholder: "123-456-789"
         });
 
     </script>

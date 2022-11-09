@@ -30,10 +30,10 @@ return new class extends Migration
             $table->string('street');
             $table->string('building_number');
             // FOR Company //
-            $table->string('company_name');
-            $table->string('company_nip');
-            $table->string('company_regon');
-            $table->string('company_website');
+            $table->string('company_name')->nullable();
+            $table->string('company_nip')->nullable();
+            $table->string('company_regon')->nullable();
+            $table->string('company_website')->nullable();
             $table->foreign('u_id') // Tworzenie relacji. Określenie kolumny z tej tabeli
             ->references('id') // Określenie kolumny z tabeli zewnętrznej
             ->on('users') // Określenie, z którą tabelą ma zostać stworzona relacja.
