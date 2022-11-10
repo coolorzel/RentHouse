@@ -146,6 +146,7 @@ Route::group(['middleware' => 'first_install'], function() {
             Route::group(['prefix' => 'billing', 'middleware' => ['verified']], function() {
                 Route::get('/createVerification', [UserBillingAccount::class, 'create'])->name('myBillingVerificationForm');
                 Route::post('/store', [UserBillingAccount::class, 'store'])->name('newBillingAccountCreate');
+                Route::post('/checkStatusMessage/{billing}', [MyUserProfile::class, 'statusMessageBillingApplication'])->name('checkStatusMessage');
             });
         });
 

@@ -33,6 +33,17 @@ class UserBillingAccount extends Controller
         return view('site.user.billing-account.billing-account-create', compact('user'));
     }
 
+
+    public function statusMessageBillingApplication(BillingAccount $billing)
+    {
+
+        foreach($billing->messages as $k =>$v) {
+            $table[$k] = [
+                'displayed' => $v->displayed
+            ];
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *

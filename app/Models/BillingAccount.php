@@ -19,10 +19,20 @@ class BillingAccount extends Model
         'country',
         'province',
         'city',
+        'zipcode',
         'street',
         'building_number',
         'company_name',
         'company_nip',
         'company_website',
     ];
+
+    public function messages()
+    {
+        return $this->hasMany(BillingApplication::class, 'billing_id', 'id');
+    }
+    public function message()
+    {
+        return $this->hasOne(BillingApplication::class, 'billing_id', 'id');
+    }
 }

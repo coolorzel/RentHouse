@@ -45,7 +45,7 @@
             <div class="alert alert-primary" role="alert">
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-3 text-center">
+                        <div class="col-sm-3 text-center col align-self-center">
                             <i class="align-middle fa fa-info fa-3x"></i>
                         </div>
                         <div class="col-sm-9">

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('country');
             $table->string('province');
             $table->string('city');
+            $table->string('zipcode');
             $table->string('street');
             $table->string('building_number');
             // FOR Company //
