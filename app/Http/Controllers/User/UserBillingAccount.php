@@ -99,6 +99,21 @@ class UserBillingAccount extends Controller
         return response()->json(['status'=>1,'route' => $routeMyProfile,'title'=>'Success','msg'=>__('The billing account request has been delivered. Wait for a response or a change in status.'),'type'=>'success']);
     }
 
+    public function sendMessage(Request $request)
+    {
+        if(isset($request->message)) {
+            $message = BillingApplication::create(['billing_id' => $request->data, 'message' => $request->message, 'sender' => Auth::id()]);
+            if(!$message){
+                return response()->json(['status' => 0, 'msg' => __('Message error send')]);
+            }else {
+                $created = Date('Y-m-d');
+                $user_avatar = asset('assets/uploads/users/'.Auth::id().'/avatar/'.Auth::user()->avatar);
+                return response()->json(['status' => 1, 'message' => $request->message, 'create' => $created, 'user_avatar' => $user_avatar]);
+            }
+        }else{
+            return response()->json(['status' => 0, 'msg' => __('Message can not empty.')]);
+        }
+    }
     /**
      * Display the specified resource.
      *

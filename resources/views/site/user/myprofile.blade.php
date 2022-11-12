@@ -419,7 +419,7 @@
                                                                                 <strong>{{ __('Status:') }}</strong>
                                                                             </div>
                                                                             <div class="col-12 col-sm-12 text-center">
-                                                                                @if($billing->reject == 0)
+                                                                                @if($billing->rejected == 0)
                                                                                     @if($billing->verified == 1)
                                                                                         <i class="fa fa-check-circle-o fa-2x text-success"></i>
                                                                                     @else
@@ -435,51 +435,182 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                        @if(!$billing->message->sender == Auth::id())
-                                                            @if($billing->message->displayed == false)
-                                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
-                                                                    {{ __('New message!') }}
-                                                                    <span class="visually-hidden">{{ __('New message!') }}</span>
-                                                                </span>
-                                                            @else
-                                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info" id="statusMessage">
-                                                                    {{ __('Do not have new answer') }}
-                                                                    <span class="visually-hidden">{{ __('You dont have new answer') }}</span>
-                                                                </span>
-                                                            @endif
-                                                        @else
-                                                            @if($billing->message->displayed == false)
-                                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
-                                                                        {{ __('Your application has not been read!') }}
-                                                                        <span class="visually-hidden">{{ __('Your application has not been read!') }}</span>
+                                                    @if($billing->rejected == false)
+                                                        @if($billing->verified == false)
+                                                            @if(!$billing->message->sender == Auth::id())
+                                                                @if($billing->message->displayed == false)
+                                                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                                                                        {{ __('New message!') }}
+                                                                        <span class="visually-hidden">{{ __('New message!') }}</span>
                                                                     </span>
+                                                                @else
+                                                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info" id="statusMessage">
+                                                                        {{ __('Do not have new answer') }}
+                                                                        <span class="visually-hidden">{{ __('You dont have new answer') }}</span>
+                                                                    </span>
+                                                                @endif
                                                             @else
-                                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info" id="statusMessage">
-                                                                    {{ __('Your application is being verified') }}
-                                                                    <span class="visually-hidden">{{ __('Your application is being verified') }}</span>
-                                                                </span>
+                                                                @if($billing->message->displayed == false)
+                                                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
+                                                                            {{ __('Your application has not been read!') }}
+                                                                            <span class="visually-hidden">{{ __('Your application has not been read!') }}</span>
+                                                                        </span>
+                                                                @else
+                                                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info" id="statusMessage">
+                                                                        {{ __('Your application is being verified') }}
+                                                                        <span class="visually-hidden">{{ __('Your application is being verified') }}</span>
+                                                                    </span>
+                                                                @endif
                                                             @endif
                                                         @endif
+                                                    @else
+                                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info" id="statusMessage">
+                                                            {{ __('Your application has been rejected. Open and learn more...') }}
+                                                            <span class="visually-hidden">{{ __('Your application has been rejected. Open and learn more...') }}</span>
+                                                        </span>
+                                                    @endif
                                                 </button>
                                             </h2>
                                             <div id="flush-collapse{{ $billing->id }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ $billing->id }}" data-bs-parent="#accordionFlushExample">
                                                 @if($billing->verified == true) <!-- Jeżeli konto rozliczeniowe potwierdzone -->
                                                     <div class="accordion-body">
-                                                        {{ __('No offers ... Add a new one to be displayed here.') }}
+                                                        <div class="card-body">{{ __('No offers ... Add a new one to be displayed here.') }}</div>
 
                                                         <button class="btn btn-info" target="__blank" href="#" type="button">
                                                             {{ __('Create new offer') }}</button>
                                                     </div>
                                                 @else <!-- Jeżeli konto rozliczeniowe nie zostało potwierdzone -->
                                                     @if ($billing->rejected == true) <!-- Jeżeli konto zostało odrzucone -->
-                                                        <div class="accordion-body">
-                                                            {{ __('The account is rejected.') }}
-                                                        </div>
-                                                    @endif
-                                                    <div class="accordion-body">
-                                                        {{ __('The account is awaiting activation.') }}
-                                                    </div>
+                                                            <div class="accordion-body">
+                                                                {{ __('The account is rejected.') }}
+                                                                <div class="container mt-4">
+                                                                    <div class="card mx-auto" style="max-width:400px">
+                                                                        <div class="card-header bg-transparent">
+                                                                            <div class="navbar navbar-expand p-0">
+                                                                                <ul class="navbar-nav me-auto align-items-center">
+                                                                                    <li class="nav-item">
+                                                                                        <span class="nav-link" id="userName">{{ __('Administration') }}</span>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div id="messagess" class="card-body p-4" style="height: 500px; overflow: auto;">
+                                                                            @foreach($billing->messages as $message)
+                                                                                @if(!$message->sender == Auth::id())
+                                                                                    <div class="d-flex align-items-baseline mb-4">
+                                                                                        <div class="position-relative avatar">
+                                                                                            <img src="{{ asset('project/img/admin_avatar.png') }}"
+                                                                                                 class="img-fluid rounded-circle" alt="" style="height: 40px;width:40px;">
+                                                                                        </div>
+                                                                                        <div class="pe-2">
+                                                                                            <div>
+                                                                                                <div class="card card-text d-inline-block p-2 px-3 m-1">{{ $message->message }}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <div class="small">{{ $message->created_at }}</div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @else
+                                                                                    <div class="d-flex align-items-baseline text-end justify-content-end mb-4">
+                                                                                        <div class="pe-2">
+                                                                                            <div>
+                                                                                                <div class="card card-text d-inline-block p-2 px-3 m-1">{{ $message->message }}</div>
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <div class="small">{{ $message->created_at }}</div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="position-relative avatar">
+                                                                                            <img src="{{ asset('assets/uploads/users/'.Auth::id().'/avatar/'.Auth::user()->avatar) }}"
+                                                                                                 class="img-fluid rounded-circle" alt="" style="height: 40px;width:40px;">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </div>
+                                                                        <form action="{{ route('userSendResponseBillingAccount') }}" method="post" id="sendMessage">
+                                                                            <div class="card-footer bg-white position-absolute w-100 bottom-0 m-0 p-1">
+                                                                                <div class="input-group">
+                                                                                    <input type="text" name="message" class="form-control border-0" required placeholder="{{ __('Write a message...') }}">
+                                                                                    <div class="input-group-text bg-transparent border-0">
+                                                                                        <button type="submit" class="btn btn-outline-warning" id="submitMessage" data-info="{{ $message->billing_id }}">
+                                                                                            <i class="fa fa-send-o"></i>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            <div class="accordion-body">
+                                                                {{ __('The account is awaiting activation.') }}
+                                                                <div class="container mt-4">
+                                                                    <div class="card mx-auto" style="max-width:400px">
+                                                                        <div class="card-header bg-transparent">
+                                                                            <div class="navbar navbar-expand p-0">
+                                                                                <ul class="navbar-nav me-auto align-items-center">
+                                                                                    <li class="nav-item">
+                                                                                        <span class="nav-link" id="userName">{{ __('Administration') }}</span>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div id="messagess" class="card-body p-4" style="height: 500px; overflow: auto;">
+                                                                            @foreach($billing->messages as $message)
+                                                                                @if(!$message->sender == Auth::id())
+                                                                                    <div class="d-flex align-items-baseline mb-4">
+                                                                                        <div class="position-relative avatar">
+                                                                                            <img src="{{ asset('project/img/admin_avatar.png') }}"
+                                                                                                 class="img-fluid rounded-circle" alt="" style="height: 40px;width:40px;">
+                                                                                        </div>
+                                                                                        <div class="pe-2">
+                                                                                            <div>
+                                                                                                <div class="card card-text d-inline-block p-2 px-3 m-1">{{ $message->message }}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <div class="small">{{ $message->created_at }}</div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @else
+                                                                                    <div class="d-flex align-items-baseline text-end justify-content-end mb-4">
+                                                                                        <div class="pe-2">
+                                                                                            <div>
+                                                                                                <div class="card card-text d-inline-block p-2 px-3 m-1">{{ $message->message }}</div>
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <div class="small">{{ $message->created_at }}</div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="position-relative avatar">
+                                                                                            <img src="{{ asset('assets/uploads/users/'.Auth::id().'/avatar/'.Auth::user()->avatar) }}"
+                                                                                                 class="img-fluid rounded-circle" alt="" style="height: 40px;width:40px;">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </div>
+                                                                        <form action="{{ route('userSendResponseBillingAccount') }}" method="post" id="sendMessage">
+                                                                            <div class="card-footer bg-white position-absolute w-100 bottom-0 m-0 p-1">
+                                                                                <div class="input-group">
+                                                                                    <input type="text" name="message" class="form-control border-0" required placeholder="{{ __('Write a message...') }}">
+                                                                                    <div class="input-group-text bg-transparent border-0">
+                                                                                        <button type="submit" class="btn btn-outline-warning" id="submitMessage" data-info="{{ $message->billing_id }}">
+                                                                                            <i class="fa fa-send-o"></i>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endif
                                                 @endif
                                             </div>
                                         </div>
@@ -572,6 +703,55 @@
             }
         });
 
+        $(function (){
+            $('#sendMessage').on('submit', function(e){
+                e.preventDefault();
+                $.ajax({
+                    url:$(this).attr('action'),
+                    method:$(this).attr('method'),
+                    data: {data:$('#submitMessage').data('info'), message:$('#sendMessage input').val()},
+                    success:
+                        function(data) {
+                            if(data.status === 0){
+                                Toastify({
+                                    text: data.msg, // "This is a toast",
+                                    duration: 3000,
+                                    //destination: "https://github.com/apvarun/toastify-js",
+                                    newWindow: true,
+                                    close: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "right", // `left`, `center` or `right`
+                                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                                    style: {
+                                        background: "linear-gradient(to right, #aac900, #ff0000)",
+                                    },
+                                    onClick: function(){} // Callback after click
+                                }).showToast();
+                            }else{
+                                $('#sendMessage')[0].reset();
+                                var create_at = new Date(data.create);
+                                $('#messagess').append("<div class=\"d-flex align-items-baseline text-end justify-content-end mb-4\">" +
+                                    "<div class=\"pe-2\">" +
+                                    "<div>" +
+                                    "<div class=\"card card-text d-inline-block p-2 px-3 m-1\">" + data.message +
+                                    "</div>" +
+                                    "</div>" +
+                                    "<div>" +
+                                    "<div class=\"small\">" + create_at.getFullYear() +
+                                    "-" +
+                                    create_at.getMonth() + "-" + create_at.getDay() + "</div>" +
+                                    "</div>" +
+                                    "</div>" +
+                                    "<div class=\"position-relative avatar\">" +
+                                    "<img id=\"avatar_message\" src=\"" + data.user_avatar + "\"" +
+                                    "class=\"img-fluid rounded-circle\" alt=\"\" style=\"height: 40px;width:40px;\">" +
+                                    "</div>" +
+                                    "</div>");
+                            }
+                        }
+                });
+            });
+        });
         /* $(window).bind("load", function() {
              //let url = '{{ route('checkStatusMessage',1) }}';
             let test = $("#accordionFlushExample #id").data('id');
