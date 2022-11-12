@@ -23,7 +23,7 @@
         <div class="col-md-9 shadow p-3 mb-5 bg-body rounded">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h2 class="h3 mb-4 page-title">{{ __('User list') }}</h2>
+                    <h2 class="h3 mb-4 page-title">{{ __('Billing account list') }}</h2>
                     <table class="table table-striped" id="table1">
                         <thead>
                         <tr>

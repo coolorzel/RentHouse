@@ -35,14 +35,20 @@
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
                                     <a class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-bell mr-1 text-warning" style="font-size:24px"></i>
+                                        <i class="fa fa-bell mr-1 @if(Auth::user()->notifications) text-warning @endif" style="font-size:24px"></i>
                                         <span class="position-absolute start-100 translate-middle badge rounded-pill bg-info">
-                                    0
+                                    {{ count(\App\Models\Notification::where('u_id', Auth::id())->get()) }}
                                     <span class="visually-hidden">{{ __('unread notification') }}</span>
                                 </span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-light">
+                                        @if(!Auth::user()->notifications)
                                         <li>{{ __('Empty') }}...</li>
+                                        @else
+                                            @foreach(Auth::user()->notifications as $notification)
+                                                <li>{{ $notification->message }}</li>
+                                            @endforeach
+                                        @endif
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown">

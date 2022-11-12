@@ -57,12 +57,23 @@
                 </div>
             </li>
             <li class="mb-1">
-                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#billing-account-collapse" aria-expanded="false">
+                <button class="btn btn-toggle align-items-center rounded collapsed position-relative" data-bs-toggle="collapse" data-bs-target="#billing-account-collapse" aria-expanded="false">
                     {{ __('Billing Account') }}
+                    @if(count(\App\Models\BillingAccount::where(['verified' => false, 'rejected' => false, 'destroy' => false])->get()) > 0)
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                                    {{ __('New message') }}
+                                    <span class="visually-hidden">{{ __('unread messages') }}</span>
+                                </span>
+                    @endif
                 </button>
                 <div class="collapse {{ (Request::is('acp/billing') || Request::is('acp/billing/*'))  ? 'show' : '' }}" id="billing-account-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="{{ route('adminUserBillingAccounts') }}" class="btn btn-link link-dark rounded {{ Request::is('acp/billing') ? 'active' : '' }}">{{ __('All accounts') }}</a></li>
+                        <li><a href="{{ route('adminUserBillingAccounts') }}" class="position-relative btn btn-link link-dark rounded {{ Request::is('acp/billing') ? 'active' : '' }}">{{ __('All accounts') }}
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                                    {{ count(\App\Models\BillingAccount::where(['verified' => false, 'rejected' => false, 'destroy' => false])->get()) }}
+                                    <span class="visually-hidden">{{ __('unread messages') }}</span>
+                                </span>
+                            </a></li>
                     </ul>
                 </div>
             </li>
