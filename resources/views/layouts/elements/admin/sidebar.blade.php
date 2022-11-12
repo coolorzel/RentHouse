@@ -53,7 +53,16 @@
                         <li><a href="{{ route('adminUserProfile') }}" class="btn btn-link link-dark rounded {{ Request::is('acp/users') ? 'active' : '' }}">{{ __('Users') }}</a></li>
                         <li><a href="{{ route('adminUserRoles') }}" class="btn btn-link link-dark rounded {{ (Request::is('acp/roles') || Request::is('acp/roles/*')) ? 'active' : '' }}">{{ __('Roles') }}</a></li>
                         <li><a href="{{ route('adminUserPermissions') }}" class="btn btn-link link-dark rounded {{ (Request::is('acp/permissions') || Request::is('acp/permissions/*')) ? 'active' : '' }}">{{ __('Permissions') }}</a></li>
-                        <li><a href="{{ route('adminUserConclusions') }}" class="btn btn-link link-dark rounded {{ (Request::is('acp/conclusions') || Request::is('acp/conclusions/*')) ? 'active' : '' }}">{{ __('Conclusions') }}</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="mb-1">
+                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#billing-account-collapse" aria-expanded="false">
+                    {{ __('Billing Account') }}
+                </button>
+                <div class="collapse {{ (Request::is('acp/billing') || Request::is('acp/billing/*'))  ? 'show' : '' }}" id="billing-account-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="{{ route('adminUserBillingAccounts') }}" class="btn btn-link link-dark rounded {{ Request::is('acp/billing') ? 'active' : '' }}">{{ __('All accounts') }}</a></li>
                     </ul>
                 </div>
             </li>

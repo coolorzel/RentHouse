@@ -13,6 +13,6 @@ class BillingApplication extends Model
         'billing_id',
         'sender',
         'message',
-
+        'displayed'
     ];
 }

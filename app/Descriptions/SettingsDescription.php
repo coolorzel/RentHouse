@@ -235,7 +235,10 @@ class SettingsDescription {
         'ACP-contact-message-read',
         'ACP-contact-message-change-status-read-un-read',
         'ACP-contact-message-change-status-close',
-        'MOD-conclusions-view',
+        'MOD-billing-account-view',
+        'MOD-billing-account-api',
+        'MOD-status-changed-billing-account',
+        'MOD-message-restored-billing-account',
 
 
         // PERMISSION FOR BLADE AND CONTROLLER //
@@ -261,6 +264,9 @@ class SettingsDescription {
         'ACP-contact-title-delete',
         'ACP-contact-message-read',
         'ACP-contact-message-history',
+        'MOD-billing-account-status-accept',
+        'MOD-billing-account-status-reject',
+        'MOD-billing-account-status-delete',
 
         // PERMISSION FOR MIDDLEWARE //
         'ACP-visit-page-off',

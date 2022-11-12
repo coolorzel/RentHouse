@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminBillingAccount;
 use App\Http\Controllers\Admin\AdminContactController;
 use App\Http\Controllers\Admin\AdminDashboard;
 use App\Http\Controllers\Admin\AdminPageSettings;
@@ -103,8 +104,13 @@ Route::group(['middleware' => 'first_install'], function() {
                 Route::post('/edit/{permission}', [PermissionsController::class, 'update'])->middleware('permission:ACP-permission-edit')->name('adminPermissionEdit');
                 Route::delete('/destroy/{permission}', [PermissionsController::class, 'destroy'])->middleware('permission:ACP-permission-delete')->name('adminPermissionDelete');
             });
-            Route::group(['prefix' => 'conclusions', 'middleware' => ['permission:MOD-conclusions-view']], function() {
-                Route::get('/', [ConclusionsController::class, 'index'])->name('adminUserConclusions');
+            Route::group(['prefix' => 'billing', 'middleware' => ['permission:MOD-billing-account-view']], function() {
+                Route::get('/', [AdminBillingAccount::class, 'index'])->name('adminUserBillingAccounts');
+                Route::group(['prefix' => 'api', 'middleware' => ['permission:MOD-billing-account-api']], function (){
+                    Route::post('/moreInfo/{billing}', [AdminBillingAccount::class, 'moreInfo'])->name('adminMoreInfoBillingAccount');
+                    Route::post('/statusChanged/{billing}', [AdminBillingAccount::class, 'status_changed'])->middleware('permission:MOD-status-changed-billing-account')->name('adminStatusChangedBillingAccount');
+                    Route::post('/sendRestored', [AdminBillingAccount::class, 'sendRestore'])->middleware('permission:MOD-message-restored-billing-account')->name('sendResponseBillingAccount');
+                });
             });
             Route::group(['prefix' => 'contact', 'middleware' => ['permission:ACP-contact-view']], function() {
                 Route::group(['prefix' => 'title', 'middleware' => ['permission:ACP-contact-title-view']], function() {

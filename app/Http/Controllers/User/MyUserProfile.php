@@ -29,6 +29,7 @@ class MyUserProfile extends Controller
         $user = User::find(Auth::id());
         $billings = BillingAccount::where('u_id', $user->id)->get();
         $issetLink = [];
+
         foreach ($links as $key => $l)
         {
             if (empty($user[$key]))

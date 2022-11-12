@@ -33,6 +33,10 @@ class BillingAccount extends Model
     }
     public function message()
     {
-        return $this->hasOne(BillingApplication::class, 'billing_id', 'id');
+        return $this->hasOne(BillingApplication::class, 'billing_id', 'id')->latest();
+    }
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'u_id');
     }
 }
