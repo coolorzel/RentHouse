@@ -110,6 +110,21 @@
             }
         });
         $(function () {
+            $('#notificationList li #redirect').on('click', function (e) {
+                e.preventDefault()
+                var btn = $(this);
+                $.ajax({
+                    url:$(this).data('route'),
+                    method:'POST',
+                    data: {data: $(this).data('info'), onlyRead: true},
+                    dataType:'json',
+                    success:
+                        function(data) {
+                            location.href = $(btn).data('redirect');
+                        }
+                });
+            });
+
             $('#notificationList li div').on('click', function (e) {
                 e.preventDefault()
                 var change = $("li").find('[data-info="'+ $(this).data('info') +'"]');

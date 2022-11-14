@@ -54,9 +54,9 @@
                                                         <small><small class="text-secondary">{{ $notification->created_at }}</small></small>
                                                         </div>
                                                         @if($notification->route)
-                                                            <a href="{{ $notification->route }}" class="badge bg-primary rounded-pill">
+                                                            <button id="redirect" data-info="{{ $notification->id }}" data-route="{{ route('notificationChange') }}" data-redirect="{{ $notification->route }}" class="badge bg-primary rounded-pill">
                                                                 <i class="fa fa-arrow-right"></i>
-                                                            </a>
+                                                            </button>
                                                         @else
                                                             <span class="badge bg-info rounded-pill">
                                                                 <i class="fa fa-arrow-right"></i>

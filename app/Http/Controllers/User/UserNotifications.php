@@ -13,6 +13,9 @@ class UserNotifications extends Controller
     {
         $data = '';
         $count = '';
+        $status = '';
+        $message = '';
+        $type = '';
         if ($notification = Notification::find($request->data)){
             if($notification->u_id == Auth::id()){
                 if($notification->displayed == false){
@@ -24,13 +27,15 @@ class UserNotifications extends Controller
                     $data = $notification->displayed;
                     $count = count(Notification::where(['u_id' => Auth::id(), 'displayed' => false])->get());
                 }else{
-                    $notification->displayed = false;
-                    $notification->save();
-                    $status = 1;
-                    $message = 'Notification marked as unread.';
-                    $type = 'success';
-                    $data = $notification->displayed;
-                    $count = count(Notification::where(['u_id' => Auth::id(), 'displayed' => false])->get());
+                    if(!$request->onlyRead == true) {
+                        $notification->displayed = false;
+                        $notification->save();
+                        $status = 1;
+                        $message = 'Notification marked as unread.';
+                        $type = 'success';
+                        $data = $notification->displayed;
+                        $count = count(Notification::where(['u_id' => Auth::id(), 'displayed' => false])->get());
+                    }
                 }
             }else{
                 $status = 0;

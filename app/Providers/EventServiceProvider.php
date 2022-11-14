@@ -8,6 +8,7 @@ use App\Models\Contact;
 use App\Models\Contact_Control;
 use App\Models\User;
 use App\Observers\BillingAccountObserver;
+use App\Observers\BillingApplicationObserver;
 use App\Observers\ContactObserver;
 use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
@@ -39,7 +40,7 @@ class EventServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Contact::observe(ContactObserver::class);
         BillingAccount::observe(BillingAccountObserver::class);
-        BillingApplication::observe(BillingAccountObserver::class);
+        BillingApplication::observe(BillingApplicationObserver::class);
     }
 
     /**
