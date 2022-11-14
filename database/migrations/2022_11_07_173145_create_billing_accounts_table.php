@@ -63,7 +63,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('billing_accounts');
         Schema::dropIfExists('billing_application');
+        Schema::dropIfExists('billing_accounts');
     }
 };

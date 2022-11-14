@@ -107,7 +107,11 @@ class UserBillingAccount extends Controller
                 return response()->json(['status' => 0, 'msg' => __('Message error send')]);
             }else {
                 $created = Date('Y-m-d');
-                $user_avatar = asset('assets/uploads/users/'.Auth::id().'/avatar/'.Auth::user()->avatar);
+                if (Auth::user()->avatar) {
+                    $user_avatar = asset('assets/uploads/users/' . Auth::id() . '/avatar/' . Auth::user()->avatar);
+                }else{
+                    $user_avatar = asset('project/img/default_avatar.png');
+                }
                 return response()->json(['status' => 1, 'message' => $request->message, 'create' => $created, 'user_avatar' => $user_avatar]);
             }
         }else{

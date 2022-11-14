@@ -588,8 +588,13 @@
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="position-relative avatar">
-                                                                                            <img src="{{ asset('assets/uploads/users/'.Auth::id().'/avatar/'.Auth::user()->avatar) }}"
+                                                                                            @if(Auth::check() && Auth::user()->avatar)
+                                                                                                <img src="{{ asset('assets/uploads/users/'.Auth::id().'/avatar/'.Auth::user()->avatar) }}"
                                                                                                  class="img-fluid rounded-circle" alt="" style="height: 40px;width:40px;">
+                                                                                            @else
+                                                                                                <img src="{{ asset('project/img/default_avatar.png') }}"
+                                                                                                     class="img-fluid rounded-circle" alt="" style="height: 40px;width:40px;">
+                                                                                            @endif
                                                                                         </div>
                                                                                     </div>
                                                                                 @endif

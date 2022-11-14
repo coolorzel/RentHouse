@@ -67,6 +67,11 @@ class AdminBillingAccount extends Controller
             $message->displayed = true;
             $message->save();
         }
+        if($user->avatar){
+            $user_avatar = asset('assets/uploads/users/'.$user->id.'/avatar/'.$user->avatar);
+        }else{
+            $user_avatar = asset('project/img/default_avatar.png');
+        }
         $phone_number[$billing->phone_number] = $billing->phone_number;
         return response()->json([
             'Status' => 1,
@@ -91,7 +96,7 @@ class AdminBillingAccount extends Controller
             'company_regon' => $billing->company_regon,
             'company_website' => $billing->company_website,
             'created_at' => $billing->created_at,
-            'user_avatar' => asset('assets/uploads/users/'.$user->id.'/avatar/'.$user->avatar),
+            'user_avatar' => $user_avatar,
             'admin_avatar' => asset('project/img/admin_avatar.png'),
             'user_email' => $user->email,
             'user_route' => route('viewUserProfile', $user->id),

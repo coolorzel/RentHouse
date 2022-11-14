@@ -9,17 +9,6 @@ use Illuminate\Support\Facades\Auth;
 class BillingAccountObserver
 {
     /**
-     * Handle the BillingAccount "created" event.
-     *
-     * @param  \App\Models\BillingAccount  $billingAccount
-     * @return void
-     */
-    public function created(BillingAccount $billingAccount)
-    {
-        //
-    }
-
-    /**
      * Handle the BillingAccount "updated" event.
      *
      * @param  \App\Models\BillingAccount  $billingAccount

@@ -61,7 +61,7 @@ class FirstInstall extends Controller
                 foreach ($permissions as $permission) {
                     Permission::updateOrCreate(['name' => $permission]);
                 }
-                $permissionslist = Config::get('roleandpermission.permission');
+                $permissionslist = $permissions;
                 foreach ($roles as $role_name){
                     $role = Role::updateOrCreate(['name' => $role_name]);
 
@@ -93,7 +93,7 @@ class FirstInstall extends Controller
                 foreach ($permissions as $permission) {
                     Permission::updateOrCreate(['name' => $permission]);
                 }
-                $permissionslist = Config::get('roleandpermission.permission');
+                $permissionslist = $permissions;
                 foreach ($roles as $role_name){
                     $role = Role::updateOrCreate(['name' => $role_name]);
 

@@ -16,7 +16,7 @@ class BillingApplicationObserver
      */
     public function created(BillingApplication $billingApplication)
     {
-        if(!$billingApplication->billingAccount->u_id == Auth::id()) {
+        if (!$billingApplication->sender == Auth::id()) {
             Notification::create([
                 'u_id' => $billingApplication->billingAccount->u_id,
                 'type' => '1',
