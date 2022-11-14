@@ -471,62 +471,66 @@
                     @if(count($billings) > 0)
                         <div class="accordion accordion-flush" id="accordionFlushExample">
                             @foreach($billings as $billing)
-                                    @if($billing->verified == true || Auth::check() && Auth::user()->can('MOD-view-user-billing-account-in-profile'))
+                                @if($billing->verified == true || Auth::check() && Auth::user()->can('MOD-view-user-billing-account-in-profile'))
+                                    @if($billing->destroy == true)
+                                        <del>
+                                    @endif
                                     <div class="accordion-item" id="id" data-id="{{ $billing->id }}">
-                                        <h2 class="accordion-header" id="flush-heading{{ $billing->id }}">
-                                            <button class="accordion-button collapsed position-relative" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ $billing->id }}" aria-expanded="false" aria-controls="flush-collapse{{ $billing->id }}">
-                                                <div class="container">
-                                                    <div class="row">
-                                                        <div class="col-sm-1 text-center align-self-center">
-                                                            @if($billing->company == true)
-                                                                <i class="fa fa-building-o"></i>
-                                                            @else
-                                                                <i class="fa fa-user-secret"></i>
+                                    <h2 class="accordion-header" id="flush-heading{{ $billing->id }}">
+                                        <button class="accordion-button collapsed position-relative" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ $billing->id }}" aria-expanded="false" aria-controls="flush-collapse{{ $billing->id }}">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-sm-1 text-center align-self-center">
+                                                        @if($billing->company == true)
+                                                            <i class="fa fa-building-o"></i>
+                                                        @else
+                                                            <i class="fa fa-user-secret"></i>
+                                                        @endif
+                                                    </div>
+                                                    <div class="col-sm-3 col align-self-center">
+                                                        <div class="row">
+                                                            @if(isset($billing->company_name))
+                                                                <strong class="text-warning">{{ __('Company name: ') }}</strong> {{ $billing->company_name }}
                                                             @endif
-                                                        </div>
-                                                        <div class="col-sm-3 col align-self-center">
-                                                            <div class="row">
-                                                                @if(isset($billing->company_name))
-                                                                    <strong class="text-warning">{{ __('Company name: ') }}</strong> {{ $billing->company_name }}
-                                                                @endif
-                                                                <div class="col-12 col-sm-12">
-                                                                    <strong>{{ __('First name: ') }}</strong> {{ $billing->name }}
-                                                                </div>
-                                                                <div class="col-12 col-sm-12">
-                                                                    <strong>{{ __('Last name: ') }}</strong> {{ $billing->lname }}
-                                                                </div>
+                                                            <div class="col-12 col-sm-12">
+                                                                <strong>{{ __('First name: ') }}</strong> {{ $billing->name }}
+                                                            </div>
+                                                            <div class="col-12 col-sm-12">
+                                                                <strong>{{ __('Last name: ') }}</strong> {{ $billing->lname }}
                                                             </div>
                                                         </div>
-                                                        <div class="col-sm-8">
-                                                            <div class="row">
-                                                                <div class="col-8 col-sm-6">
-                                                                    <div class="row">
-                                                                        <div class="col-12 col-sm-12 text-center">
-                                                                            <strong>{{ __('Address:') }}</strong>
-                                                                        </div>
-                                                                        <div class="col-12 col-sm-12">
-                                                                            <strong>{{ __('Country:') }}</strong> {{ $billing->country }}
-                                                                        </div>
-                                                                        <div class="col-12 col-sm-12">
-                                                                            <strong>{{ __('Province:') }}</strong> {{ $billing->province }}
-                                                                        </div>
-                                                                        <div class="col-12 col-sm-12">
-                                                                            <strong>{{ __('City:') }}</strong> {{ $billing->city }}
-                                                                        </div>
-                                                                        <div class="col-12 col-sm-12">
-                                                                            <strong>{{ __('Post Code:') }}</strong> {{ $billing->zipcode }}
-                                                                        </div>
-                                                                        <div class="col-12 col-sm-12">
-                                                                            <strong>{{ __('Street:') }}</strong> {{ $billing->street }} {{ $billing->building_number }}
-                                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <div class="row">
+                                                            <div class="col-8 col-sm-6">
+                                                                <div class="row">
+                                                                    <div class="col-12 col-sm-12 text-center">
+                                                                        <strong>{{ __('Address:') }}</strong>
+                                                                    </div>
+                                                                    <div class="col-12 col-sm-12">
+                                                                        <strong>{{ __('Country:') }}</strong> {{ $billing->country }}
+                                                                    </div>
+                                                                    <div class="col-12 col-sm-12">
+                                                                        <strong>{{ __('Province:') }}</strong> {{ $billing->province }}
+                                                                    </div>
+                                                                    <div class="col-12 col-sm-12">
+                                                                        <strong>{{ __('City:') }}</strong> {{ $billing->city }}
+                                                                    </div>
+                                                                    <div class="col-12 col-sm-12">
+                                                                        <strong>{{ __('Post Code:') }}</strong> {{ $billing->zipcode }}
+                                                                    </div>
+                                                                    <div class="col-12 col-sm-12">
+                                                                        <strong>{{ __('Street:') }}</strong> {{ $billing->street }} {{ $billing->building_number }}
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-4 col-sm-6 align-self-center">
-                                                                    <div class="row">
-                                                                        <div class="col-12 col-sm-12 text-center">
-                                                                            <strong>{{ __('Status:') }}</strong>
-                                                                        </div>
-                                                                        <div class="col-12 col-sm-12 text-center">
+                                                            </div>
+                                                            <div class="col-4 col-sm-6 align-self-center">
+                                                                <div class="row">
+                                                                    <div class="col-12 col-sm-12 text-center">
+                                                                        <strong>{{ __('Status:') }}</strong>
+                                                                    </div>
+                                                                    <div class="col-12 col-sm-12 text-center">
+                                                                        @if($billing->destroy == 0)
                                                                             @if($billing->rejected == 0)
                                                                                 @if($billing->verified == 1)
                                                                                     <i class="fa fa-check-circle-o fa-2x text-success"></i>
@@ -536,76 +540,45 @@
                                                                             @else
                                                                                 <i class="fa fa-times-circle-o fa-2x text-danger"></i>
                                                                             @endif
-                                                                        </div>
+                                                                        @else
+                                                                            <i class="fa fa-trash-o fa-2x text-danger"></i>
+                                                                        @endif
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                @if($billing->rejected == false)
-                                                    @if($billing->verified == false)
-                                                        @if(!$billing->message->sender == Auth::id())
-                                                            @if($billing->message->displayed == false)
-                                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
-                                                                        {{ __('New message!') }}
-                                                                        <span class="visually-hidden">{{ __('New message!') }}</span>
-                                                                    </span>
-                                                            @else
-                                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info" id="statusMessage">
-                                                                        {{ __('Do not have new answer') }}
-                                                                        <span class="visually-hidden">{{ __('You dont have new answer') }}</span>
-                                                                    </span>
-                                                            @endif
-                                                        @else
-                                                            @if($billing->message->displayed == false)
-                                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
-                                                                            {{ __('Your application has not been read!') }}
-                                                                            <span class="visually-hidden">{{ __('Your application has not been read!') }}</span>
-                                                                        </span>
-                                                            @else
-                                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info" id="statusMessage">
-                                                                        {{ __('Your application is being verified') }}
-                                                                        <span class="visually-hidden">{{ __('Your application is being verified') }}</span>
-                                                                    </span>
-                                                            @endif
-                                                        @endif
-                                                    @endif
-                                                @else
-                                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="statusMessage">
-                                                            {{ __('Your application has been rejected. Open and learn more...') }}
-                                                            <span class="visually-hidden">{{ __('Your application has been rejected. Open and learn more...') }}</span>
-                                                        </span>
-                                                @endif
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapse{{ $billing->id }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ $billing->id }}" data-bs-parent="#accordionFlushExample">
-                                        @if($billing->verified == true) <!-- Jeżeli konto rozliczeniowe potwierdzone -->
-                                            <div class="accordion-body">
-                                                <div class="card-body">{{ __('No offers ... Add a new one to be displayed here.') }}</div>
                                             </div>
-                                        @else <!-- Jeżeli konto rozliczeniowe nie zostało potwierdzone -->
-                                        @if ($billing->rejected == true) <!-- Jeżeli konto zostało odrzucone -->
-                                            <div class="accordion-body">
-                                                {{ __('The account is rejected.') }}
-                                            </div>
-                                            @else
-                                                <div class="accordion-body">
-                                                    {{ __('The account is awaiting activation.') }}
-                                                </div>
-                                            @endif
-                                            @endif
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapse{{ $billing->id }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ $billing->id }}" data-bs-parent="#accordionFlushExample">
+                                    @if($billing->verified == true) <!-- Jeżeli konto rozliczeniowe potwierdzone -->
+                                        <div class="accordion-body">
+                                            <div class="card-body">{{ __('No offers ... Add a new one to be displayed here.') }}</div>
                                         </div>
+                                    @else <!-- Jeżeli konto rozliczeniowe nie zostało potwierdzone -->
+                                    @if ($billing->rejected == true) <!-- Jeżeli konto zostało odrzucone -->
+                                        <div class="accordion-body">
+                                            {{ __('The account is rejected.') }}
+                                        </div>
+                                        @else
+                                            <div class="accordion-body">
+                                                {{ __('The account is awaiting activation.') }}
+                                            </div>
+                                        @endif
+                                        @endif
                                     </div>
+                                </div>
+                                    @if($billing->destroy == true)
+                                        </del>
+                                    @endif
                                 @endif
                             @endforeach
                         </div>
                     @else
-                        <div class="callout">{{ __('You do not have billing account...') }}</div>
+                        <div class="callout">{{ __('User '.$user->email.' do not have billing account...') }}</div>
                     @endif
-                    <a href="{{ route('myBillingVerificationForm') }}" class="btn btn-outline-default" type="button">
-                        {{ __('Create new billing account') }}
-                    </a>
                 </div>
             </div>
 

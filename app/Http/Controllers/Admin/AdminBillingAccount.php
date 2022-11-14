@@ -143,6 +143,8 @@ class AdminBillingAccount extends Controller
                     $button = __('Delete');
                 }else{
                     $billing->destroy = true;
+                    $billing->rejected = false;
+                    $billing->verified = false;
                     $button = __('Cancel delete');
                 }
             }else{
@@ -154,7 +156,12 @@ class AdminBillingAccount extends Controller
                 ]);
             }
         }else{
-            return false;
+            return response()->json([
+                'status'=>0,
+                'title'=>'Error',
+                'msg'=>__('This billing account be deleted...'),
+                'type'=>'error'
+            ]);
         }
         if ($billing->save())
             return response()->json([

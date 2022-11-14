@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\App\ContactController;
+use App\Http\Controllers\App\OfferController;
 use App\Http\Controllers\App\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SystemControl\FirstInstall;
@@ -179,7 +180,8 @@ Route::group(['middleware' => 'first_install'], function() {
 
         });
 
-        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified')->name('home');
-        Route::get('/postNewAd')->name('postNewAd');
+        //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified')->name('home');
+        Route::get('/postNewAd', [OfferController::class, 'select'])->name('postNewAd');
+        Route::get('/t/{test}', [OfferController::class, 'create'])->name('offerCreate');
     });
 });

@@ -113,6 +113,9 @@
                                 <li><i class="fa fa-envelope mt-4 fa-3x text-white"></i>
                                     <p>{{ config('global.contact_email', 'contact@domain.com') }}</p>
                                 </li>
+                                <li><i class="fa fa-calendar-times-o fa-3x text-white"></i>
+                                    <p>{{ __('Work time') }}: {{ config('global.contact_start_work', '8:00') }} - {{ config('global.contact_end_work', '16:00') }}</p>
+                                </li>
                             </ul>
                         </div>
                 </div>
