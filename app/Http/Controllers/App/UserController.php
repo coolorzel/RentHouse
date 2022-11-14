@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App;
 use App\Descriptions\UserLinksDescriptions;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserProfileValidationRequest;
+use App\Models\BillingAccount;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -55,12 +56,13 @@ class UserController extends Controller
         $issetLink = [];
         $userRole = $user->roles->pluck('name')->toArray();
         $roles = Role::latest()->get();
+        $billings = BillingAccount::where('u_id', $user->id)->get();
         foreach ($links as $key => $l)
         {
             if (empty($user[$key]))
                 $issetLink[] = $key;
         }
-        return view('site.user.viewuserprofile', compact('user', 'issetLink', 'links', 'userRole', 'roles'));
+        return view('site.user.viewuserprofile', compact('user', 'issetLink', 'links', 'userRole', 'roles', 'billings'));
     }
 
     /**

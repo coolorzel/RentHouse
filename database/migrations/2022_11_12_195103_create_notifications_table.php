@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('u_id');
             $table->boolean('displayed')->default(false);
             $table->string('type');
-            $table->string('route');
+            $table->string('route')->nullable();
             $table->string('message');
             $table->timestamps();
         });

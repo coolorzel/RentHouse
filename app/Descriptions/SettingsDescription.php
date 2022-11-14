@@ -267,6 +267,7 @@ class SettingsDescription {
         'MOD-billing-account-status-accept',
         'MOD-billing-account-status-reject',
         'MOD-billing-account-status-delete',
+        'MOD-view-user-billing-account-in-profile',
 
         // PERMISSION FOR MIDDLEWARE //
         'ACP-visit-page-off',

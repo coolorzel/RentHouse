@@ -16,6 +16,8 @@ use App\Http\Controllers\User\AvatarController;
 use App\Http\Controllers\User\LinkUserController;
 use App\Http\Controllers\User\MyUserProfile;
 use App\Http\Controllers\User\UserBillingAccount;
+use App\Http\Controllers\User\UserNotifications;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -155,6 +157,7 @@ Route::group(['middleware' => 'first_install'], function() {
                 Route::post('/checkStatusMessage/{billing}', [MyUserProfile::class, 'statusMessageBillingApplication'])->name('checkStatusMessage');
                 Route::post('/sendMessageBillingAccount', [UserBillingAccount::class, 'sendMessage'])->name('userSendResponseBillingAccount');
             });
+            Route::post('/notification', [UserNotifications::class, 'change'])->name('notificationChange');
         });
 
         //___________________//

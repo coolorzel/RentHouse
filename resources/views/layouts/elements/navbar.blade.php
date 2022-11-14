@@ -34,20 +34,37 @@
                         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-bell mr-1 @if(Auth::user()->notifications) text-warning @endif" style="font-size:24px"></i>
-                                        <span class="position-absolute start-100 translate-middle badge rounded-pill bg-info">
-                                    {{ count(\App\Models\Notification::where('u_id', Auth::id())->get()) }}
-                                    <span class="visually-hidden">{{ __('unread notification') }}</span>
-                                </span>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-light">
+                                    <button class="btn btn-white nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                        <i id="iconNotification" class="fa fa-bell mr-1 @if(count(\App\Models\Notification::where(['u_id' => Auth::id(), 'displayed' => false])->get()) > 0) text-warning @endif" style="font-size:24px"></i>
+                                        <span class="position-absolute start-100 translate-middle badge rounded-pill bg-info" id="countNotification">
+                                            {{ count(\App\Models\Notification::where(['u_id' => Auth::id(), 'displayed' => false])->get()) }}
+                                            <span class="visually-hidden">{{ __('unread notification') }}</span>
+                                        </span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-light" style="min-width: 300px;">
+                                            <li><h6 class="dropdown-header">{{ __('Notification list') }}</h6></li>
                                         @if(!Auth::user()->notifications)
                                         <li>{{ __('Empty') }}...</li>
                                         @else
-                                            @foreach(Auth::user()->notifications as $notification)
-                                                <li>{{ $notification->message }}</li>
-                                            @endforeach
+                                            <ol class="list-group" id="notificationList">
+                                                @foreach(Auth::user()->notifications as $notification)
+                                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                                        <div data-info="{{ $notification->id }}" data-route="{{ route('notificationChange') }}" class="me-auto">
+                                                        <div class="@if($notification->displayed == false) fw-bold @endif" data-info="{{ $notification->id }}"><small>{{ __($notification->message) }}</small></div>
+                                                        <small><small class="text-secondary">{{ $notification->created_at }}</small></small>
+                                                        </div>
+                                                        @if($notification->route)
+                                                            <a href="{{ $notification->route }}" class="badge bg-primary rounded-pill">
+                                                                <i class="fa fa-arrow-right"></i>
+                                                            </a>
+                                                        @else
+                                                            <span class="badge bg-info rounded-pill">
+                                                                <i class="fa fa-arrow-right"></i>
+                                                            </span>
+                                                        @endif
+                                                    </li>
+                                                @endforeach
+                                            </ol>
                                         @endif
                                     </ul>
                                 </li>
@@ -88,3 +105,4 @@
         </div>
     </div>
 </nav>
+

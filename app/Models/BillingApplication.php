@@ -15,4 +15,8 @@ class BillingApplication extends Model
         'message',
         'displayed'
     ];
+    public function billingAccount()
+    {
+        return $this->hasOne(BillingAccount::class, 'id', 'billing_id');
+    }
 }

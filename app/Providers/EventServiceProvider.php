@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\BillingAccount;
+use App\Models\BillingApplication;
 use App\Models\Contact;
 use App\Models\Contact_Control;
 use App\Models\User;
+use App\Observers\BillingAccountObserver;
 use App\Observers\ContactObserver;
 use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
@@ -35,6 +38,8 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
         User::observe(UserObserver::class);
         Contact::observe(ContactObserver::class);
+        BillingAccount::observe(BillingAccountObserver::class);
+        BillingApplication::observe(BillingAccountObserver::class);
     }
 
     /**

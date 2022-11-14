@@ -103,6 +103,72 @@
     @include('sweetalert::alert')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script>
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(function () {
+            $('#notificationList li div').on('click', function (e) {
+                e.preventDefault()
+                var change = $("li").find('[data-info="'+ $(this).data('info') +'"]');
+                $.ajax({
+                    url:$(this).data('route'),
+                    method:'POST',
+                    data: {data: $(this).data('info')},
+                    dataType:'json',
+                    success:
+                        function(data) {
+                                if(data.data === true){
+                                    change.removeClass('fw-bold');
+                                }else{
+                                    change.addClass('fw-bold');
+                                }
+                                $('#countNotification').text(data.countNotification);
+                                if(data.countNotification > 0) {
+                                    $('#iconNotification').addClass('text-warning');
+                                }else {
+                                    $('#iconNotification').removeClass('text-warning');
+                                }
+                            Toastify({
+                                    text: data.message, // "This is a toast",
+                                    duration: 3000,
+                                    //destination: "https://github.com/apvarun/toastify-js",
+                                    newWindow: true,
+                                    close: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "right", // `left`, `center` or `right`
+                                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                                    style: {
+                                        background: "linear-gradient(to right, #aac900, #ff0000)",
+                                    },
+                                    onClick: function(){} // Callback after click
+                                }).showToast();
+                            /*} else {
+                                if(data.typepost == 'readunread')
+                                {
+                                    $('#messageStatus').text(data.description);
+                                    $('#btnReadUnRead').text(data.btn);
+                                }
+                                if(data.typepost == 'close')
+                                {
+                                    $('#messageStatus').text(data.description);
+                                    $('#btnClose').text(data.btn);
+                                }
+
+                                Swal.fire({
+                                    title: data.title,
+                                    text: data.msg,
+                                    type: data.type
+                                });
+                            }*/
+                        }
+                });
+            });
+        });
+    </script>
+
     @yield('scripts')
 </body>
 </html>

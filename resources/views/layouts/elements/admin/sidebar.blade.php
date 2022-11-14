@@ -61,7 +61,7 @@
                     {{ __('Billing Account') }}
                     @if(count(\App\Models\BillingAccount::where(['verified' => false, 'rejected' => false, 'destroy' => false])->get()) > 0)
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
-                                    {{ __('New message') }}
+                                    {{ __('New application billing account') }}
                                     <span class="visually-hidden">{{ __('unread messages') }}</span>
                                 </span>
                     @endif

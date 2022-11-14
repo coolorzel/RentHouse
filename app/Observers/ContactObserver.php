@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Contact;
 use App\Models\Contact_Control;
+use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,6 +45,11 @@ class ContactObserver
         if($contact->wasChanged('closed')) {
             if ($contact->closed == true) {
                 $information = __('Has been marked as closed');
+                Notification::create([
+                    'u_id' => $contact->u_id,
+                    'type' => '1',
+                    'message' => 'Reply to your contact. Check your mail.'
+                ]);
             }else{
                 $information = __('Has been marked as unclosed');
             }

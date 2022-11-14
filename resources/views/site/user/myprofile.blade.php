@@ -464,7 +464,7 @@
                                                             @endif
                                                         @endif
                                                     @else
-                                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info" id="statusMessage">
+                                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="statusMessage">
                                                             {{ __('Your application has been rejected. Open and learn more...') }}
                                                             <span class="visually-hidden">{{ __('Your application has been rejected. Open and learn more...') }}</span>
                                                         </span>
