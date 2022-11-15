@@ -49,4 +49,14 @@ class UserNotifications extends Controller
         }
         return response()->json(['status' => $status, 'message' => $message, 'type' => $type, 'data' => $data, 'countNotification' => $count]);
     }
+
+    public function getValue (Request $request)
+    {
+        if($notifications = Auth::user()->notifications()->offset(0)->limit($request->data)->get()){
+            $isComplete = Auth::user()->notifications->count() <= $request->data;
+            return response()->json(['notifications' => $notifications, 'isComplete' => $isComplete]);
+        }else{
+            return false;
+        }
+    }
 }

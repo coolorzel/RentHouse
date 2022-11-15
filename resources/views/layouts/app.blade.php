@@ -27,7 +27,8 @@
     <link rel="stylesheet" href="{{ asset('project/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('project/css/sidebars.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <style>
 
     </style>
@@ -91,11 +92,14 @@
     <script src="{{ url('project/js/sidebars.js') }}"></script>
     <script src="{{ url('project/js/changeForm.js') }}"></script>
     <script src="{{ url('project/simple-datatables/simple-datatables.js') }}"></script>
+    <script src="{{ url('project/js/date-format.js') }}"></script>
     <!-- tether js -->
     <script src="{{ url('/project/plugins/tether/js/tether.min.js') }}"></script>
     <script src="{{ url('/project/plugins/slick-carousel/slick/slick.min.js') }}"></script>
     <script src="{{ url('/project/plugins/jquery-nice-select/js/jquery.nice-select.min.js') }}"></script>
     <script src="{{ url('/project/plugins/fancybox/jquery.fancybox.pack.js') }}"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <!-- sweet alert -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
@@ -104,14 +108,137 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        let count = 10;
+        const notificationChangeUrl = "{{ route('notificationChange') }}";
+
         $.ajaxSetup({
             headers:{
                 'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
             }
         });
-        $(function () {
+
+        //$(function () {
+            $('#moreNotifications').on('click', function (e){
+                const self = $(this);
+                let displayed;
+                let button;
+                let isComplete = false;
+                e.preventDefault();
+               $.ajax({
+                   url:$(this).data('route'),
+                   method: 'POST',
+                   data: {data: count},
+                   dataType:'json',
+                   success:
+                   function(data) {
+                       if(data['isComplete'] === false) {
+                           count += 5;
+                       }else{
+                           $('#moreNotifications').hide();
+                       }
+                       $('#notificationList').text('');
+                       $.each(data.notifications, function(prefix, val) {
+                           var created_at = new Date(val['created_at']);
+                           if(val['displayed'] === 0) {
+                               displayed = "fw-bold text-warning";
+                           }else{
+                               displayed = '';
+                           }
+                           if(val['route']){
+                               button = "<button id=\"redirect\" data-info=\"" + val['id'] + "\" data-route=\"" + notificationChangeUrl + "\" data-redirect=\"" + val['route'] + "\" class=\"badge bg-primary rounded-pill\">" +
+                                   "<i class=\"fa fa-arrow-right\"></i>" +
+                               "</button>";
+                           }else{
+                               button = "<span class=\"badge bg-info rounded-pill\">" +
+                                   "<i class=\"fa fa-arrow-right\"></i>" +
+                                   "</span>";
+                           }
+                           $('#notificationList').append("<li class=\"list-group-item d-flex justify-content-between align-items-start\">" +
+                           "<div data-info=\"" + val['id'] + "\" data-route=\"" + notificationChangeUrl + "\" class=\"me-auto\">" +
+                           "<div class=\"" + displayed + "\" data-info=\"" + val['id'] + "\"><small>" + val['message'] + "</small></div>" +
+                           "<small><small class=\"text-secondary\">" + dateFormat(created_at, 'yyyy-m-d HH:MM:ss') + "</small></small>" +
+                           "</div>" +
+                           button +
+                       "</li>");
+                       });
+
+                       $('#notificationList li #redirect').on('click', function (e) {
+                           e.preventDefault();
+                           var btn = $(this);
+                           $.ajax({
+                               url:$(this).data('route'),
+                               method:'POST',
+                               data: {data: $(this).data('info'), onlyRead: true},
+                               dataType:'json',
+                               success:
+                                   function(data) {
+                                       location.href = $(btn).data('redirect');
+                                   }
+                           });
+                       });
+
+                       $('#notificationList li div').on('click', function (e) {
+                           e.preventDefault()
+                           var change = $("li").find('[data-info="'+ $(this).data('info') +'"]');
+                           $.ajax({
+                               url:$(this).data('route'),
+                               method:'POST',
+                               data: {data: $(this).data('info')},
+                               dataType:'json',
+                               success:
+                                   function(data) {
+                                       if(data.data === true){
+                                           change.removeClass('fw-bold');
+                                       }else{
+                                           change.addClass('fw-bold');
+                                       }
+                                       $('#countNotification').text(data.countNotification);
+                                       if(data.countNotification > 0) {
+                                           $('#iconNotification').addClass('text-warning');
+                                       }else {
+                                           $('#iconNotification').removeClass('text-warning');
+                                       }
+                                       Toastify({
+                                           text: data.message, // "This is a toast",
+                                           duration: 3000,
+                                           //destination: "https://github.com/apvarun/toastify-js",
+                                           newWindow: true,
+                                           close: true,
+                                           gravity: "top", // `top` or `bottom`
+                                           position: "right", // `left`, `center` or `right`
+                                           stopOnFocus: true, // Prevents dismissing of toast on hover
+                                           style: {
+                                               background: "linear-gradient(to right, #aac900, #ff0000)",
+                                           },
+                                           onClick: function(){} // Callback after click
+                                       }).showToast();
+                                       /*} else {
+                                           if(data.typepost == 'readunread')
+                                           {
+                                               $('#messageStatus').text(data.description);
+                                               $('#btnReadUnRead').text(data.btn);
+                                           }
+                                           if(data.typepost == 'close')
+                                           {
+                                               $('#messageStatus').text(data.description);
+                                               $('#btnClose').text(data.btn);
+                                           }
+
+                                           Swal.fire({
+                                               title: data.title,
+                                               text: data.msg,
+                                               type: data.type
+                                           });
+                                       }*/
+                                   }
+                           });
+                       });
+                   }
+               });
+            });
+
             $('#notificationList li #redirect').on('click', function (e) {
-                e.preventDefault()
+                e.preventDefault();
                 var btn = $(this);
                 $.ajax({
                     url:$(this).data('route'),
@@ -136,9 +263,9 @@
                     success:
                         function(data) {
                                 if(data.data === true){
-                                    change.removeClass('fw-bold');
+                                    change.removeClass('fw-bold text-warning');
                                 }else{
-                                    change.addClass('fw-bold');
+                                    change.addClass('fw-bold text-warning');
                                 }
                                 $('#countNotification').text(data.countNotification);
                                 if(data.countNotification > 0) {
@@ -181,7 +308,7 @@
                         }
                 });
             });
-        });
+       // });
     </script>
 
     @yield('scripts')

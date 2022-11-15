@@ -494,7 +494,7 @@
                                                                                 </ul>
                                                                             </div>
                                                                         </div>
-                                                                        <div id="messagess" class="card-body p-4" style="height: 500px; overflow: auto;">
+                                                                        <div id="messagess" data-messages="{{ $billing->id }}" class="card-body p-4" style="height: 500px; overflow: auto;">
                                                                             @foreach($billing->messages as $message)
                                                                                 @if(!$message->sender == Auth::id())
                                                                                     <div class="d-flex align-items-baseline mb-4">
@@ -530,12 +530,12 @@
                                                                                 @endif
                                                                             @endforeach
                                                                         </div>
-                                                                        <form action="{{ route('userSendResponseBillingAccount') }}" method="post" id="sendMessage">
+                                                                        <form action="{{ route('userSendResponseBillingAccount') }}" method="post" id="sendMessage" data-info="{{ $message->billing_id }}">
                                                                             <div class="card-footer bg-white position-absolute w-100 bottom-0 m-0 p-1">
                                                                                 <div class="input-group">
                                                                                     <input type="text" name="message" class="form-control border-0" required placeholder="{{ __('Write a message...') }}">
                                                                                     <div class="input-group-text bg-transparent border-0">
-                                                                                        <button type="submit" class="btn btn-outline-warning" id="submitMessage" data-info="{{ $message->billing_id }}">
+                                                                                        <button type="submit" class="btn btn-outline-warning" id="submitMessage">
                                                                                             <i class="fa fa-send-o"></i>
                                                                                         </button>
                                                                                     </div>
@@ -559,7 +559,7 @@
                                                                                 </ul>
                                                                             </div>
                                                                         </div>
-                                                                        <div id="messagess" class="card-body p-4" style="height: 500px; overflow: auto;">
+                                                                        <div id="messagess" data-messages="{{ $billing->id }}" class="card-body p-4" style="height: 500px; overflow: auto;">
                                                                             @foreach($billing->messages as $message)
                                                                                 @if(!$message->sender == Auth::id())
                                                                                     <div class="d-flex align-items-baseline mb-4">
@@ -600,12 +600,12 @@
                                                                                 @endif
                                                                             @endforeach
                                                                         </div>
-                                                                        <form action="{{ route('userSendResponseBillingAccount') }}" method="post" id="sendMessage">
+                                                                        <form action="{{ route('userSendResponseBillingAccount') }}" method="post" id="sendMessage" data-info="{{ $message->billing_id }}">
                                                                             <div class="card-footer bg-white position-absolute w-100 bottom-0 m-0 p-1">
                                                                                 <div class="input-group">
                                                                                     <input type="text" name="message" class="form-control border-0" required placeholder="{{ __('Write a message...') }}">
                                                                                     <div class="input-group-text bg-transparent border-0">
-                                                                                        <button type="submit" class="btn btn-outline-warning" id="submitMessage" data-info="{{ $message->billing_id }}">
+                                                                                        <button type="submit" class="btn btn-outline-warning" id="submitMessage">
                                                                                             <i class="fa fa-send-o"></i>
                                                                                         </button>
                                                                                     </div>
@@ -708,13 +708,16 @@
             }
         });
 
-        $(function (){
-            $('#sendMessage').on('submit', function(e){
+        $(document).ready(function (){
+            $('div #sendMessage').on('submit', function(e){
+                const thisForm = $(this);
+                var input = $(this).find('input[name="message"]');
+                const messanger = $('div').find('[data-messages="'+ $(this).data('info') +'"]');
                 e.preventDefault();
                 $.ajax({
                     url:$(this).attr('action'),
                     method:$(this).attr('method'),
-                    data: {data:$('#submitMessage').data('info'), message:$('#sendMessage input').val()},
+                    data: {data:$(this).data('info'), message:input.val()},
                     success:
                         function(data) {
                             if(data.status === 0){
@@ -733,9 +736,10 @@
                                     onClick: function(){} // Callback after click
                                 }).showToast();
                             }else{
-                                $('#sendMessage')[0].reset();
+                                thisForm[0].reset();
+                                messanger[0].scrollIntoView();
                                 var create_at = new Date(data.create);
-                                $('#messagess').append("<div class=\"d-flex align-items-baseline text-end justify-content-end mb-4\">" +
+                                messanger.append("<div class=\"d-flex align-items-baseline text-end justify-content-end mb-4\">" +
                                     "<div class=\"pe-2\">" +
                                     "<div>" +
                                     "<div class=\"card card-text d-inline-block p-2 px-3 m-1\">" + data.message +

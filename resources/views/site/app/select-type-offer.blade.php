@@ -76,12 +76,12 @@
             <ul class="nav nav-pills nav-fill">
                 @foreach($categories as $category)
                     <li class="nav-item d-flex">
-                        <button class="btn btn-outline-warning" data-route="{{ route('offerCreate', strtolower($category['name'])) }}">
+                        <button class="btn btn-outline-warning" data-route="{{ route('offerCreate', strtolower($category->slug)) }}">
                             <div class="col-sm-12 col-md-12 col-lg-12">
-                                <i class="fa {{ $category['photo'] }} fa-5x"></i>
+                                <i class="fa {{ $category->icon }} fa-5x"></i>
                             </div>
                             <div class="col-sm-12 col-md-12 col-lg-12">
-                                <span class="link-text">{{ $category['name'] }}</span>
+                                <span class="link-text">{{ $category->name }}</span>
                             </div>
                         </button>
                     </li>

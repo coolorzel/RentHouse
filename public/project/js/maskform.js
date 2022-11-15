@@ -26,14 +26,14 @@
         $('.selectonfocus').mask("00/00/0000", {selectOnFocus: true});
 
         $('.cep_with_callback').mask('00000-000', {onComplete: function(cep) {
-                console.log('Mask is done!:', cep);
+                //console.log('Mask is done!:', cep);
             },
             onKeyPress: function(cep, event, currentField, options){
-                console.log('An key was pressed!:', cep, ' event: ', event, 'currentField: ', currentField.attr('class'), ' options: ', options);
+                //console.log('An key was pressed!:', cep, ' event: ', event, 'currentField: ', currentField.attr('class'), ' options: ', options);
             },
             onInvalid: function(val, e, field, invalid, options){
                 var error = invalid[0];
-                console.log ("Digit: ", error.v, " is invalid for the position: ", error.p, ". We expect something like: ", error.e);
+                //console.log ("Digit: ", error.v, " is invalid for the position: ", error.p, ". We expect something like: ", error.e);
             }
         });
 

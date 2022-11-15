@@ -209,7 +209,6 @@
             oSpan.innerHTML = maxLength +'';
             $('#comment').on('keyup', function(){
                 var string = document.getElementById('comment')
-                console.log(string.value.length);
                 oSpan.innerHTML = (maxLength - ( string.value.length ) ) +'';
                 if( maxLength < string.value.length ) {
                     whenBeMaxLength = string.value.substring(0, maxLength);

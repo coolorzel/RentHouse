@@ -35,9 +35,9 @@
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
                                     <button class="btn btn-white nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-                                        <i id="iconNotification" class="fa fa-bell mr-1 @if(count(\App\Models\Notification::where(['u_id' => Auth::id(), 'displayed' => false])->get()) > 0) text-warning @endif" style="font-size:24px"></i>
+                                        <i id="iconNotification" class="fa fa-bell mr-1 @if((\App\Models\Notification::where(['u_id' => Auth::id(), 'displayed' => false])->count()) > 0) text-warning @endif" style="font-size:24px"></i>
                                         <span class="position-absolute start-100 translate-middle badge rounded-pill bg-info" id="countNotification">
-                                            {{ count(\App\Models\Notification::where(['u_id' => Auth::id(), 'displayed' => false])->get()) }}
+                                            {{ (\App\Models\Notification::where(['u_id' => Auth::id(), 'displayed' => false])->count()) }}
                                             <span class="visually-hidden">{{ __('unread notification') }}</span>
                                         </span>
                                     </button>
@@ -47,10 +47,10 @@
                                         <li>{{ __('Empty') }}...</li>
                                         @else
                                             <ol class="list-group" id="notificationList">
-                                                @foreach(Auth::user()->notifications as $notification)
+                                                @foreach(Auth::user()->notifications()->offset(0)->limit(5)->get() as $notification)
                                                     <li class="list-group-item d-flex justify-content-between align-items-start">
                                                         <div data-info="{{ $notification->id }}" data-route="{{ route('notificationChange') }}" class="me-auto">
-                                                        <div class="@if($notification->displayed == false) fw-bold @endif" data-info="{{ $notification->id }}"><small>{{ __($notification->message) }}</small></div>
+                                                        <div class="@if($notification->displayed == false) fw-bold  text-warning @endif" data-info="{{ $notification->id }}"><small>{{ __($notification->message) }}</small></div>
                                                         <small><small class="text-secondary">{{ $notification->created_at }}</small></small>
                                                         </div>
                                                         @if($notification->route)
@@ -65,6 +65,7 @@
                                                     </li>
                                                 @endforeach
                                             </ol>
+                                            <button class="btn btn-outline-white" id="moreNotifications" data-count="10" data-route="{{ route('notificationGet') }}">{{ __('More 5 pcs') }}</button>
                                         @endif
                                     </ul>
                                 </li>

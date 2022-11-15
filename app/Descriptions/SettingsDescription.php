@@ -239,6 +239,8 @@ class SettingsDescription {
         'MOD-billing-account-api',
         'MOD-status-changed-billing-account',
         'MOD-message-restored-billing-account',
+        'ACP-offers-controller-view',
+        'ACP-offers-category-view',
 
 
         // PERMISSION FOR BLADE AND CONTROLLER //
@@ -268,6 +270,9 @@ class SettingsDescription {
         'MOD-billing-account-status-reject',
         'MOD-billing-account-status-delete',
         'MOD-view-user-billing-account-in-profile',
+        'ACP-offers-category-edit',
+        'ACP-offers-category-delete',
+        'ACP-offers-category-create',
 
         // PERMISSION FOR MIDDLEWARE //
         'ACP-visit-page-off',

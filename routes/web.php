@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminBillingAccount;
 use App\Http\Controllers\Admin\AdminContactController;
 use App\Http\Controllers\Admin\AdminDashboard;
+use App\Http\Controllers\Admin\AdminOfferCategory;
 use App\Http\Controllers\Admin\AdminPageSettings;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\PermissionsController;
@@ -133,6 +134,14 @@ Route::group(['middleware' => 'first_install'], function() {
                     });
                 });
             });
+            Route::group(['prefix' => 'offer-controller', 'middleware' => ['permission:ACP-offers-controller-view']], function() {
+                Route::group(['prefix' => 'categories', 'middleware' => ['permission:ACP-offers-category-view']], function() {
+                    Route::get('/', [AdminOfferCategory::class, 'index'])->name('adminOffersControllerCategory');
+                    Route::post('/create', [AdminOfferCategory::class, 'store'])->middleware('permission:ACP-offers-category-create')->name('adminOffersCategoryCreate');
+                    Route::post('/show/{category}', [AdminOfferCategory::class, 'edit'])->middleware('permission:ACP-offers-category-edit')->name('adminOffersCategoryShow');
+                    Route::post('/edit/{category}', [AdminOfferCategory::class, 'update'])->middleware('permission:ACP-offers-category-edit')->name('adminOffersCategoryEdit');
+                });
+            });
         });
 
         //______________//
@@ -158,7 +167,10 @@ Route::group(['middleware' => 'first_install'], function() {
                 Route::post('/checkStatusMessage/{billing}', [MyUserProfile::class, 'statusMessageBillingApplication'])->name('checkStatusMessage');
                 Route::post('/sendMessageBillingAccount', [UserBillingAccount::class, 'sendMessage'])->name('userSendResponseBillingAccount');
             });
-            Route::post('/notification', [UserNotifications::class, 'change'])->name('notificationChange');
+            Route::group(['prefix' => 'notification'], function() {
+                Route::post('/', [UserNotifications::class, 'change'])->name('notificationChange');
+                Route::post('/get', [UserNotifications::class, 'getValue'])->name('notificationGet');
+            });
         });
 
         //___________________//
@@ -182,6 +194,6 @@ Route::group(['middleware' => 'first_install'], function() {
 
         //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified')->name('home');
         Route::get('/postNewAd', [OfferController::class, 'select'])->name('postNewAd');
-        Route::get('/t/{test}', [OfferController::class, 'create'])->name('offerCreate');
+        Route::get('/t/{category}', [OfferController::class, 'create'])->name('offerCreate');
     });
 });

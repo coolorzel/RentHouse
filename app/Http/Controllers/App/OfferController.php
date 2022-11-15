@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 
 class OfferController extends Controller
 {
     public function select()
     {
-        $categories[0] = ['name' => 'Posiadłość', 'photo' => 'fa-home'];
-        $categories[1] = ['name' => 'Teren rolny', 'photo' => 'fa-bed'];
+        $categories = Category::where('enable', true)->get();
         //dd($categories);
         return view ('site.app.select-type-offer', compact('categories'));
     }

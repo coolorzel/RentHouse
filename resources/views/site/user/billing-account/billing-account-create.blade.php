@@ -382,7 +382,6 @@
             oSpan.innerHTML = maxLength +'';
             $('#message').on('keyup', function(){
                 var string = document.getElementById('message')
-                console.log(string.value.length);
                 oSpan.innerHTML = (maxLength - ( string.value.length ) ) +'';
                 if( maxLength < string.value.length ) {
                     whenBeMaxLength = string.value.substring(0, maxLength);

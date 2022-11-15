@@ -80,7 +80,8 @@
             <li class="mb-1">
                 <button class="btn btn-toggle align-items-center rounded collapsed position-relative" data-bs-toggle="collapse" data-bs-target="#contact-collapse" aria-expanded="false">
                     {{ __('Contact') }}
-                    @if(count(\App\Models\Contact::where('displayed', false)->get()) > 0)
+
+                    @if((\App\Models\Contact::where('displayed', false)->count()) > 0)
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
                                     {{ __('New message') }}
                                     <span class="visually-hidden">{{ __('unread messages') }}</span>
@@ -96,6 +97,19 @@
                                     <span class="visually-hidden">{{ __('unread messages') }}</span>
                                 </span>
                             </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <hr>
+            <li class="mb-1">
+                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#offer-controller-collapse" aria-expanded="false">
+                    {{ __('Offer controller') }}
+                </button>
+                <div class="collapse {{ (Request::is('acp/offer-controller', 'acp/offer-controller/*')) ? 'show' : '' }}" id="offer-controller-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="{{ route('adminOffersControllerCategory') }}" class="btn btn-link link-dark rounded {{ Request::is('acp/offer-controller/categories') ? 'active' : '' }}">{{ __('Categories') }}</a></li>
+                        <li><a href="{{ route('adminContactMessage') }}" class="btn btn-link link-dark rounded position-relative {{ (Request::is('acp/contact/message') || Request::is('acp/contact/message/*')) ? 'active' : '' }}">{{ __('Messages') }}</a>
                         </li>
                     </ul>
                 </div>
