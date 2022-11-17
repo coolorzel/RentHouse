@@ -242,6 +242,7 @@ class SettingsDescription {
         'ACP-offers-controller-view',
         'ACP-offers-category-view',
         'ACP-offers-category-delete',
+        'ACP-offers-form-in-category-view',
 
 
         // PERMISSION FOR BLADE AND CONTROLLER //
@@ -275,6 +276,9 @@ class SettingsDescription {
         'ACP-offers-category-delete',
         'ACP-offers-category-create',
         'ACP-view-disabled-category',
+        'ACP-offers-form-in-category-delete',
+        'ACP-offers-form-in-category-edit',
+        'ACP-offers-form-in-category-create',
 
         // PERMISSION FOR MIDDLEWARE //
         'ACP-visit-page-off',

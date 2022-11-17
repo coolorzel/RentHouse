@@ -109,7 +109,7 @@
                 <div class="collapse {{ (Request::is('acp/offer-controller', 'acp/offer-controller/*')) ? 'show' : '' }}" id="offer-controller-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                         <li><a href="{{ route('adminOffersControllerCategory') }}" class="btn btn-link link-dark rounded {{ Request::is('acp/offer-controller/categories') ? 'active' : '' }}">{{ __('Categories') }}</a></li>
-                        <li><a href="{{ route('adminContactMessage') }}" class="btn btn-link link-dark rounded position-relative {{ (Request::is('acp/contact/message') || Request::is('acp/contact/message/*')) ? 'active' : '' }}">{{ __('Messages') }}</a>
+                        <li><a href="{{ route('adminOffersControllerFormInCategory') }}" class="btn btn-link link-dark rounded position-relative {{ (Request::is('acp/offer-controller/form-in-category', 'acp/offer-controller/form-in-category/*')) ? 'active' : '' }}">{{ __('Active form in Category') }}</a>
                         </li>
                     </ul>
                 </div>

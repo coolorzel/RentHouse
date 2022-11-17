@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminBillingAccount;
 use App\Http\Controllers\Admin\AdminContactController;
 use App\Http\Controllers\Admin\AdminDashboard;
+use App\Http\Controllers\Admin\AdminFormInCategoryController;
 use App\Http\Controllers\Admin\AdminOfferCategory;
 use App\Http\Controllers\Admin\AdminPageSettings;
 use App\Http\Controllers\Admin\AdminUserController;
@@ -139,12 +140,21 @@ Route::group(['middleware' => 'first_install'], function() {
             // Offer setting controller //
             //__________________________//
             Route::group(['prefix' => 'offer-controller', 'middleware' => ['permission:ACP-offers-controller-view']], function() {
+                // ---- CATEGORY ---- //
                 Route::group(['prefix' => 'categories', 'middleware' => ['permission:ACP-offers-category-view']], function() {
                     Route::get('/', [AdminOfferCategory::class, 'index'])->name('adminOffersControllerCategory');
                     Route::post('/create', [AdminOfferCategory::class, 'store'])->middleware('permission:ACP-offers-category-create')->name('adminOffersCategoryCreate');
                     Route::post('/show/{category}', [AdminOfferCategory::class, 'show'])->middleware('permission:ACP-offers-category-edit')->name('adminOffersCategoryShow');
                     Route::post('/edit/{category}', [AdminOfferCategory::class, 'update'])->middleware('permission:ACP-offers-category-edit')->name('adminOffersCategoryEdit');
                     Route::delete('/delete/{category}', [AdminOfferCategory::class, 'destroy'])->middleware('permission:ACP-offers-category-delete')->name('adminOffersCategoryDelete');
+                });
+                // ---- OFFER FORM IN CATEGORY ---- //
+                Route::group(['prefix' => 'form-in-category', 'middleware' => ['permission:ACP-offers-form-in-category-view']], function() {
+                    Route::get('/', [AdminFormInCategoryController::class, 'index'])->name('adminOffersControllerFormInCategory');
+                    Route::post('/create', [AdminFormInCategoryController::class, 'store'])->middleware('permission:ACP-offers-form-in-category-create')->name('adminOffersFormInCategoryCreate');
+                    Route::post('/show/{category}', [AdminFormInCategoryController::class, 'show'])->middleware('permission:ACP-offers-form-in-category-edit')->name('adminOffersFormInCategoryShow');
+                    Route::post('/edit/{category}', [AdminFormInCategoryController::class, 'update'])->middleware('permission:ACP-offers-form-in-category-edit')->name('adminOffersFormInCategoryEdit');
+                    Route::delete('/delete/{category}', [AdminFormInCategoryController::class, 'destroy'])->middleware('permission:ACP-offers-form-in-category-delete')->name('adminOffersFormInCategoryDelete');
                 });
             });
         });
