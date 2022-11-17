@@ -241,6 +241,7 @@ class SettingsDescription {
         'MOD-message-restored-billing-account',
         'ACP-offers-controller-view',
         'ACP-offers-category-view',
+        'ACP-offers-category-delete',
 
 
         // PERMISSION FOR BLADE AND CONTROLLER //
@@ -273,6 +274,7 @@ class SettingsDescription {
         'ACP-offers-category-edit',
         'ACP-offers-category-delete',
         'ACP-offers-category-create',
+        'ACP-view-disabled-category',
 
         // PERMISSION FOR MIDDLEWARE //
         'ACP-visit-page-off',

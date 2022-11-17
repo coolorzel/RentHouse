@@ -5,11 +5,11 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 
-class OfferController extends Controller
+class OfferControllerController extends Controller
 {
     public function select()
     {
-        $categories = Category::where('enable', true)->get();
+        $categories = Category::all();
         //dd($categories);
         return view ('site.app.select-type-offer', compact('categories'));
     }

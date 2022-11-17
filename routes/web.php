@@ -9,7 +9,7 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\App\ContactController;
-use App\Http\Controllers\App\OfferController;
+use App\Http\Controllers\App\OfferControllerController;
 use App\Http\Controllers\App\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SystemControl\FirstInstall;
@@ -134,12 +134,17 @@ Route::group(['middleware' => 'first_install'], function() {
                     });
                 });
             });
+
+            //__________________________//
+            // Offer setting controller //
+            //__________________________//
             Route::group(['prefix' => 'offer-controller', 'middleware' => ['permission:ACP-offers-controller-view']], function() {
                 Route::group(['prefix' => 'categories', 'middleware' => ['permission:ACP-offers-category-view']], function() {
                     Route::get('/', [AdminOfferCategory::class, 'index'])->name('adminOffersControllerCategory');
                     Route::post('/create', [AdminOfferCategory::class, 'store'])->middleware('permission:ACP-offers-category-create')->name('adminOffersCategoryCreate');
-                    Route::post('/show/{category}', [AdminOfferCategory::class, 'edit'])->middleware('permission:ACP-offers-category-edit')->name('adminOffersCategoryShow');
+                    Route::post('/show/{category}', [AdminOfferCategory::class, 'show'])->middleware('permission:ACP-offers-category-edit')->name('adminOffersCategoryShow');
                     Route::post('/edit/{category}', [AdminOfferCategory::class, 'update'])->middleware('permission:ACP-offers-category-edit')->name('adminOffersCategoryEdit');
+                    Route::delete('/delete/{category}', [AdminOfferCategory::class, 'destroy'])->middleware('permission:ACP-offers-category-delete')->name('adminOffersCategoryDelete');
                 });
             });
         });
@@ -192,8 +197,15 @@ Route::group(['middleware' => 'first_install'], function() {
 
         });
 
+        //_____________________________//
+        // User view edit create offer //
+        //_____________________________//
         //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified')->name('home');
-        Route::get('/postNewAd', [OfferController::class, 'select'])->name('postNewAd');
-        Route::get('/t/{category}', [OfferController::class, 'create'])->name('offerCreate');
+        Route::group(['prefix' => 'postNewAd'], function (){
+            Route::get('/', [OfferControllerController::class, 'select'])->name('postNewAd');
+            Route::get('/{category}', function(App\Models\Category $category){
+                return $category;
+            })->name('offerCreate');
+        });
     });
 });

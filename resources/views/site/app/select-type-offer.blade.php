@@ -73,18 +73,37 @@
     </style>
     <div class="row gutters-sm">
         <div class="col-md-12 p-3 mb-5 bg-body rounded">
-            <ul class="nav nav-pills nav-fill">
+            <ul class="nav nav-pills nav-fill mt-2 mt-lg-0 mx-auto" id="categoryList">
                 @foreach($categories as $category)
-                    <li class="nav-item d-flex">
-                        <button class="btn btn-outline-warning" data-route="{{ route('offerCreate', strtolower($category->slug)) }}">
-                            <div class="col-sm-12 col-md-12 col-lg-12">
-                                <i class="fa {{ $category->icon }} fa-5x"></i>
-                            </div>
-                            <div class="col-sm-12 col-md-12 col-lg-12">
-                                <span class="link-text">{{ $category->name }}</span>
-                            </div>
-                        </button>
-                    </li>
+                    @if($category->enable == true)
+                        <li class="nav-item">
+                            <button class="btn btn-outline-warning" data-route="{{ route('offerCreate', $category->slug) }}">
+                                <s>
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <i class="fa {{ $category->icon }} fa-5x"></i>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <span class="link-text">{{ $category->name }}</span>
+                                    </div>
+                                </s>
+                            </button>
+                        </li>
+                    @else
+                    @can('ACP-view-disabled-category')
+                        <li class="nav-item">
+                            <button class="btn btn-outline-warning" data-route="{{ route('offerCreate', $category->slug) }}" disabled>
+                                <s>
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <i class="fa {{ $category->icon }} fa-5x"></i>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <span class="link-text">{{ $category->name }}</span>
+                                    </div>
+                                </s>
+                            </button>
+                        </li>
+                    @endcan
+                    @endif
                 @endforeach
             </ul>
         </div>
@@ -93,5 +112,9 @@
 @endsection
 
 @section('scripts')
-
+<script>
+    $('#categoryList button').on('click', function(e) {
+        location.replace($(this).data('route'))
+    });
+</script>
 @endsection

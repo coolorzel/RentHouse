@@ -16,4 +16,9 @@ class Category extends Model
         'enable',
         'icon'
         ];
+
+    public function getRouteKeyName()
+    {
+        return strtolower('slug');
+    }
 }
