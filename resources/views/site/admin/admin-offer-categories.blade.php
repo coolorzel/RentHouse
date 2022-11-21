@@ -93,7 +93,7 @@
 
     <!--MODAL: modal title edit or create -->
     <div class="modal fade" id="modalEditCategory" tabindex="-1" aria-labelledby="modalEditCategoryLabel" aria-hidden="true" data-mdb-backdrop="static" data-mdb-keyboard="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <form method="post" id="categoryFormEdit" enctype="multipart/form-data" class="form" action="{{ route('adminOffersCategoryCreate') }}">
                     @csrf
@@ -101,59 +101,73 @@
                         <h5 class="modal-title">{{ __('Category: ')}} <span id="nameCategoryTitle">{{ __('New category') }}</span></h5>
                         <button type="reset" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body pt-md-0 text-center">
+                    <div class="modal-body pt-md-0">
                         <div class="card-content">
                             <div class="card-body">
 
                                 <div class="row">
-                                    <div class="col-md-6 col-6">
-                                        <div class="form-group">
-                                            <label for="nameCategory">{{ __('Name category') }}</label>
-                                            <input type="text" id="nameCategory" class="form-control" placeholder="{{ __('Name category') }}" name="name" onkeyup="tranSlug()" required>
+                                    <div class="row col-md-6 col-sm-6 col-6 col-lg-6 text-center">
+                                        <div class="col-md-6 col-6">
+                                            <div class="form-group">
+                                                <label for="nameCategory">{{ __('Name category') }}</label>
+                                                <input type="text" id="nameCategory" class="form-control" placeholder="{{ __('Name category') }}" name="name" onkeyup="tranSlug()" required>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 col-6">
-                                        <div class="form-group">
-                                            <label for="slugCategory">{{ __('Slug category') }}</label>
-                                            <input type="text" readonly id="slugCategory" class="form-control" placeholder="{{ __('Name category') }}" name="slug">
+                                        <div class="col-md-6 col-6">
+                                            <div class="form-group">
+                                                <label for="slugCategory">{{ __('Slug category') }}</label>
+                                                <input type="text" readonly id="slugCategory" class="form-control" placeholder="{{ __('Name category') }}" name="slug">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-12 col-12 mb-2">
-                                        <div class="form-group">
-                                            <label for="descriptionCategory">{{ __('Description category') }}</label>
-                                            <input type="text" id="descriptionCategory" class="form-control" placeholder="{{ __('Description category') }}" name="description" required>
+                                        <div class="col-md-12 col-12 mb-2">
+                                            <div class="form-group">
+                                                <label for="descriptionCategory">{{ __('Description category') }}</label>
+                                                <input type="text" id="descriptionCategory" class="form-control" placeholder="{{ __('Description category') }}" name="description" required>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-6 col-6">
-                                        <div class="form-group">
-                                            <label for="iconCategory">{{ __('Icon category') }}</label>
-                                            <div class="input-group">
-                                            <select name="icon" id="iconCategory" class="form-control" aria-label="" required>
-                                                <option value="fa-home" selected>{{ __('Home') }}</option>
-                                                <option value="fa-building-o">{{ __('Apartments') }}</option>
-                                                <option value="fa-map-o">{{ __('Map') }}</option>
-                                                <option value="fa-tree">{{ __('Tree') }}</option>
-                                                <option value="fa-bed">{{ __('Bed') }}</option>
-                                                <option value="fa-shopping-basket">{{ __('Shop') }}</option>
-                                                <option value="fa-car">{{ __('Garage') }}</option>
-                                            </select>
-                                                <label class="input-group-text" for="icon">
-                                                    <i id="view-fa" class="fa fa-home" aria-hidden="true" style="font-size: 24px;"></i>
-                                                </label>
+                                        <div class="col-md-6 col-6">
+                                            <div class="form-group">
+                                                <label for="iconCategory">{{ __('Icon category') }}</label>
+                                                <div class="input-group">
+                                                <select name="icon" id="iconCategory" class="form-control" aria-label="" required>
+                                                    <option value="fa-home" selected>{{ __('Home') }}</option>
+                                                    <option value="fa-building-o">{{ __('Apartments') }}</option>
+                                                    <option value="fa-map-o">{{ __('Map') }}</option>
+                                                    <option value="fa-tree">{{ __('Tree') }}</option>
+                                                    <option value="fa-bed">{{ __('Bed') }}</option>
+                                                    <option value="fa-shopping-basket">{{ __('Shop') }}</option>
+                                                    <option value="fa-car">{{ __('Garage') }}</option>
+                                                </select>
+                                                    <label class="input-group-text" for="icon">
+                                                        <i id="view-fa" class="fa fa-home" aria-hidden="true" style="font-size: 24px;"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-6">
+                                            <div class="form-group">
+                                                <label for="enableCategory">{{ __('Enabled') }}</label>
+                                                <div class="btn-group input-group">
+                                                    <input type="radio" class="btn-check" name="enable" id="enableOn" autocomplete="off" value="1" checked />
+                                                    <label class="btn btn-secondary" for="enableOn">{{ __('On') }}</label>
+
+                                                    <input type="radio" class="btn-check" name="enable" id="enableOff" value="0" autocomplete="off" />
+                                                    <label class="btn btn-secondary" for="enableOff">{{ __('Off') }}</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-6">
-                                        <div class="form-group">
-                                            <label for="enableCategory">{{ __('Enabled') }}</label>
-                                            <div class="btn-group input-group">
-                                                <input type="radio" class="btn-check" name="enable" id="enableOn" autocomplete="off" value="1" checked />
-                                                <label class="btn btn-secondary" for="enableOn">{{ __('On') }}</label>
 
-                                                <input type="radio" class="btn-check" name="enable" id="enableOff" value="0" autocomplete="off" />
-                                                <label class="btn btn-secondary" for="enableOff">{{ __('Off') }}</label>
-                                            </div>
+                                    <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                                        <label class="text-warning" id="other_all_permission">{{ __('Select active form of this Category') }}</label>
+                                        <div id="formLists">
+                                            @foreach($forms as $form)
+                                                <li class="list-group-item">
+                                                    <input class="form-check-input me-1 other_permission" type="checkbox" name="form[{{ $form->id }}]" value="{{ $form->id }}" id="form-{{ $form->id }}">
+                                                    <label class="form-check-label stretched-link" for="form-{{ $form->id }}">{{ $form->name }} <i class="fa fa-arrow-right text-warning"></i> [{{ $form->type }}]</label>
+                                                </li>
+                                            @endforeach
                                         </div>
                                     </div>
 
@@ -245,15 +259,32 @@
                     $('#enableOn').prop('checked', true);$('#enableOff').prop('checked', false);
                     $('#iconCategory').attr('value', 'fa-home');
                     $('#view-fa').removeClass().addClass('fa ' + $('#iconCategory').val());
+
+                    var formInputChecked = [];
+                    var divNod = document.getElementById("formLists");
+                    var inputNod = divNod.getElementsByTagName('INPUT');
+                    for(var i = 0; i < inputNod.length; i++){
+                        formInputChecked.push({
+                            name: inputNod[i].name,
+                            value: inputNod[i].value
+                        });
+                    }
+                    formInputChecked.forEach((index) => {
+                        const element = document.getElementsByName(index.name)[0];
+                        element.checked = false;
+                    });
+
                 }
                 else
                 {
+                    $('#formLists').text('');
                     $.ajax({
                         url:url,
                         method:'POST',
                         data: {data:btn.data('info')},
                         success:
                             function (data) {
+                                let Forms = data.Forms;
                                 $('#nameCategory').attr('value', data.Name);
                                 $('#slugCategory').prop('readonly', false).val(data.Slug).prop('readonly', true);
                                 $('#descriptionCategory').text(data.Description);
@@ -274,6 +305,19 @@
                                     $('#enableOn').prop('disabled', false);
                                     $('#enableOff').prop('disabled', false);
                                 }
+                                $.each(data.AllForms, function(prefix, val){
+                                    if(Forms.includes(val['id'])){
+                                        $('#formLists').append("<li class=\"list-group-item\">" +
+                                            "<input class=\"form-check-input me-1 other_permission\" type=\"checkbox\" name=\"form[" + val['id'] + "]\" value=\"" + val['id'] + " \" id=\"form-" + val['id'] + "\" checked>" +
+                                            "<label class=\"form-check-label stretched-link\" for=\"form-" + val['id'] + "\">" + val['name'] + " <i class=\"fa fa-arrow-right text-warning\"></i> [" + val['name'] + "]</label>" +
+                                            "\"</li>");
+                                    }else {
+                                        $('#formLists').append("<li class=\"list-group-item\">" +
+                                            "<input class=\"form-check-input me-1 other_permission\" type=\"checkbox\" name=\"form[" + val['id'] + "]\" value=\"" + val['id'] + " \" id=\"form-" + val['id'] + "\">" +
+                                            "<label class=\"form-check-label stretched-link\" for=\"form-" + val['id'] + "\">" + val['name'] + " <i class=\"fa fa-arrow-right text-warning\"></i> [" + val['name'] + "]</label>" +
+                                            "\"</li>");
+                                    }
+                                })
                             }
                     });
                 }

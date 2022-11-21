@@ -476,8 +476,8 @@
                                                     <div class="accordion-body">
                                                         <div class="card-body">{{ __('No offers ... Add a new one to be displayed here.') }}</div>
 
-                                                        <button class="btn btn-info" target="__blank" href="#" type="button">
-                                                            {{ __('Create new offer') }}</button>
+                                                        <a href="{{ route('postNewAd') }}" class="btn btn-info" target="__blank" href="#" type="button">
+                                                            {{ __('Create new offer') }}</a>
                                                     </div>
                                                 @else <!-- Jeżeli konto rozliczeniowe nie zostało potwierdzone -->
                                                     @if ($billing->rejected == true) <!-- Jeżeli konto zostało odrzucone -->

@@ -243,6 +243,8 @@ class SettingsDescription {
         'ACP-offers-category-view',
         'ACP-offers-category-delete',
         'ACP-offers-form-in-category-view',
+        'ACP-element-form-control-view',
+        'LANDLORD-create-new-offer',
 
 
         // PERMISSION FOR BLADE AND CONTROLLER //
@@ -279,6 +281,9 @@ class SettingsDescription {
         'ACP-offers-form-in-category-delete',
         'ACP-offers-form-in-category-edit',
         'ACP-offers-form-in-category-create',
+        'ACP-element-form-control-create',
+        'ACP-element-form-control-edit',
+        'ACP-element-form-control-delete',
 
         // PERMISSION FOR MIDDLEWARE //
         'ACP-visit-page-off',

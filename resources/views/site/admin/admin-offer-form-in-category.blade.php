@@ -35,7 +35,9 @@
                         <tr>
                             <th>{{ __('ID') }}</th>
                             <th>{{ __('Name') }}</th>
+                            <th>{{ __('Title') }}</th>
                             <th>{{ __('Type') }}</th>
+                            <th>{{ __('Have options') }}</th>
                             <th>{{ __('Operations') }}</th>
                         </tr>
                         </thead>
@@ -44,23 +46,19 @@
                             <tr>
                                 <td>{{ $element->id }}</td>
                                 <td>{{ $element->name }}</td>
+                                <td>{{ $element->title }}</td>
                                 <td>{{ $element->type }}</td>
                                 <td>
-                                    @if($element->destroy == false)
-                                        @if($element->enable == true)
-                                            <i class="fa fa-power-off text-warning btn-outline-warning"></i>
-                                        @else
-                                            <i class="fa fa-power-off text-secondary btn-outline-secondary"></i>
-                                        @endif
+                                    @if($element->have_options == true)
+                                        {{ __('Yes') }}
                                     @else
-                                        <i class="fa fa-trash-o text-danger btn-outline-danger"></i>
+                                        {{ __('NO') }}
                                     @endif
                                 </td>
-                                <td><i class="fa {{ $element->icon }} fa-2x text-warning"></i></td>
                                 <td>
                                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                         @if(Auth::user()->can('ACP-offers-form-incategory-edit'))
-                                            <button href="#" type="button" class="btn btn-outline-info" data-info="{{ $element->id }}" data-route="{{ route('adminOffersFormInCategoryShow', $element->slug) }}" data-mdb-toggle="modal" data-mdb-target="#modalEditFormInCategory">
+                                            <button href="#" type="button" class="btn btn-outline-info" data-info="{{ $element->id }}" data-route="{{ route('adminOffersFormInCategoryShow', $element->id) }}"data-mdb-toggle="modal" data-mdb-target="#modalEditFormInCategory">
                                                 {{ __('Edit') }}</button>
                                         @else
                                             <button href="#" type="button" class="btn btn-outline-info" disabled>{{ __('Edit') }}</button>
@@ -96,7 +94,7 @@
                 <form method="post" id="categoryFormEdit" enctype="multipart/form-data" class="form" action="{{ route('adminOffersFormInCategoryCreate') }}">
                     @csrf
                     <div class="modal-header ftco-degree-bg">
-                        <h5 class="modal-title">{{ __('Category: ')}} <span id="nameCategoryTitle">{{ __('New category') }}</span></h5>
+                        <h5 class="modal-title">{{ __('Form: ')}} <span id="nameCategoryTitle">{{ __('New form in category') }}</span></h5>
                         <button type="reset" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body pt-md-0 text-center">
@@ -104,59 +102,49 @@
                             <div class="card-body">
 
                                 <div class="row">
-                                    <div class="col-md-6 col-6">
+                                    <div class="col-md-6 col-6 mb-2">
                                         <div class="form-group">
-                                            <label for="nameCategory">{{ __('Name category') }}</label>
-                                            <input type="text" id="nameCategory" class="form-control" placeholder="{{ __('Name category') }}" name="name" onkeyup="tranSlug()" required>
+                                            <label for="nameCategory">{{ __('Name form in category') }}</label>
+                                            <input type="text" id="nameCategory" class="form-control" placeholder="{{ __('Name category') }}" name="name" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-6">
+
+                                    <div class="col-md-6 col-6 mb-2">
                                         <div class="form-group">
-                                            <label for="slugCategory">{{ __('Slug category') }}</label>
-                                            <input type="text" readonly id="slugCategory" class="form-control" placeholder="{{ __('Name category') }}" name="slug">
+                                            <label for="titleCategory">{{ __('Title form in category') }}</label>
+                                            <input type="text" id="titleCategory" class="form-control" placeholder="{{ __('Title category') }}" name="title" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 col-12 mb-2">
+
+                                    <div class="col-md-6 col-6 mb-2">
                                         <div class="form-group">
-                                            <label for="descriptionCategory">{{ __('Description category') }}</label>
-                                            <input type="text" id="descriptionCategory" class="form-control" placeholder="{{ __('Description category') }}" name="description" required>
+                                            <label for="typeFormInCategory">{{ __('Type input') }}</label>
+                                            <select name="type" id="typeFormInCategory" class="form-control" aria-label="" required>
+                                                <option value="text" selected>{{ __('Text') }}</option>
+                                                <option value="file">{{ __('File') }}</option>
+                                                <option value="select">{{ __('Select') }}</option>
+                                                <option value="checkbox">{{ __('Checkbox') }}</option>
+                                                <option value="number">{{ __('Number') }}</option>
+                                                <option value="textarea">{{ __('Textarea') }}</option>
+                                            </select>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 col-6">
                                         <div class="form-group">
-                                            <label for="iconCategory">{{ __('Icon category') }}</label>
-                                            <div class="input-group">
-                                                <select name="icon" id="iconCategory" class="form-control" aria-label="" required>
-                                                    <option value="fa-home" selected>{{ __('Home') }}</option>
-                                                    <option value="fa-building-o">{{ __('Apartments') }}</option>
-                                                    <option value="fa-map-o">{{ __('Map') }}</option>
-                                                    <option value="fa-tree">{{ __('Tree') }}</option>
-                                                    <option value="fa-bed">{{ __('Bed') }}</option>
-                                                    <option value="fa-shopping-basket">{{ __('Shop') }}</option>
-                                                    <option value="fa-car">{{ __('Garage') }}</option>
-                                                </select>
-                                                <label class="input-group-text" for="icon">
-                                                    <i id="view-fa" class="fa fa-home" aria-hidden="true" style="font-size: 24px;"></i>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-6">
-                                        <div class="form-group">
-                                            <label for="enableCategory">{{ __('Enabled') }}</label>
+                                            <label for="enableCategory">{{ __('Have options') }}</label>
                                             <div class="btn-group input-group">
-                                                <input type="radio" class="btn-check" name="enable" id="enableOn" autocomplete="off" value="1" checked />
-                                                <label class="btn btn-secondary" for="enableOn">{{ __('On') }}</label>
+                                                <input type="radio" class="btn-check" name="have_options" id="haveOptionsOn" autocomplete="off" value="1" checked />
+                                                <label class="btn btn-secondary" for="haveOptionsOn">{{ __('On') }}</label>
 
-                                                <input type="radio" class="btn-check" name="enable" id="enableOff" value="0" autocomplete="off" />
-                                                <label class="btn btn-secondary" for="enableOff">{{ __('Off') }}</label>
+                                                <input type="radio" class="btn-check" name="have_options" id="haveOptionsOff" value="0" autocomplete="off" />
+                                                <label class="btn btn-secondary" for="haveOptionsOff">{{ __('Off') }}</label>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-12 d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-primary me-1 mb-1">{{ __('Save title') }}</button>
+                                        <button type="submit" class="btn btn-primary me-1 mb-1">{{ __('Save form') }}</button>
                                         <button type="reset" class="btn btn-light-secondary me-1 mb-1">{{ __('Reset') }}</button>
                                     </div>
                                 </div>
@@ -169,7 +157,7 @@
     </div>
 
     <!--Modal: modalConfirmDelete-->
-    <div class="modal fade" id="modalDeleteCategory" tabindex="-1" role="dialog" aria-labelledby="modalDeleteCategoryLabel"
+    <div class="modal fade" id="modalDeleteFormInCategory" tabindex="-1" role="dialog" aria-labelledby="modalDeleteFormInCategoryLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
             <!--Content-->
@@ -206,20 +194,6 @@
         // Simple Datatable
         let titleList = document.querySelector('#titleList');
         let dataTable = new simpleDatatables.DataTable(titleList);
-
-        function tranSlug()
-        {
-            let text = document.getElementById("nameCategory");
-            let value1 = text.value;
-            let replaceText1 = value1.replace(/ /g, "-");
-            document.getElementById("slugCategory").value = (replaceText1.toLowerCase());
-        }
-
-
-        $('#iconCategory').on('change', function() {
-            $('#view-fa').removeClass().addClass('fa ' + $(this).val());
-        });
-
     </script>
     <script>
         $.ajaxSetup({
@@ -228,21 +202,18 @@
             }
         });
 
+
         $(document).ready(function(){
-            $('#modalEditCategory').on('show.bs.modal', function(e) {
+
+            $('#modalEditFormInCategory').on('show.bs.modal', function(e) {
                 let btn = $(e.relatedTarget);
                 let url = btn.data('route');
                 if (btn.data('info') === 'new')
                 {
                     $('#nameCategoryTitle').text('New category');
-                    $('#categoryFormEdit #nameCategory').attr('placeholder', 'Name category').attr('value', '');
-                    $('#categoryFormEdit #slugCategory').attr('placeholder', 'Slug category').attr('value', '');
+                    $('#categoryFormEdit #nameCategory').attr('placeholder', 'Name form in category').attr('value', '');
                     $('#categoryFormEdit').attr('action', btn.data('route'));
-                    $('#categoryFormEdit #descriptionCategory').attr('placeholder', 'Description category').attr('value', '');
-                    $('#slugCategory').prop('readonly', false).text('').prop('readonly', true);
-                    $('#enableOn').prop('checked', true);$('#enableOff').prop('checked', false);
-                    $('#iconCategory').attr('value', 'fa-home');
-                    $('#view-fa').removeClass().addClass('fa ' + $('#iconCategory').val());
+                    $('#haveOptionsOn').prop('checked', true);$('#haveOptionsOff').prop('checked', false);
                 }
                 else
                 {
@@ -253,24 +224,17 @@
                         success:
                             function (data) {
                                 $('#nameCategory').attr('value', data.Name);
-                                $('#slugCategory').prop('readonly', false).val(data.Slug).prop('readonly', true);
-                                $('#descriptionCategory').text(data.Description);
                                 $('#nameCategoryTitle').text(data.Name);
-                                $('#categoryFormEdit #descriptionCategory').attr('value', data.Description);
-                                $('#categoryFormEdit').attr('action', data.Edit)
-                                if(data.Enable === 1){
-                                    $('#enableOn').prop('checked', true);$('#enableOff').prop('checked', false);
-                                }else{
-                                    $('#enableOn').prop('checked', false);$('#enableOff').prop('checked', true);
+                                $('#titleCategory').attr('value', data.Title);
+                                $('#categoryFormEdit').attr('action', data.Edit);
+                                $('#typeFormInCategory').val(data.Type);
+                                if(data.Model) {
+                                    $('#selectModel').val(data.Model);
                                 }
-                                $('#iconCategory').val(data.Icon);
-                                $('#view-fa').removeClass().addClass('fa ' + data.Icon);
-                                if(data.Destroy === 1){
-                                    $('#enableOn').prop('disabled', true);
-                                    $('#enableOff').prop('disabled', true);
+                                if(data.HaveOptions === 1){
+                                    $('#haveOptionsOn').prop('checked', true);$('#haveOptionsOff').prop('checked', false);
                                 }else{
-                                    $('#enableOn').prop('disabled', false);
-                                    $('#enableOff').prop('disabled', false);
+                                    $('#haveOptionsOn').prop('checked', false);$('#haveOptionsOff').prop('checked', true);
                                 }
                             }
                     });
@@ -279,7 +243,7 @@
         });
 
         $(document).ready(function(){
-            $('#modalDeleteCategory').on('show.bs.modal', function(e) {
+            $('#modalDeleteFormInCategory').on('show.bs.modal', function(e) {
                 let btn = $(e.relatedTarget);
                 let url = btn.data('route');
                 $.ajax({
@@ -291,11 +255,6 @@
                             const element = document.getElementById('buttonSubmitDelete');
                             element.disabled = false;
                             $('#categoryFormDelete').attr('action', data.Delete);
-                            if(data.Destroy === 1){
-                                $('#deleteRestoreIcon').removeClass('fa-times', 'text-danger').addClass('fa-check', 'text-success');
-                            }else{
-                                $('#deleteRestoreIcon').removeClass('fa-check', 'text-success').addClass('fa-times', 'text-danger');
-                            }
                         }
                 });
             });

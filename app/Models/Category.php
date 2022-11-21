@@ -21,4 +21,14 @@ class Category extends Model
     {
         return strtolower('slug');
     }
+    public function formInCategory()
+    {
+        return $this->hasMany(ElementFormInCategory::class, 'cat_id', 'id')->pluck('form_id')->toArray();
+    }
+
+    public function forms()
+    {
+        return $this->belongsToMany(ElementFormOffer::class, 'element_form_in_categories', 'cat_id', 'form_id');
+    }
+
 }

@@ -106,11 +106,14 @@
                 <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#offer-controller-collapse" aria-expanded="false">
                     {{ __('Offer controller') }}
                 </button>
-                <div class="collapse {{ (Request::is('acp/offer-controller', 'acp/offer-controller/*')) ? 'show' : '' }}" id="offer-controller-collapse">
+                <div class="collapse {{ (Request::is('acp/offer-controller', 'acp/offer-controller/*', 'acp/offer-controller/element-form-controller/*')) ? 'show' : '' }}" id="offer-controller-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                         <li><a href="{{ route('adminOffersControllerCategory') }}" class="btn btn-link link-dark rounded {{ Request::is('acp/offer-controller/categories') ? 'active' : '' }}">{{ __('Categories') }}</a></li>
-                        <li><a href="{{ route('adminOffersControllerFormInCategory') }}" class="btn btn-link link-dark rounded position-relative {{ (Request::is('acp/offer-controller/form-in-category', 'acp/offer-controller/form-in-category/*')) ? 'active' : '' }}">{{ __('Active form in Category') }}</a>
-                        </li>
+                        <li><a href="{{ route('adminOffersControllerFormInCategory') }}" class="btn btn-link link-dark rounded position-relative {{ (Request::is('acp/offer-controller/form-in-category', 'acp/offer-controller/form-in-category/*')) ? 'active' : '' }}">{{ __('Active form in Category') }}</a></li>
+                        <hr>
+                        @foreach(\App\Models\ElementFormOffer::where('have_options', true)->get() as $element)
+                            <li><a href="{{ route('adminElementFormController', $element->id) }}" class="btn btn-link link-dark rounded {{ (Request::is('acp/offer-controller/element-form-control/'.$element->id)) ? 'active' : '' }}">{{ __($element->name) }}</a></li>
+                        @endforeach
                     </ul>
                 </div>
             </li>

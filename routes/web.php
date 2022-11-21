@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminBillingAccount;
 use App\Http\Controllers\Admin\AdminContactController;
 use App\Http\Controllers\Admin\AdminDashboard;
+use App\Http\Controllers\Admin\AdminElementFormController;
 use App\Http\Controllers\Admin\AdminFormInCategoryController;
 use App\Http\Controllers\Admin\AdminOfferCategory;
 use App\Http\Controllers\Admin\AdminPageSettings;
@@ -12,9 +13,11 @@ use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\App\ContactController;
 use App\Http\Controllers\App\OfferControllerController;
 use App\Http\Controllers\App\UserController;
+use App\Http\Controllers\App\UserOffersController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SystemControl\FirstInstall;
 use App\Http\Controllers\SystemControl\siteIsOff;
+use App\Http\Controllers\TEST;
 use App\Http\Controllers\User\AvatarController;
 use App\Http\Controllers\User\LinkUserController;
 use App\Http\Controllers\User\MyUserProfile;
@@ -51,20 +54,7 @@ Route::group(['prefix' => 'firstInstall'], function() {
     Route::post('/', [FirstInstall::class, 'store'])->name('firstInstallStore');
 });
 Route::get('/siteIsOff', [siteIsOff::class, 'index'])->name('siteIsOff');
-Route::get('/test', function(){
-    $message = \App\Models\Contact::find(2)->first();
-    $test = [];
-    foreach($message->history as $key => $val)
-    {
-        $history[$key] = [
-                'information' => $val->information,
-                'message' => $val->message,
-                'user' => $val->viewer_u_id,
-                'created_at' => $val->created_at
-        ];
-    }
-    dd($history);
-});
+Route::get('/test', [TEST::class, 'index']);
 
 Route::group(['middleware' => 'first_install'], function() {
 
@@ -152,9 +142,17 @@ Route::group(['middleware' => 'first_install'], function() {
                 Route::group(['prefix' => 'form-in-category', 'middleware' => ['permission:ACP-offers-form-in-category-view']], function() {
                     Route::get('/', [AdminFormInCategoryController::class, 'index'])->name('adminOffersControllerFormInCategory');
                     Route::post('/create', [AdminFormInCategoryController::class, 'store'])->middleware('permission:ACP-offers-form-in-category-create')->name('adminOffersFormInCategoryCreate');
-                    Route::post('/show/{category}', [AdminFormInCategoryController::class, 'show'])->middleware('permission:ACP-offers-form-in-category-edit')->name('adminOffersFormInCategoryShow');
-                    Route::post('/edit/{category}', [AdminFormInCategoryController::class, 'update'])->middleware('permission:ACP-offers-form-in-category-edit')->name('adminOffersFormInCategoryEdit');
-                    Route::delete('/delete/{category}', [AdminFormInCategoryController::class, 'destroy'])->middleware('permission:ACP-offers-form-in-category-delete')->name('adminOffersFormInCategoryDelete');
+                    Route::post('/show/{elementFormOffer}', [AdminFormInCategoryController::class, 'show'])->middleware('permission:ACP-offers-form-in-category-edit')->name('adminOffersFormInCategoryShow');
+                    Route::post('/edit/{elementFormOffer}', [AdminFormInCategoryController::class, 'update'])->middleware('permission:ACP-offers-form-in-category-edit')->name('adminOffersFormInCategoryEdit');
+                    Route::delete('/delete/{elementFormOffer}', [AdminFormInCategoryController::class, 'destroy'])->middleware('permission:ACP-offers-form-in-category-delete')->name('adminOffersFormInCategoryDelete');
+                });
+                // ---- ELEMENT FORM OFFER CONTROLLER ---- //
+                Route::group(['prefix' => 'element-form-control', 'middleware' => ['permission:ACP-element-form-control-view']], function() {
+                    Route::get('/{form}', [AdminElementFormController::class, 'index'])->name('adminElementFormController');
+                    Route::post('/{form}/create', [AdminElementFormController::class, 'store'])->middleware('permission:ACP-element-form-control-create')->name('adminElementFormCreate');
+                    Route::post('/{form}/{option}/show', [AdminElementFormController::class, 'show'])->middleware('permission:ACP-element-form-control-view')->name('adminElementFormShow');
+                    Route::post('/{form}/{option}/update', [AdminElementFormController::class, 'update'])->middleware('permission:ACP-element-form-control-edit')->name('adminElementFormEdit');
+                    Route::delete('/{form}/{option}/destroy', [AdminElementFormController::class, 'destroy'])->middleware('permission:ACP-element-form-control-delete')->name('adminElementFormDestroy');
                 });
             });
         });
@@ -213,9 +211,10 @@ Route::group(['middleware' => 'first_install'], function() {
         //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified')->name('home');
         Route::group(['prefix' => 'postNewAd'], function (){
             Route::get('/', [OfferControllerController::class, 'select'])->name('postNewAd');
-            Route::get('/{category}', function(App\Models\Category $category){
-                return $category;
-            })->name('offerCreate');
+            Route::group(['middleware' => ['auth', 'verified', 'permission:LANDLORD-create-new-offer']], function() {
+                Route::get('/{category}', [UserOffersController::class, 'create'])->name('offerCreate');
+                Route::post('/{category}/create')->name('offerCreateStore');
+            });
         });
     });
 });

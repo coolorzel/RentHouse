@@ -98,9 +98,11 @@
                         </div>
                     @endif
 
-                    @if (Route::has('postNewAd'))
-                        <a href="{{ route('postNewAd') }}" class="btn btn-outline-success my-2 my-sm-0 d-flex align-items-center"><i class="fa fa-plus-circle mx-1" style="font-size:24px"></i> {{ __('Post new ad') }}</a>
-                    @endif
+                        @if (Route::has('postNewAd') && Auth::user()->can('LANDLORD-create-new-offer'))
+                            <a href="{{ route('postNewAd') }}" class="btn btn-outline-success my-2 my-sm-0 d-flex align-items-center"><i class="fa fa-plus-circle mx-1" style="font-size:24px"></i> {{ __('Post new ad') }}</a>
+                        @else
+                            <a href="{{ route('myBillingVerificationForm') }}" class="btn btn-outline-success my-2 my-sm-0 d-flex align-items-center"><i class="fa fa-plus-circle mx-1" style="font-size:24px"></i> {{ __('New billing account') }}</a>
+                        @endif
                 </div>
             @endguest
         </div>
