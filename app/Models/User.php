@@ -55,4 +55,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Notification::class, 'u_id', 'id')->orderByDesc('created_at');
     }
+
+    public function billingAccount()
+    {
+        return $this->hasMany(BillingAccount::class, 'u_id', 'id')->where('verified', true);
+    }
 }

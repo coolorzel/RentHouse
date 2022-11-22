@@ -14,6 +14,7 @@ use App\Http\Controllers\App\ContactController;
 use App\Http\Controllers\App\OfferControllerController;
 use App\Http\Controllers\App\UserController;
 use App\Http\Controllers\App\UserOffersController;
+use App\Http\Controllers\App\UserOffersImagesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SystemControl\FirstInstall;
 use App\Http\Controllers\SystemControl\siteIsOff;
@@ -214,6 +215,12 @@ Route::group(['middleware' => 'first_install'], function() {
             Route::group(['middleware' => ['auth', 'verified', 'permission:LANDLORD-create-new-offer']], function() {
                 Route::get('/{category}', [UserOffersController::class, 'create'])->name('offerCreate');
                 Route::post('/{category}/create')->name('offerCreateStore');
+                // ---- API and CONTROL images in Offer ---- //
+                Route::group(['prefix' => 'images'], function() {
+                   Route::post('/store/{category}/{offer}', [UserOffersImagesController::class, 'store'])->name('offerImagesStore');
+                   Route::get('/fetch/{category}/{offer}', [UserOffersImagesController::class, 'fetch'])->name('offerImagesFetch');
+                   Route::delete('/destroy/{category}/{offer}', [UserOffersImagesController::class, 'destroy'])->name('offerImagesDestroy');
+                });
             });
         });
     });

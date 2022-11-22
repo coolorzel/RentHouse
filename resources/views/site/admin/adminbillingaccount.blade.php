@@ -468,7 +468,7 @@
                             });
 
                             $.each(data.phone_number, function (val) {
-                            $('#numberList').append("<li class=\"list-group-item\">" + val + "</li>");
+                            $('#numberList').append("<li class=\"list-group-item\">" + val['name'] + "</li>");
                             });
 
                             const dateNow = Date.now(); // ustawienie daty za pomocą tekstu (miesiąc/dzień/rok)

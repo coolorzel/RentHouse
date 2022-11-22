@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\ElementFormOffer;
 use App\Models\Offers;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Termwind\Components\Element;
 
 class UserOffersController extends Controller
@@ -29,13 +31,21 @@ class UserOffersController extends Controller
     public function create(Category $category)
     {
         $forms = [];
+        if(!$offer = Offers::where([
+            ['u_id', Auth::id()],
+            ['cat_id', $category->id],
+            ['isCreated', true]])->first()){
+        $offer = Offers::create([
+            'cat_id' => $category->id,
+            'u_id' => Auth::id()]);
+        }
+        $billingAccounts = Auth::user()->billingAccount;
         foreach ($category->forms as $key => $val){
             $items = ElementFormOffer::find($val->id)->items;
             $active = [];
             $forms[$val->name] = ['title' => $val->title, 'items' => $items, 'active' => $active];
         }
-        $offer = Offers::find(1);
-        return view('site.app.create-new-offer', compact('category', 'forms', 'offer'));
+        return view('site.app.create-new-offer', compact('category', 'forms', 'offer', 'billingAccounts'));
     }
 
     /**

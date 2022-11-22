@@ -13,6 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('project/simple-datatables/style.css') }}">
     <link rel="stylesheet" href="{{ asset('mdb/css/mdb.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('project/css/select-img.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.37/dist/sweetalert2.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
@@ -84,6 +85,7 @@
     </div>
     <!-- JAVASCRIPTS-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <script src="{{ url('project/js/jquery.mask.min.js') }}"></script>
     <script src="{{ url('mdb/js/mdb.min.js') }}"></script>
     <script src="{{ url('project/js/maskform.js') }}"></script>
@@ -99,7 +101,6 @@
     <script src="{{ url('/project/plugins/jquery-nice-select/js/jquery.nice-select.min.js') }}"></script>
     <script src="{{ url('/project/plugins/fancybox/jquery.fancybox.pack.js') }}"></script>
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <!-- sweet alert -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>

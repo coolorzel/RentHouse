@@ -21,7 +21,7 @@ return new class extends Migration
             $table->boolean('isAcceptMod')->default(false); // Czy oferta została zaakceptowana przez moderatora
             $table->unsignedBigInteger('cat_id')->unsigned(); // Pod jaką kategorią ma być podpięte oferta
             $table->unsignedbigInteger('u_id'); // Id użytkownika, właściciela oferty
-            $table->unsignedBigInteger('billing_id'); // Id konta rozliczeniowego
+            $table->unsignedBigInteger('billing_id')->nullable(); // Id konta rozliczeniowego
             $table->unsignedBigInteger('images_id')->nullable(); // Id głównego zdjęcia
             $table->unsignedBigInteger('payment')->nullable(); // Wybór płatnośći za jaki okres
             // TABIELE ZASTĘPUJĄCE PONIŻEJ ZAKOMENTOWANE.
