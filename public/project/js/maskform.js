@@ -2,6 +2,12 @@
     $(function() {
         $('.date').mask('00/00/0000');
         $('.time').mask('00:00:00');
+        $('#mask').mask('000');
+        $('#surface').mask('000');
+        $('#land_area').mask('0000');
+        $('#regular_rent').mask('00000');
+        $('#contact_tel').mask('000-000-000')
+        $('#deposit').mask('00000');
         $('.date_time').mask('00/00/0000 00:00:00');
         $('.cep').mask('00000-000');
         $('.zipcode').mask('00-000');

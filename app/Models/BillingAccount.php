@@ -27,6 +27,11 @@ class BillingAccount extends Model
         'company_website',
     ];
 
+    public function offers()
+    {
+        return $this->hasMany(Offers::class, 'billing_id', 'id');
+    }
+
     public function messages()
     {
         return $this->hasMany(BillingApplication::class, 'billing_id', 'id');

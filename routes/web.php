@@ -214,7 +214,7 @@ Route::group(['middleware' => 'first_install'], function() {
             Route::get('/', [OfferControllerController::class, 'select'])->name('postNewAd');
             Route::group(['middleware' => ['auth', 'verified', 'permission:LANDLORD-create-new-offer']], function() {
                 Route::get('/{category}', [UserOffersController::class, 'create'])->name('offerCreate');
-                Route::post('/{category}/create')->name('offerCreateStore');
+                Route::post('/{category}/{offer}/store', [UserOffersController::class, 'store'])->name('offerCreateStore');
                 // ---- API and CONTROL images in Offer ---- //
                 Route::group(['prefix' => 'images'], function() {
                    Route::post('/store/{category}/{offer}', [UserOffersImagesController::class, 'store'])->name('offerImagesStore');
@@ -222,6 +222,10 @@ Route::group(['middleware' => 'first_install'], function() {
                    Route::delete('/destroy/{category}/{offer}', [UserOffersImagesController::class, 'destroy'])->name('offerImagesDestroy');
                 });
             });
+        });
+        Route::group(['prefix' => 'offers'], function(){
+            Route::get('{category}')->name('searchInCategory');
+             Route::get('{category}/{offer}/{slug}', [UserOffersController::class, 'show'])->name('offerShow');
         });
     });
 });

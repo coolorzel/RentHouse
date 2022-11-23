@@ -22,12 +22,11 @@
             border:2px dashed orange;
         }
     </style>
-    <form action="{{ route('offerCreateStore', $category->slug) }}" method="post" id="formOfferCreate">
+    <form action="{{ route('offerCreateStore', [$category->slug, $offer->id]) }}" method="post" id="formOfferCreate">
     <div class="row gutters-sm">
-            @method('patch')
+            @method('post')
             @csrf
         <div class="col-md-8 p-3 mb-5 bg-body rounded" id="forms">
-                <input class="element-form" type="hidden" name="category_id" value="{{ $offer->cat_id }}">
                 <input class="element-form" type="hidden" id="city" name="city" value="{{ $offer->city }}">
                 <input class="element-form" type="hidden" id="state" name="state" value="{{ $offer->state }}">
                 <input class="element-form" type="hidden" id="postcode" name="postcode" value="{{ $offer->postcode }}">
@@ -41,7 +40,7 @@
                         <!-- Search input -->
                         <div class="input-group">
                             <input type="text" class="form-control element-form" id="searchInput" name="location" value="{{ $offer->city }}" placeholder="Enter a location...">
-                            <input type="text" class="form-control element-form" id="searchInputPostcode" value="{{ $offer->postcode }}" placeholder="Enter a postcode...">
+                            <input type="text" class="form-control element-form" id="searchInputPostcode" name="postcodes" value="{{ $offer->postcode }}" placeholder="Enter a postcode...">
                         </div>
 
                         <!-- Button trigger modal -->
@@ -122,9 +121,9 @@
                     @if(array_key_exists('rooms', $forms))
                         <div class="form-group col-md-4">
                             <label for="rooms">{{ $forms['rooms']['title'] }}</label>
-                            <div class="input-group text-center mb-3 rooms" style="width:130px;">
+                            <div class="input-group text-center mb-3" style="width:130px;">
                                 <span class="input-group-text decrement-btn">-</span>
-                                <input type="text" id="rooms" class="form-control text-center element-form" name="rooms" value="@if(empty($offer->rooms))0
+                                <input type="text" id="rooms" class="form-control text-center element-form rooms" name="rooms" value="@if(empty($offer->rooms))0
 @else{{ $offer->rooms }}@endif">
                                 <span class="input-group-text increment-btn">+</span>
                             </div>
@@ -134,7 +133,7 @@
                     @if(array_key_exists('surface', $forms))
                         <div class="form-group col-md-4">
                             <label for="surface">{{ $forms['surface']['title'] }}</label>
-                            <div class="input-group text-center mb-3 rooms" style="width:130px;">
+                            <div class="input-group text-center mb-3" style="width:130px;">
                                 <span class="input-group-text decrement-btn">-</span>
                                 <input type="text" id="surface" class="form-control text-center element-form" name="surface" value="@if(empty($offer->surface))0
 @else{{ $offer->surface }}@endif">
@@ -146,7 +145,7 @@
                     @if(array_key_exists('land_area', $forms))
                         <div class="form-group col-md-4">
                             <label for="land_area">{{ $forms['land_area']['title'] }}</label>
-                            <div class="input-group text-center mb-3 rooms" style="width:130px;">
+                            <div class="input-group text-center mb-3" style="width:130px;">
                                 <span class="input-group-text decrement-btn">-</span>
                                 <input type="text" id="land_area" class="form-control text-center element-form" name="land_area" value="@if(empty($offer->land_area))0
 @else{{ $offer->land_area }}@endif">
@@ -209,11 +208,11 @@
                         @foreach($forms['heating']['items'] as $item)
                             <div class="form-group col-md-4">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input element-form" id="material[{{ $item->name }}]" name="heating[{{ $item->name }}]" value="{{ $item->id }}"
+                                    <input type="checkbox" class="form-check-input element-form" id="heating[{{ $item->name }}]" name="heating[{{ $item->name }}]" value="{{ $item->id }}"
                                         {{ in_array($item->id, $forms['heating']['active'])
                                                             ? 'checked'
                                                             : '' }}>
-                                    <label class="form-check-label" for="material[{{ $item->name }}]">{{ $item->name }}</label>
+                                    <label class="form-check-label" for="heating[{{ $item->name }}]">{{ $item->name }}</label>
                                 </div>
                             </div>
                         @endforeach
@@ -227,11 +226,11 @@
                         @foreach($forms['media']['items'] as $item)
                             <div class="form-group col-md-4">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input element-form" id="material[{{ $item->name }}]" name="media[{{ $item->name }}]" value="{{ $item->id }}"
+                                    <input type="checkbox" class="form-check-input element-form" id="media[{{ $item->name }}]" name="media[{{ $item->name }}]" value="{{ $item->id }}"
                                         {{ in_array($item->id, $forms['media']['active'])
                                                             ? 'checked'
                                                             : '' }}>
-                                    <label class="form-check-label" for="material[{{ $item->name }}]">{{ $item->name }}</label>
+                                    <label class="form-check-label" for="media[{{ $item->name }}]">{{ $item->name }}</label>
                                 </div>
                             </div>
                         @endforeach
@@ -245,11 +244,11 @@
                         @foreach($forms['security']['items'] as $item)
                             <div class="form-group col-md-4">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input element-form" id="material[{{ $item->name }}]" name="security[{{ $item->name }}]" value="{{ $item->id }}"
+                                    <input type="checkbox" class="form-check-input element-form" id="security[{{ $item->name }}]" name="security[{{ $item->name }}]" value="{{ $item->id }}"
                                         {{ in_array($item->id, $forms['security']['active'])
                                                             ? 'checked'
                                                             : '' }}>
-                                    <label class="form-check-label" for="material[{{ $item->name }}]">{{ $item->name }}</label>
+                                    <label class="form-check-label" for="security[{{ $item->name }}]">{{ $item->name }}</label>
                                 </div>
                             </div>
                         @endforeach
@@ -263,11 +262,11 @@
                         @foreach($forms['charges']['items'] as $item)
                             <div class="form-group col-md-4">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input element-form" id="material[{{ $item->name }}]" name="charges[{{ $item->name }}]" value="{{ $item->id }}"
+                                    <input type="checkbox" class="form-check-input element-form" id="charges[{{ $item->name }}]" name="charges[{{ $item->name }}]" value="{{ $item->id }}"
                                         {{ in_array($item->id, $forms['charges']['active'])
                                                             ? 'checked'
                                                             : '' }}>
-                                    <label class="form-check-label" for="material[{{ $item->name }}]">{{ $item->name }}</label>
+                                    <label class="form-check-label" for="charges[{{ $item->name }}]">{{ $item->name }}</label>
                                 </div>
                             </div>
                         @endforeach
@@ -281,11 +280,11 @@
                         @foreach($forms['equipment']['items'] as $item)
                             <div class="form-group col-md-4">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input element-form" id="material[{{ $item->name }}]" name="equipment[{{ $item->name }}]" value="{{ $item->id }}"
+                                    <input type="checkbox" class="form-check-input element-form" id="equipment[{{ $item->name }}]" name="equipment[{{ $item->name }}]" value="{{ $item->id }}"
                                         {{ in_array($item->id, $forms['equipment']['active'])
                                                             ? 'checked'
                                                             : '' }}>
-                                    <label class="form-check-label" for="material[{{ $item->name }}]">{{ $item->name }}</label>
+                                    <label class="form-check-label" for="equipment[{{ $item->name }}]">{{ $item->name }}</label>
                                 </div>
                             </div>
                         @endforeach
@@ -369,9 +368,9 @@
             @endif
 
             <!-- Submit button -->
-                <div class="btn-group-lg">
-                <button name="add" value="add" class="btn btn-outline-warning element-form">{{ __('Add') }}</button>
-                <button name="save" value="save" class="btn btn-warning element-form">{{ __('Save') }}</button>
+                <div class="btn-group-lg" id="submit">
+                <button type="submit" name="add" value="add" class="btn btn-outline-warning element-form">{{ __('Add') }}</button>
+                <button type="submit" name="save" value="save" class="btn btn-warning element-form">{{ __('Save') }}</button>
                 </div>
 
 
@@ -387,7 +386,7 @@
                 <ul class="list-group" id="billingAccount">
                     @foreach($billingAccounts as $item)
                         <li class="list-group-item">
-                            <input class="form-check-input me-1" type="radio" name="billingAccount" value="{{ $item->id }}" id="billingAccountNr{{$item->id}}" autocomplete="off" onclick="changeForm(this)" @if($offer->billing_id == $item->id) checked @endif>
+                            <input class="form-check-input me-1" type="radio" name="billing_id" value="{{ $item->id }}" id="billingAccountNr{{$item->id}}" autocomplete="off" onclick="changeForm(this)" @if($offer->billing_id == $item->id) checked @endif>
                             <label class="form-check-label" for="billingAccountNr{{$item->id}}">
                                     <div class="row">
                                         <div class="col text-center align-self-center">
@@ -446,6 +445,85 @@
 @endsection
 
 @section('scripts')
+    <script>
+        const plus = document.querySelector(".increment-btn"),
+            minus = document.querySelector(".decrement-btn"),
+            num = document.querySelector(".rooms");
+        let a = 0;
+        plus.addEventListener("click", ()=>{
+           a++
+           num.innerText = a;
+        });
+
+        minus.addEventListener("click", ()=>{
+            if(a > 1){
+                a--;
+                num.innerText = a;
+            }
+        })
+    </script>
+
+    <script>
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('#submit button').on('click', function() {
+            let btn = ($(this).attr('value'))
+            $('#formOfferCreate').submit(function (e) {
+                //let btn = $(e.relatedTarget)\
+                const dataForm = new FormData(this)
+                dataForm.append('btn', btn)
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: 'POST',
+                    data: dataForm,
+                    processData: false,
+                    dataType: 'json',
+                    contentType: false,
+                    success:
+                        function (data) {
+                            if (data.status === 0) {
+                                $.each(data.error, function (prefix, val) {
+                                    Toastify({
+                                        text: val[0], // "This is a toast",
+                                        duration: 3000,
+                                        //destination: "https://github.com/apvarun/toastify-js",
+                                        newWindow: true,
+                                        close: true,
+                                        gravity: "top", // `top` or `bottom`
+                                        position: "right", // `left`, `center` or `right`
+                                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                                        style: {
+                                            background: "linear-gradient(to right, #aac900, #ff0000)",
+                                        },
+                                        onClick: function(){} // Callback after click
+                                    }).showToast();
+                                });
+                            } else {
+
+                                $('#errors').hide();
+                                Swal.fire({
+                                    title: data.title,
+                                    text: data.msg,
+                                    type: data.type
+                                }).then(function (){
+                                    if(data.route) {
+                                        location.replace(data.route)
+                                    }else{
+                                        location.reload()
+                                    }
+                                })
+                            }
+                        }
+                })
+                e.preventDefault()
+            })
+        })
+    </script>
+
     <script type="text/javascript">
 
         Dropzone.options.fileUpload = {
@@ -461,7 +539,7 @@
                 myDropzone = this;
 
                 this.on("complete", function(){
-                    if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0)
+                    if(this.getQueuedFiles().length === 0 && this.getUploadingFiles().length === 0)
                     {
                         var _this = this;
                         _this.removeAllFiles();
@@ -486,14 +564,16 @@
                 {
                     $('#uploaded_image').text('');
                     $.each(data.images, function (index, val) {
-                        $('#uploaded_image').append("<div class='col text-center'>" +
-                            "<input type='radio' name='images_file' id='images-" + index + "' class='d-none imgbgchk' value='" + index + "'" + val.isChecked + ">" +
+                        $('#uploaded_image').append("" +
+                            "<div class='col col-sm-4 col-md-4 text-center position-relative'>" +
+                            "<input type='radio' name='images_id' id='images-" + index + "' class='d-none imgbgchk' value='" + index + "'" + val.isChecked + ">" +
                                 "<label for='images-" + index + "'>" +
-                                "<img src='" + val.src + "' alt='" + val.name + "'>" +
+                                "<img class='rounded-3 border border-warning' src='" + val.src + "' alt='" + val.name + "'>" +
                                     "<div class='tick_container'>" +
                                         "<div class='tick'><i class='fa fa-check'></i></div>" +
                                     "</div>" +
                                 "</label>" +
+                            "<button type='button' class='btn btn-link remove_image position-absolute' id='" + val.name + "'><i class='fa fa-trash fa-2x text-danger' aria-hidden='true'></i></button>" +
                             "</div>")
                     })
                 }
@@ -588,8 +668,8 @@
                             document.getElementById('city_s').textContent = clickedData.administrative;
                             document.getElementById('state_s').textContent = clickedData.state;
                             document.getElementById('postcode_s').textContent = clickedData.postcode;
-                            document.getElementById('lat').textContent = clickedData.lat;
-                            document.getElementById('lon').textContent = clickedData.lon;
+                            document.getElementById('lat').value = clickedData.lat;
+                            document.getElementById('lon').value = clickedData.lon;
                         }
                         if (!!clickedData.city)
                         {
@@ -599,8 +679,8 @@
                             document.getElementById('city_s').textContent = clickedData.city;
                             document.getElementById('state_s').textContent = clickedData.state;
                             document.getElementById('postcode_s').textContent = clickedData.postcode;
-                            document.getElementById('lat').textContent = clickedData.lat;
-                            document.getElementById('lon').textContent = clickedData.lon;
+                            document.getElementById('lat').value = clickedData.lat;
+                            document.getElementById('lon').value = clickedData.lon;
                         }
                         if (!!clickedData.village)
                         {
@@ -610,8 +690,8 @@
                             document.getElementById('city_s').textContent = clickedData.village;
                             document.getElementById('state_s').textContent = clickedData.state;
                             document.getElementById('postcode_s').textContent = clickedData.postcode;
-                            document.getElementById('lat').textContent = clickedData.lat;
-                            document.getElementById('lon').textContent = clickedData.lon;
+                            document.getElementById('lat').value = clickedData.lat;
+                            document.getElementById('lon').value = clickedData.lon;
                         }
                         if (!!clickedData.suburb)
                         {
@@ -621,8 +701,8 @@
                             document.getElementById('city_s').textContent = clickedData.suburb;
                             document.getElementById('state_s').textContent = clickedData.state;
                             document.getElementById('postcode_s').textContent = clickedData.postcode;
-                            document.getElementById('lat').textContent = clickedData.lat;
-                            document.getElementById('lon').textContent = clickedData.lon;
+                            document.getElementById('lat').value = clickedData.lat;
+                            document.getElementById('lon').value = clickedData.lon;
                         }
                         //const position = new L.LatLng(clickedData.lat, clickedData.lon);
                         //map.flyTo(position, 10);
@@ -642,7 +722,7 @@
         const inputNodes = divNode.getElementsByClassName('element-form')
         const forms = document.getElementById("forms")
         let pulse = document.getElementById("firstChangeAccount")
-        if ($('input[name=billingAccount]:checked').length > 0) {
+        if ($('input[name=billing_id]:checked').length > 0) {
             pulse.style.display = 'none';
         }else{
             forms.classList.remove('bg-body')
@@ -663,7 +743,7 @@
         }
     }
 
-    let billingAccountRadio = document.querySelector('input[name = "billingAccount"]:checked');
+    let billingAccountRadio = document.querySelector('input[name = "billing_id"]:checked');
     function changeForm(item) {
 
         formEdit = [];

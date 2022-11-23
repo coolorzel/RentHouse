@@ -25,12 +25,12 @@ return new class extends Migration
             $table->unsignedBigInteger('images_id')->nullable(); // Id głównego zdjęcia
             $table->unsignedBigInteger('payment')->nullable(); // Wybór płatnośći za jaki okres
             // TABIELE ZASTĘPUJĄCE PONIŻEJ ZAKOMENTOWANE.
-            $table->unsignedBigInteger('heating')->nullable(); // Ogrzewanie. Wybór z bazy danych
-            $table->unsignedBigInteger('media')->nullable(); // media. Wybór z bazy
-            $table->unsignedBigInteger('security')->nullable(); // Zabezpieczenia posiadłości
-            $table->unsignedBigInteger('charges')->nullable(); //Opłaty
-            $table->unsignedBigInteger('equipment')->nullable(); // Wyposażenie
-            $table->unsignedBigInteger('parking')->nullable(); // Miejsce parkingowe
+            //$table->unsignedBigInteger('heating')->nullable(); // Ogrzewanie. Wybór z bazy danych
+            //$table->unsignedBigInteger('media')->nullable(); // media. Wybór z bazy
+            //$table->unsignedBigInteger('security')->nullable(); // Zabezpieczenia posiadłości
+            //$table->unsignedBigInteger('charges')->nullable(); //Opłaty
+            //$table->unsignedBigInteger('equipment')->nullable(); // Wyposażenie
+            //$table->unsignedBigInteger('parking')->nullable(); // Miejsce parkingowe
             // KONIEC TABELI ZAKOMENTOWANYCH
             $table->string('name')->nullable(); //title
             $table->string('slug')->nullable(); //
@@ -59,7 +59,7 @@ return new class extends Migration
             //$table->string('country')->nullable(); // Państwo
             //$table->string('voivodeship')->nullable(); // Województwo
             $table->string('lat')->nullable();
-            $table->string('len')->nullable();
+            $table->string('lon')->nullable();
             $table->string('state')->nullable(); // Gmina
             $table->string('city')->nullable(); // Miasto
             $table->string('postcode')->nullable(); // Kod pocztowy
