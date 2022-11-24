@@ -117,6 +117,18 @@
                     </ul>
                 </div>
             </li>
+            <hr>
+            <li class="mb-1">
+                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#offers-collapse" aria-expanded="false">
+                    {{ __('Offers') }}
+                </button>
+                <div class="collapse {{ (Request::is('acp/offers', 'acp/offers/*')) ? 'show' : '' }}" id="offers-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="{{ route('adminOffersList') }}" class="btn btn-link link-dark rounded {{ Request::is('acp/offers/list') ? 'active' : '' }}">{{ __('Offers list') }}</a></li>
+                        <li><a href="#" class="btn btn-link link-dark rounded position-relative">{{ __('Messages in offers') }}</a></li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
 </div>

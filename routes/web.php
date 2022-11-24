@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminDashboard;
 use App\Http\Controllers\Admin\AdminElementFormController;
 use App\Http\Controllers\Admin\AdminFormInCategoryController;
 use App\Http\Controllers\Admin\AdminOfferCategory;
+use App\Http\Controllers\Admin\AdminOfferController;
 use App\Http\Controllers\Admin\AdminPageSettings;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\PermissionsController;
@@ -155,6 +156,9 @@ Route::group(['middleware' => 'first_install'], function() {
                     Route::post('/{form}/{option}/update', [AdminElementFormController::class, 'update'])->middleware('permission:ACP-element-form-control-edit')->name('adminElementFormEdit');
                     Route::delete('/{form}/{option}/destroy', [AdminElementFormController::class, 'destroy'])->middleware('permission:ACP-element-form-control-delete')->name('adminElementFormDestroy');
                 });
+            });
+            Route::group(['prefix' => 'offers'], function(){
+                Route::get('/', [AdminOfferController::class, 'index'])->name('adminOffersList');
             });
         });
 

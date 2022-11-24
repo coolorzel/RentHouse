@@ -112,8 +112,13 @@ class UserOffersController extends Controller
      */
     public function show(Category $category, Offers $offer, $slug)
     {
+        $elementFormHasOffer = $offer->activeElement;
+        foreach($elementFormHasOffer as $key => $val){
+            $active[$key] = $val->element_form_names_id;
+        }
         if($offer->slug == $slug) {
-            return view('site.app.offer.view-offer', compact('category', 'offer'));
+            $items = ElementFormOffer::get();
+            return view('site.app.offer.view-offer', compact('category', 'offer', 'items', 'active'));
         }else{
             return redirect()->route('index');
         }

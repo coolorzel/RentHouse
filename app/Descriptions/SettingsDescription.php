@@ -284,6 +284,7 @@ class SettingsDescription {
         'ACP-element-form-control-create',
         'ACP-element-form-control-edit',
         'ACP-element-form-control-delete',
+        'MOD-view-mod-panel-with-view-offer',
 
         // PERMISSION FOR MIDDLEWARE //
         'ACP-visit-page-off',

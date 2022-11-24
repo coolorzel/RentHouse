@@ -62,7 +62,7 @@
                                     </ul>
                                 </td>
                                 <td>
-                                    0
+                                    {{ count($billing->offers) }}
                                 </td>
                                 <td>
                                     {{ $billing->created_at }}
