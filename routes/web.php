@@ -157,6 +157,7 @@ Route::group(['middleware' => 'first_install'], function() {
                     Route::delete('/{form}/{option}/destroy', [AdminElementFormController::class, 'destroy'])->middleware('permission:ACP-element-form-control-delete')->name('adminElementFormDestroy');
                 });
             });
+            // ---- OFFERS VIEW AND MESSAGE ---- //
             Route::group(['prefix' => 'offers'], function(){
                 Route::get('/', [AdminOfferController::class, 'index'])->name('adminOffersList');
             });
@@ -229,7 +230,9 @@ Route::group(['middleware' => 'first_install'], function() {
         });
         Route::group(['prefix' => 'offers'], function(){
             Route::get('{category}')->name('searchInCategory');
-             Route::get('{category}/{offer}/{slug}', [UserOffersController::class, 'show'])->name('offerShow');
+            Route::get('{category}/{offer}/{slug}', [UserOffersController::class, 'show'])->name('offerShow');
+            Route::get('{category}/{offer}/{slug}/edit', [UserOffersController::class, 'edit'])->name('offerEdit');
+            Route::delete('{category}/{offer}/{slug}/destroy', [UserOffersController::class, 'destroy'])->name('offerDestroy');
         });
     });
 });

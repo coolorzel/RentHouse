@@ -578,7 +578,7 @@
                                                                 <td>{{ $val->name }}</td>
                                                                 <td>{{ $val->cat_id }}</td>
                                                                 <td>
-                                                                    @if($val->isDeactive == 0)
+                                                                    @if($val->isReject == 0)
                                                                         @if($billing->isAcceptMod == 1)
                                                                             <i class="fa fa-check-circle-o fa-2x text-success"></i>
                                                                         @else

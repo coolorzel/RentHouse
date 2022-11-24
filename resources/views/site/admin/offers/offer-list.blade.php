@@ -39,7 +39,7 @@
                         <tbody>
                         @foreach($offers as $offer)
                             <tr class="
-                                @if($offer->isDeactive == true)
+                                @if($offer->isReject == true)
                                     table-danger
                                 @endif
                                 ">
@@ -63,7 +63,7 @@
                                 </td>
                                 <td>
                                     @if($offer->archivum == false)
-                                        @if($offer->isDeactive == false)
+                                        @if($offer->isReject == false)
                                             @if($offer->isAcceptMod == true)
                                                 <i class="fa fa-check-circle-o fa-2x text-success"></i>
                                             @else

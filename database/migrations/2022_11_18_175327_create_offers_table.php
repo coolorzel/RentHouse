@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->boolean('isCreated')->default(true); // Jest tworzony... Na true po kliknięciu w utworzenie nowego ogłoszenia...
             $table->boolean('isActive')->default(false); // Czy aktywny lub wersja robocza
-            $table->boolean('isDeactive')->default(false); // Czy upłynął czas, lub oferta została zakończona/usunieta
+            $table->boolean('isReject')->default(false); // Czy upłynął czas, lub oferta została zakończona/usunieta
             $table->boolean('isAcceptMod')->default(false); // Czy oferta została zaakceptowana przez moderatora
             $table->unsignedBigInteger('cat_id')->unsigned(); // Pod jaką kategorią ma być podpięte oferta
             $table->unsignedbigInteger('u_id'); // Id użytkownika, właściciela oferty

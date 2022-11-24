@@ -369,12 +369,17 @@
 
             <!-- Submit button -->
                 <div class="btn-group-lg" id="submit">
-                <button type="submit" name="add" value="add" class="btn btn-outline-warning element-form">{{ __('Add') }}</button>
-                <button type="submit" name="save" value="save" class="btn btn-warning element-form">{{ __('Save') }}</button>
+                    @if(Route::is('offerCreate'))
+                        <button type="submit" name="add" value="add" class="btn btn-outline-warning element-form">{{ __('Add') }}</button>
+                        <button type="submit" name="save" value="save" class="btn btn-warning element-form">{{ __('Save') }}</button>
+                    @else
+                        <button type="submit" name="tosave" value="tosave" class="btn btn-warning element-form">{{ __('Save') }}</button>
+                    @endif
                 </div>
 
 
         </div>
+        @if(Route::is('offerCreate'))
         <div class="col-md-4 p-3 mb-5 bg-body rounded position-relative">
             <h3>{{ __('Billing account') }}</h3>
             <hr>
@@ -438,7 +443,9 @@
                 </ul>
             </div>
         </div>
-
+        @else
+            <input class="form-check-input me-1" style="display: none;" type="radio" name="billing_id" value="{{ $offer->billing_id }}" id="billingAccountNr{{$item->id}}" autocomplete="off" onclick="changeForm(this)" checked>
+        @endif
     </div>
     </form>
 

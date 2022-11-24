@@ -89,6 +89,24 @@ class UserOffersController extends Controller
             $offer->update(array_merge($request->all(), [ 'slug' => $slug, 'isCreated' => false, 'isActive' => true,'isAcceptMod' => false]));
             $route = route('myProfile');
             return response()->json(['status' => 1, 'title' => 'Success', 'msg' => 'Offer add to check success', 'type' => 'success', 'route' => $route]);
+        } else if ($request->btn == 'tosave') {
+            if($offer->isAcceptMod == true){
+                if($offer->regular_rent > $request->regular_rent){
+                    $offer->update(['sale_rent' => $offer->regular_rent]);
+                }elseif($offer->regular_rent < $request->regular_rent){
+                    $offer->update(['sale_rent' => '']);
+                }
+            }
+            ElementFormHasOffer::where('offer_id', $offer->id)->delete();
+            foreach ($category->forms as $key => $val) {
+                $item = ElementFormOffer::find($val->id);
+                if ($item->type == 'checkbox') {
+                    self::checkBoxCheck($request->input($item->name), $offer->id);
+                }
+            }
+            $offer->update(array_merge($request->all(), ['slug' => $slug, 'isCreated' => false, 'isActive' => true, 'isAcceptMod' => false]));
+            $route = route('myProfile');
+            return response()->json(['status' => 1, 'title' => 'Success', 'msg' => 'Offer save and send to check success', 'type' => 'success', 'route' => $route]);
         } else {
             //no button pressed
             return response()->json(['status' => 1, 'title' => 'Error', 'msg' => 'ERROR CREATE OFFER', 'type' => 'error']);
@@ -129,11 +147,26 @@ class UserOffersController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Offers  $offers
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
-    public function edit(Offers $offers)
+    public function edit(Category $category, Offers $offer, $slug)
     {
-        //
+        if($offer->u_id == Auth::id()) {
+            $forms = [];
+            $elementFormHasOffer = $offer->activeElement;
+            foreach ($elementFormHasOffer as $key => $val) {
+                $active[$key] = $val->element_form_names_id;
+            }
+            $active['s'] = $offer->payment;
+            $billingAccounts = Auth::user()->billingAccount;
+            foreach ($category->forms as $key => $val) {
+                $items = ElementFormOffer::find($val->id)->items;
+                $forms[$val->name] = ['title' => $val->title, 'items' => $items, 'active' => $active];
+            }
+            return view('site.app.create-new-offer', compact('category', 'forms', 'offer', 'billingAccounts'));
+        }else{
+            return redirect()->route('index');
+        }
     }
 
     /**
@@ -152,10 +185,15 @@ class UserOffersController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Offers  $offers
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Offers $offers)
+    public function destroy(Category $category, Offers $offer, $slug)
     {
-        //
+        if($offer->u_id == Auth::id()){
+            $offer->update(['archivum' => true]);
+            return response()->json(['status' => 1, 'title' => 'Success', 'msg' => 'Offer delete success', 'type' => 'success']);
+        }else{
+            return response()->json(['status' => 1, 'title' => 'Error', 'msg' => 'ERROR DELETE OFFER', 'type' => 'error']);
+        }
     }
 }

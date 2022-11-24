@@ -488,7 +488,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                 @foreach($billing->offers as $key => $val)
-                                                                    @if($val->isCreated == false)
+                                                                    @if($val->isCreated == false && $val->archivum == false)
                                                                         <tr>
                                                                             <th scope="row">{{ $val->id }}</th>
                                                                             <td>
@@ -497,7 +497,7 @@
                                                                             <td>{{ $val->name }}</td>
                                                                             <td>{{ $val->cat_id }}</td>
                                                                             <td>
-                                                                                @if($val->isDeactive == 0)
+                                                                                @if($val->isReject == 0)
                                                                                     @if($billing->isAcceptMod == 1)
                                                                                         <i class="fa fa-check-circle-o fa-2x text-success"></i>
                                                                                     @else
@@ -515,16 +515,47 @@
                                                                                             </a>
                                                                                         </li>
                                                                                         <li class="list-inline-item">
-                                                                                            <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="">
+                                                                                            <a data-toggle="tooltip" data-placement="top" title="Edit" class="edit" href="{{ route('offerEdit', [$val->category->slug, $val->id, $val->slug]) }}">
                                                                                                 <i class="fa fa-pencil text-warning fa-2x"></i>
                                                                                             </a>
                                                                                         </li>
                                                                                         <li class="list-inline-item">
                                                                                         <span data-toggle="modal" data-target="#deleteoffer{{ $val->id }}">
-                                                                                        <a data-toggle="tooltip" class="delete" data-placement="top" title="Delete"><i class="fa fa-trash text-warning fa-2x"></i></a>
+                                                                                        <a data-toggle="tooltip" class="delete" data-placement="top" title="Delete" data-mdb-toggle="modal" data-mdb-target="#modalDelete-{{ $val->id }}"><i class="fa fa-trash text-warning fa-2x"></i></a>
                                                                                         </span>
                                                                                         </li>
+                                                                                        <!--Modal: modalConfirmDelete-->
+                                                                                        <div class="modal fade" id="modalDelete-{{ $val->id }}" tabindex="-1" role="dialog" aria-labelledby="modalDelete-{{ $val->id }}-Label"
+                                                                                             aria-hidden="true">
+                                                                                            <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+                                                                                                <!--Content-->
+                                                                                                <div class="modal-content text-center">
+                                                                                                    <!--Header-->
+                                                                                                    <div class="modal-header d-flex justify-content-center">
+                                                                                                        <p class="heading">{{ __('Are you sure?') }}</p>
+                                                                                                    </div>
 
+                                                                                                    <!--Body-->
+                                                                                                    <div class="modal-body">
+
+                                                                                                        <i id="deleteRestoreIcon" class="fa fa-times fa-4x animated rotateIn text-danger"></i>
+
+                                                                                                    </div>
+
+                                                                                                    <!--Footer-->
+                                                                                                    <div class="modal-footer flex-center">
+                                                                                                        <form action="{{ route('offerDestroy', [$val->category->slug, $val->id, $val->slug]) }}" method="delete" id="formDelete">
+                                                                                                            <input type="hidden" name="btn" value="destroy">
+                                                                                                            <button type="submit" class="btn btn-outline-danger" id="buttonSubmitDelete">{{ __('Yes') }}</button>
+                                                                                                        </form>
+                                                                                                        <button type="button" class="btn btn-danger waves-effect" data-mdb-dismiss="modal">
+                                                                                                            {{ __('No') }}</button>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <!--/.Content-->
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!--Modal: modalConfirmDelete-->
 
                                                                                     </ul>
                                                                                 </div></td>
@@ -767,6 +798,28 @@
             headers:{
                 'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        $('div #formDelete').on('submit', function(e){
+            e.preventDefault();
+            $.ajax({
+                url:$(this).attr('action'),
+                method:'DELETE',
+                data:new FormData(this),
+                processData: false,
+                //dataType:'json',
+                contentType:false,
+                success:
+                    function(data) {
+                        Swal.fire({
+                            title: data.title,
+                            text: data.msg,
+                            type: data.type
+                        }).then(function(){
+                            location.reload();
+                        });
+                    }
+            });
         });
 
         $(document).ready(function (){

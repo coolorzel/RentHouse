@@ -206,7 +206,7 @@
                         <div class="flex-row align-items-center">
                             <span class="text-warning fw-bold fs-2">
                                 @if($offer->archivum == false)
-                                    @if($offer->isDeactive == false)
+                                    @if($offer->isReject == false)
                                         @if($offer->isAcceptMod == true)
                                             @if($offer->isActive == true)
                                                 {{ __('Active') }}
@@ -223,9 +223,21 @@
                                 @endif
                             </span><br>
                             <div class="btn-group">
-                                <button class="btn btn-dark" type="button">{{ __('ACCEPT') }}</button>
-                                <button class="btn btn-dark" type="button">{{ __('REJECT') }}</button>
-                                <button class="btn btn-dark" type="button">{{ __('DELETE') }}</button>
+                                @if($offer->isAcceptMod == false)
+                                    <button class="btn btn-dark" type="button">{{ __('ACCEPT') }}</button>
+                                @else
+                                    <button class="btn btn-dark" type="button">{{ __('Cancel Accept') }}</button>
+                                @endif
+                                @if($offer->isReject == false)
+                                    <button class="btn btn-dark" type="button">{{ __('REJECT') }}</button>
+                                @else
+                                    <button class="btn btn-dark" type="button">{{ __('Cancel Reject') }}</button>
+                                @endif
+                                @if($offer->archive == false)
+                                    <button class="btn btn-dark" type="button">{{ __('DELETE') }}</button>
+                                @else
+                                    <button class="btn btn-dark" type="button">{{ __('CANCEL DELETE') }}</button>
+                                @endif
                             </div>
                         </div>
                     </div>
