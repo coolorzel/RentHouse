@@ -29,6 +29,7 @@
                         <tr>
                             <th>{{ __('ID') }}</th>
                             <th>{{ __('User eMail') }}</th>
+                            <th>{{ __('Title offer') }}</th>
                             <th>{{ __('Type offer') }}</th>
                             <th>{{ __('Created at') }}</th>
                             <th>{{ __('Status') }}</th>
@@ -44,6 +45,7 @@
                                 ">
                                 <td>{{ $offer->id }}</td>
                                 <td><a class="btn btn-outline-white" href="{{ route('viewUserProfile', $offer->u_id) }}">{{ $offer->user->email }}</a></td>
+                                <td>{{ $offer->name }}</td>
                                 <td>
                                     <ul class="list-group list-group-flush">
                                         @if($offer->billingAccount->company == true)

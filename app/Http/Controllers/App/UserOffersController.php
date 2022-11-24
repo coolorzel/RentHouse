@@ -112,11 +112,12 @@ class UserOffersController extends Controller
      */
     public function show(Category $category, Offers $offer, $slug)
     {
+        $user = Auth::user();
         $elementFormHasOffer = $offer->activeElement;
         foreach($elementFormHasOffer as $key => $val){
             $active[$key] = $val->element_form_names_id;
         }
-        if($offer->slug == $slug) {
+        if($offer->slug == $slug && $offer->isActive == true && $offer->isAcceptMod == true || $offer->slug == $slug && $offer->u_id == Auth::id() || $offer->slug == $slug && $offer->isAcceptMod == false && Auth::check() && Auth::user()->hasDirectPermission('MOD-view-mod-panel-with-view-offer')) {
             $items = ElementFormOffer::get();
             return view('site.app.offer.view-offer', compact('category', 'offer', 'items', 'active'));
         }else{

@@ -476,7 +476,6 @@
                                                     <div class="accordion-body">
                                                         @if(!empty($billing->offers->toArray()))
                                                             <table class="table caption-top table-responsive">
-                                                                <caption>List of users</caption>
                                                                 <thead>
                                                                 <tr>
                                                                     <th scope="col">#</th>

@@ -555,7 +555,56 @@
                                     <div id="flush-collapse{{ $billing->id }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ $billing->id }}" data-bs-parent="#accordionFlushExample">
                                     @if($billing->verified == true) <!-- Jeżeli konto rozliczeniowe potwierdzone -->
                                         <div class="accordion-body">
-                                            <div class="card-body">{{ __('No offers ... Add a new one to be displayed here.') }}</div>
+                                            @if(!empty($billing->offers->toArray()))
+                                                <table class="table caption-top table-responsive">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">{{ __('Picture') }}</th>
+                                                        <th scope="col">{{ __('Title') }}</th>
+                                                        <th scope="col">{{ __('Category') }}</th>
+                                                        <th scope="col">{{ __('Status') }}</th>
+                                                        <th scope="col">{{ __('Options') }}</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($billing->offers as $key => $val)
+                                                        @if($val->isCreated == false)
+                                                            <tr>
+                                                                <th scope="row">{{ $val->id }}</th>
+                                                                <td>
+                                                                    <img width="80px" height="auto" class="rounded" src="{{asset('images/'.$val->id.'/'.$val->cat_id.'/'.\App\Models\OfferImages::where('id', $val->images_id)->pluck('name')->first())}}" alt="image description"></td>
+                                                                </td>
+                                                                <td>{{ $val->name }}</td>
+                                                                <td>{{ $val->cat_id }}</td>
+                                                                <td>
+                                                                    @if($val->isDeactive == 0)
+                                                                        @if($billing->isAcceptMod == 1)
+                                                                            <i class="fa fa-check-circle-o fa-2x text-success"></i>
+                                                                        @else
+                                                                            <i class="fa fa-spinner fa-2x text-warning"></i>
+                                                                        @endif
+                                                                    @else
+                                                                        <i class="fa fa-times-circle-o fa-2x text-danger"></i>
+                                                                    @endif
+                                                                </td>
+                                                                <td><div class="">
+                                                                        <ul class="list-inline justify-content-center">
+                                                                            <li class="list-inline-item">
+                                                                                <a data-toggle="tooltip" data-placement="top" title="View" class="view" href="{{ route('offerShow', [$val->category->slug, $val->id, $val->slug]) }}">
+                                                                                    <i class="fa fa-eye text-warning fa-2x"></i>
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div></td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            @else
+                                                <div class="card-body">{{ __('No offers ... User must add a new one to be displayed here.') }}</div>
+                                            @endif
                                         </div>
                                     @else <!-- Jeżeli konto rozliczeniowe nie zostało potwierdzone -->
                                     @if ($billing->rejected == true) <!-- Jeżeli konto zostało odrzucone -->
