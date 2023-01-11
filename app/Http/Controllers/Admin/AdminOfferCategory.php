@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateAdminOfferCategory;
+use App\Http\Service\AdminOfferCategoryService;
 use App\Models\Category;
 use App\Models\ElementFormInCategory;
 use App\Models\ElementFormOffer;
@@ -10,6 +12,13 @@ use Illuminate\Http\Request;
 
 class AdminOfferCategory extends Controller
 {
+    private AdminOfferCategoryService $service;
+
+    public function __construct(AdminOfferCategoryService $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -38,22 +47,9 @@ class AdminOfferCategory extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(CreateAdminOfferCategory $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'slug' => 'required',
-            'description' => 'required',
-            'enable' => 'required',
-            'icon' => 'required'
-        ]);
-        if ($category = Category::create(['name' => $request->name, 'slug' => $request->slug, 'description' => $request->description, 'enable' => $request->enable, 'icon' => $request->icon])) {
-            self::updateFormInCategory($request->form, $category->id);
-            return response()->json(['status' => 1, 'title' => 'Success', 'msg' => 'Category created complete', 'type' => 'success']);
-        }
-        else{
-            return response()->json(['status' => 0, 'title' => 'Error', 'msg' => 'ERROR Create', 'type' => 'error']);
-        }
+        return $this->service->create($request);
     }
 
     /**

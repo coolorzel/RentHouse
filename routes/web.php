@@ -25,6 +25,8 @@ use App\Http\Controllers\User\LinkUserController;
 use App\Http\Controllers\User\MyUserProfile;
 use App\Http\Controllers\User\UserBillingAccount;
 use App\Http\Controllers\User\UserNotifications;
+use App\Http\Response\BasicErrorResponse;
+use App\Http\Response\BasicSuccessResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +34,13 @@ use Illuminate\Support\Facades\Route;
 //moje testy
 Route::get('/tenantapplication', function(){
     return view('site.user.tenantapplication');
+});
+
+Route::get('/test2', function(){
+    $response = new BasicErrorResponse("Test");
+
+
+   return response()->json($response->asArray());
 });
 
 /*
